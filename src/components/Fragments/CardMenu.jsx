@@ -63,9 +63,34 @@ const Notes = (props) => {
   );
 };
 
+const Type = ({ id, isTakeAway, handleIsTakeAway }) => {
+  const classButton = `btn-sm max-w-[48%]`;
+  return (
+    <div className="flex gap-2">
+      <Button
+        className={`${classButton} ${
+          isTakeAway ? "btn-active bg-secondary text-neutral" : "btn-outline"
+        } `}
+        onClick={() => handleIsTakeAway(id, true)}
+      >
+        Dibawa Pulang
+      </Button>
+      <Button
+        className={`${classButton} ${
+          isTakeAway ? "btn-outline" : "btn-active bg-secondary text-neutral"
+        } `}
+        onClick={() => handleIsTakeAway(id, false)}
+      >
+        Makan Ditempat
+      </Button>
+    </div>
+  );
+};
+
 CardMenu.Figure = Figure;
 CardMenu.Title = Title;
 CardMenu.Price = Price;
 CardMenu.Notes = Notes;
+CardMenu.Type = Type;
 
 export default CardMenu;

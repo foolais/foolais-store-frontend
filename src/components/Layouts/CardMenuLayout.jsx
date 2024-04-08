@@ -1,7 +1,8 @@
 import CardMenu from "../Fragments/CardMenu";
 import Button from "../Elements/Button/Button";
+import { useState } from "react";
 
-const menu = [
+const data = [
   {
     _id: 1,
     name: "Soto",
@@ -27,7 +28,7 @@ const menu = [
     name: "Mie",
     price: 10000,
     quantity: 1,
-    is_take_away: false,
+    is_take_away: true,
     is_available: true,
     category: "Food",
     notes: "",
@@ -35,6 +36,23 @@ const menu = [
 ];
 
 const CardMenuLayout = () => {
+  const [menu, setMenu] = useState(data);
+
+  const handleIsTakeAway = (id, type) => {
+    const updatedMenu = menu.map((item) => {
+      if (item._id === id) {
+        return {
+          ...item,
+          is_take_away: type,
+        };
+      } else {
+        return item;
+      }
+    });
+
+    setMenu(updatedMenu);
+  };
+
   return (
     <div className="w-full h-full">
       <div className="flex items-center justify-center sm:justify-between flex-wrap gap-8">
@@ -48,6 +66,11 @@ const CardMenuLayout = () => {
               <div className="card-body over">
                 <CardMenu.Title title={item.name} className="font-semibold" />
                 <CardMenu.Price price={item.price} className="text-lg" />
+                <CardMenu.Type
+                  id={item._id}
+                  isTakeAway={item.is_take_away}
+                  handleIsTakeAway={handleIsTakeAway}
+                />
                 <CardMenu.Notes
                   textButton={`${
                     item.notes && item.notes.length > 1
