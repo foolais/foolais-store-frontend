@@ -3,6 +3,7 @@ import TextArea from "../Elements/Input/TextArea";
 import Button from "../Elements/Button/Button";
 import { formatRupiah } from "../../utils/utils";
 import { useState } from "react";
+import { AiOutlineShoppingCart, AiOutlineHome } from "react-icons/ai";
 
 /* eslint-disable react/prop-types */
 const CardMenu = ({ children, className }) => {
@@ -57,7 +58,7 @@ const Notes = (props) => {
             className="textarea textarea-bordered textarea-md"
             defaultValue={data}
           />
-          <Button className="btn-sm btn-outline w-1/2 ">Simpan</Button>
+          <Button className="btn-sm btn-neutral w-1/2 ">Simpan</Button>
         </div>
       </Modal>
     </>
@@ -65,7 +66,7 @@ const Notes = (props) => {
 };
 
 const Type = ({ id, isTakeAway, handleIsTakeAway }) => {
-  const classButton = `btn-sm max-w-[48%]`;
+  const classButton = `btn-sm`;
   return (
     <div className="flex gap-2">
       <Button
@@ -74,7 +75,8 @@ const Type = ({ id, isTakeAway, handleIsTakeAway }) => {
         } `}
         onClick={() => handleIsTakeAway(id, true)}
       >
-        Dibawa Pulang
+        <AiOutlineHome />
+        <span>Take away</span>
       </Button>
       <Button
         className={`${classButton} ${
@@ -82,7 +84,8 @@ const Type = ({ id, isTakeAway, handleIsTakeAway }) => {
         } `}
         onClick={() => handleIsTakeAway(id, false)}
       >
-        Makan Ditempat
+        <AiOutlineShoppingCart />
+        <span>Dine-in</span>
       </Button>
     </div>
   );

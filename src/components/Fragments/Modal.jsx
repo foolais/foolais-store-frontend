@@ -6,7 +6,7 @@ const Modal = (props) => {
 
   return (
     <>
-      <dialog className={`modal ${showModal && "modal-open"}`}>
+      <dialog className={`modal z-50 ${showModal && "modal-open"}`}>
         <div className="modal-box">
           <form method="dialog">
             <Button

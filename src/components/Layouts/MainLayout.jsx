@@ -1,4 +1,4 @@
-import Sidenav from "../Fragments/Sidenav";
+import Sidenav from "./Sidenav";
 
 /* eslint-disable react/prop-types */
 const MainLayout = ({ children }) => {
