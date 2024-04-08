@@ -6,7 +6,7 @@ const data = [
   {
     _id: 1,
     name: "Soto",
-    price: 10000,
+    price: 9000,
     quantity: 1,
     is_take_away: false,
     is_available: true,
@@ -26,7 +26,7 @@ const data = [
   {
     _id: 3,
     name: "Mie",
-    price: 10000,
+    price: 8000,
     quantity: 1,
     is_take_away: true,
     is_available: true,
@@ -55,7 +55,7 @@ const CardMenuLayout = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="flex items-center justify-center sm:justify-between flex-wrap gap-8">
+      <div className="flex items-center justify-around sm:justify-between flex-wrap gap-8">
         {menu.map((item) => {
           return (
             <CardMenu key={item._id}>

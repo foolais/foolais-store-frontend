@@ -1,13 +1,14 @@
 import Modal from "./Modal";
 import TextArea from "../Elements/Input/TextArea";
 import Button from "../Elements/Button/Button";
+import { formatRupiah } from "../../utils/utils";
 import { useState } from "react";
 
 /* eslint-disable react/prop-types */
 const CardMenu = ({ children, className }) => {
   return (
     <div
-      className={`card card-compact bg-neutral min-w-[45%] max-w-[45%] sm:min-w-[30%] sm:max-w-[30%] ${className}`}
+      className={`card card-compact bg-neutral min-w-[45%] max-w-[45%] sm:min-w-[30%] overflow-hidden sm:max-w-[30%] ${className}`}
     >
       {children}
     </div>
@@ -27,7 +28,7 @@ const Title = ({ title, className }) => {
 };
 
 const Price = ({ price, className }) => {
-  return <p className={`card-price ${className}`}>{price}</p>;
+  return <p className={`card-price ${className}`}>{formatRupiah(price)}</p>;
 };
 
 const Notes = (props) => {
