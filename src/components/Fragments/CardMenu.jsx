@@ -1,4 +1,7 @@
+import Modal from "./Modal";
+import TextArea from "../Elements/Input/TextArea";
 import Button from "../Elements/Button/Button";
+import { useState } from "react";
 
 /* eslint-disable react/prop-types */
 const CardMenu = ({ children, className }) => {
@@ -27,8 +30,42 @@ const Price = ({ price, className }) => {
   return <p className={`card-price ${className}`}>{price}</p>;
 };
 
+const Notes = (props) => {
+  const { data, textButton, title, btnClassName } = props;
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModal = (type) => {
+    setShowModal(type === "open" ? true : false);
+  };
+
+  return (
+    <>
+      <Button className={btnClassName} onClick={() => handleModal("open")}>
+        {textButton}
+      </Button>
+      <Modal
+        textButton={textButton}
+        title={title}
+        btnClassName={btnClassName}
+        showModal={showModal}
+        closeModal={() => handleModal("close")}
+      >
+        <div className=" flex flex-col gap-4 w-4/5">
+          <TextArea
+            name="notes"
+            className="textarea textarea-bordered textarea-md"
+            defaultValue={data}
+          />
+          <Button className="btn-sm btn-outline w-1/2 ">Simpan</Button>
+        </div>
+      </Modal>
+    </>
+  );
+};
+
 CardMenu.Figure = Figure;
 CardMenu.Title = Title;
 CardMenu.Price = Price;
+CardMenu.Notes = Notes;
 
 export default CardMenu;

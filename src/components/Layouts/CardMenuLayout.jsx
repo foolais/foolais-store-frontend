@@ -10,7 +10,7 @@ const menu = [
     is_take_away: false,
     is_available: true,
     category: "Food",
-    notes: "",
+    notes: "hello",
   },
   {
     _id: 2,
@@ -20,16 +20,17 @@ const menu = [
     is_take_away: false,
     is_available: true,
     category: "Food",
-    notes: "",
+    notes: "hello",
   },
   {
     _id: 3,
-    name: "Bakso",
+    name: "Mie",
     price: 10000,
     quantity: 1,
     is_take_away: false,
     is_available: true,
     category: "Food",
+    notes: "",
   },
 ];
 
@@ -47,6 +48,16 @@ const CardMenuLayout = () => {
               <div className="card-body over">
                 <CardMenu.Title title={item.name} className="font-semibold" />
                 <CardMenu.Price price={item.price} className="text-lg" />
+                <CardMenu.Notes
+                  textButton={`${
+                    item.notes && item.notes.length > 1
+                      ? "Lihat Catatan"
+                      : "Tambah Catatan"
+                  }`}
+                  title={`Catatan untuk ${item.name}`}
+                  btnClassName="btn-sm btn-outline"
+                  data={item.notes}
+                />
                 <div className="card-actions justify-end mt-4">
                   <Button className=" btn-accent">{">"}</Button>
                 </div>
