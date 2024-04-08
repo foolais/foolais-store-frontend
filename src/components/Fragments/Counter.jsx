@@ -15,7 +15,7 @@ const Counter = (props) => {
       <span className="font-semibold text-xl">{value}</span>
       <Button
         className="btn-circle btn-sm btn-outline"
-        onClick={() => handleCounter(id, "add")}
+        onClick={() => handleCounter(id, "plus")}
       >
         <AiOutlinePlus size={20} />
       </Button>

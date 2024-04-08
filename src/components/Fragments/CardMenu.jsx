@@ -6,10 +6,11 @@ import { useState } from "react";
 import { AiOutlineShoppingCart, AiOutlineHome } from "react-icons/ai";
 
 /* eslint-disable react/prop-types */
-const CardMenu = ({ children, className }) => {
+const CardMenu = ({ children, className, onClick = () => {} }) => {
   return (
     <div
       className={`card card-compact bg-neutral min-w-[45%] max-w-[45%] sm:min-w-[30%] overflow-hidden sm:max-w-[30%] ${className}`}
+      onClick={onClick}
     >
       {children}
     </div>
@@ -71,21 +72,21 @@ const Type = ({ id, isTakeAway, handleIsTakeAway }) => {
     <div className="flex gap-2">
       <Button
         className={`${classButton} ${
-          isTakeAway ? "btn-active bg-secondary text-neutral" : "btn-outline"
-        } `}
-        onClick={() => handleIsTakeAway(id, true)}
-      >
-        <AiOutlineHome />
-        <span>Take away</span>
-      </Button>
-      <Button
-        className={`${classButton} ${
           isTakeAway ? "btn-outline" : "btn-active bg-secondary text-neutral"
         } `}
         onClick={() => handleIsTakeAway(id, false)}
       >
         <AiOutlineShoppingCart />
         <span>Dine-in</span>
+      </Button>
+      <Button
+        className={`${classButton} ${
+          isTakeAway ? "btn-active bg-secondary text-neutral" : "btn-outline"
+        } `}
+        onClick={() => handleIsTakeAway(id, true)}
+      >
+        <AiOutlineHome />
+        <span>Take away</span>
       </Button>
     </div>
   );
