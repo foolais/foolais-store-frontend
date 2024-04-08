@@ -1,42 +1,20 @@
 import CardMenu from "../Fragments/CardMenu";
+import { useEffect } from "react";
 // import Button from "../Elements/Button/Button";
 import { useState } from "react";
-
-const data = [
-  {
-    _id: 1,
-    name: "Soto",
-    price: 9000,
-    quantity: 1,
-    is_take_away: false,
-    is_available: true,
-    category: "Food",
-    notes: "hello",
-  },
-  {
-    _id: 2,
-    name: "Bakso",
-    price: 10000,
-    quantity: 1,
-    is_take_away: false,
-    is_available: true,
-    category: "Food",
-    notes: "hello",
-  },
-  {
-    _id: 3,
-    name: "Mie",
-    price: 8000,
-    quantity: 1,
-    is_take_away: true,
-    is_available: true,
-    category: "Food",
-    notes: "",
-  },
-];
+import { useSelector } from "react-redux";
+import { getMenuData, getMenuStatus } from "../../redux/slice/menuSlice";
 
 const CardMenuLayout = () => {
-  const [menu, setMenu] = useState(data);
+  const [menu, setMenu] = useState();
+  const dataMenu = useSelector(getMenuData);
+  const statusMenu = useSelector(getMenuStatus);
+
+  useEffect(() => {
+    if (statusMenu === "idle") {
+      setMenu(dataMenu);
+    }
+  }, [statusMenu, dataMenu]);
 
   // const handleIsTakeAway = (id, type) => {
   //   const updatedMenu = menu.map((item) => {
@@ -56,17 +34,18 @@ const CardMenuLayout = () => {
   return (
     <div className="w-full h-full">
       <div className="flex items-center justify-around sm:justify-between flex-wrap gap-8">
-        {menu.map((item) => {
-          return (
-            <CardMenu key={item._id}>
-              <CardMenu.Figure
-                src="https://picsum.photos/200"
-                alt={item.name}
-              />
-              <div className="card-body over">
-                <CardMenu.Title title={item.name} className="font-semibold" />
-                <CardMenu.Price price={item.price} className="text-lg" />
-                {/* <CardMenu.Type
+        {menu &&
+          menu.map((item) => {
+            return (
+              <CardMenu key={item._id}>
+                <CardMenu.Figure
+                  src="https://picsum.photos/200"
+                  alt={item.name}
+                />
+                <div className="card-body over">
+                  <CardMenu.Title title={item.name} className="font-semibold" />
+                  <CardMenu.Price price={item.price} className="text-lg" />
+                  {/* <CardMenu.Type
                   id={item._id}
                   isTakeAway={item.is_take_away}
                   handleIsTakeAway={handleIsTakeAway}
@@ -84,10 +63,10 @@ const CardMenuLayout = () => {
                 <div className="card-actions justify-end mt-4">
                   <Button className=" btn-accent">{">"}</Button>
                 </div> */}
-              </div>
-            </CardMenu>
-          );
-        })}
+                </div>
+              </CardMenu>
+            );
+          })}
       </div>
     </div>
   );
