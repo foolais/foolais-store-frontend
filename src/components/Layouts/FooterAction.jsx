@@ -3,7 +3,7 @@ import Divider from "../Elements/Divider/Divider";
 import CardMenu from "../Fragments/CardMenu";
 import Button from "../Elements/Button/Button";
 import { AiOutlineRight } from "react-icons/ai";
-import { getMenuData } from "../../redux/slice/menuSlice";
+import { getMenuData, resetSelectedMenu } from "../../redux/slice/menuSlice";
 import { handleAddToCart } from "../../redux/slice/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
@@ -47,6 +47,12 @@ const FooterAction = () => {
     });
   };
 
+  const onAddToCart = () => {
+    dispatch(handleAddToCart(selectedMenu));
+    setSelectedMenu(null);
+    dispatch(resetSelectedMenu());
+  };
+
   return (
     <div className="fixed bottom-0 right-0 left-0 h-28 bg-neutral ml-16 flex">
       {/* Title Name */}
@@ -88,7 +94,7 @@ const FooterAction = () => {
         <Button
           className="bg-accent text-secondary"
           disabled={!selectedMenu?.name}
-          onClick={() => dispatch(handleAddToCart(selectedMenu))}
+          onClick={onAddToCart}
         >
           Tambah Pesanan
           <AiOutlineRight size={15} />

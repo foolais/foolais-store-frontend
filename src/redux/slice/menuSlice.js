@@ -65,6 +65,11 @@ const menuSlice = createSlice({
         }
       });
     },
+    resetSelectedMenu: (state) => {
+      state.data.forEach((menu) => {
+        menu.is_selected = false;
+      });
+    },
   },
 });
 
@@ -72,6 +77,6 @@ export const getMenuData = (state) => state.menu.data;
 export const getMenuStatus = (state) => state.menu.status;
 export const getMenuError = (state) => state.menu.error;
 
-export const { handleSelectedMenu } = menuSlice.actions;
+export const { handleSelectedMenu, resetSelectedMenu } = menuSlice.actions;
 
 export default menuSlice.reducer;
