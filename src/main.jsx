@@ -6,9 +6,10 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import HomePage from "./pages/HomePage";
 import MenuPage from "./pages/MenuPage";
+import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter([
-  { path: "/", element: <HomePage /> },
+  { path: "/", element: <HomePage />, errorElement: <ErrorPage /> },
   { path: "/menu", element: <MenuPage /> },
 ]);
 
