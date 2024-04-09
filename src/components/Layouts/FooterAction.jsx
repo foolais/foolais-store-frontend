@@ -34,6 +34,17 @@ const FooterAction = () => {
     });
   };
 
+  const handleSubmitFormNotes = (event) => {
+    event.preventDefault();
+    const notes = event.target.notes.value;
+    setSelectedMenu((prev) => {
+      return {
+        ...prev,
+        notes: notes,
+      };
+    });
+  };
+
   return (
     <div className="fixed bottom-0 right-0 left-0 h-28 bg-neutral ml-16 flex">
       {/* Title Name */}
@@ -67,6 +78,7 @@ const FooterAction = () => {
           title="Catatan"
           btnClassName="btn-sm btn-outline"
           disabled={!selectedMenu?.name}
+          onSubmit={handleSubmitFormNotes}
         />
       </div>
       <Divider className="divider-horizontal" />

@@ -34,7 +34,7 @@ const Price = ({ price, className }) => {
 };
 
 const Notes = (props) => {
-  const { data, textButton, title, btnClassName, disabled } = props;
+  const { data, textButton, title, btnClassName, disabled, onSubmit } = props;
   const [showModal, setShowModal] = useState(false);
 
   const handleModal = (type) => {
@@ -57,14 +57,14 @@ const Notes = (props) => {
         showModal={showModal}
         closeModal={() => handleModal("close")}
       >
-        <div className=" flex flex-col gap-4 w-4/5">
+        <form className=" flex flex-col gap-4 w-4/5" onSubmit={onSubmit}>
           <TextArea
             name="notes"
             className="textarea textarea-bordered textarea-md"
             defaultValue={data}
           />
           <Button className="btn-sm btn-neutral w-1/2 ">Simpan</Button>
-        </div>
+        </form>
       </Modal>
     </>
   );
