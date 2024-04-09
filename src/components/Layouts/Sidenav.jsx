@@ -1,5 +1,5 @@
 import Button from "../Elements/Button/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   AiOutlineHome,
   AiOutlineAppstore,
@@ -46,6 +46,12 @@ const data = [
 
 const Sidenav = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (title) => {
+    return location.pathname.includes(`/${title.toLowerCase()}`);
+  };
+
   const handleNavigate = (title) => {
     if (title == "Home") {
       navigate("/");
@@ -58,13 +64,20 @@ const Sidenav = () => {
     <aside className="fixed top-0 left-0 h-screen w-16 m-0 flex flex-col items-center gap-3 z-30 bg-primary text-neutral p-4">
       {data.map((item) => {
         return (
-          <Button
+          <div
             key={item.id}
-            className="btn-circle btn-outline btn-accent"
-            onClick={() => handleNavigate(item.title)}
+            className="tooltip tooltip-right tooltip-accent"
+            data-tip={item.title}
           >
-            {item.icon}
-          </Button>
+            <Button
+              className={`btn-circle btn-accent ${
+                !isActive(item.title) && "btn-outline"
+              }`}
+              onClick={() => handleNavigate(item.title)}
+            >
+              {item.icon}
+            </Button>
+          </div>
         );
       })}
     </aside>

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 const Title = ({ children }) => {
   return (
-    <h1 className="text-2xl text-neutral font-bold tracking-wider mb-4">
+    <h1 className="text-2xl text-neutral font-bold tracking-wider">
       {children}
     </h1>
   );
