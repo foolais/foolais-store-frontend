@@ -4,10 +4,12 @@ import CardMenu from "../Fragments/CardMenu";
 import Button from "../Elements/Button/Button";
 import { AiOutlineRight } from "react-icons/ai";
 import { getMenuData } from "../../redux/slice/menuSlice";
-import { useSelector } from "react-redux";
+import { handleAddToCart } from "../../redux/slice/cartSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
 const FooterAction = () => {
+  const dispatch = useDispatch();
   const dataMenu = useSelector(getMenuData);
   const [selectedMenu, setSelectedMenu] = useState(null);
 
@@ -86,7 +88,7 @@ const FooterAction = () => {
         <Button
           className="bg-accent text-secondary"
           disabled={!selectedMenu?.name}
-          onClick={() => console.log({ selectedMenu })}
+          onClick={() => dispatch(handleAddToCart(selectedMenu))}
         >
           Tambah Pesanan
           <AiOutlineRight size={15} />
