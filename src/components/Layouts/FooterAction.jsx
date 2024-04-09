@@ -58,7 +58,7 @@ const FooterAction = () => {
         handleCounter={handleChangeQuantity}
         disabled={!selectedMenu?.name}
       />
-      <Divider className="divider-horizontal" />
+      <Divider className="divider-horizontal ml-0.5 mr-0.5" />
       <div className="flex flex-col gap-2 justify-center pt-2">
         {/* Tipe */}
         <CardMenu.Type
@@ -81,14 +81,14 @@ const FooterAction = () => {
           onSubmit={handleSubmitFormNotes}
         />
       </div>
-      <Divider className="divider-horizontal" />
+      <Divider className="divider-horizontal ml-0.5 mr-0.5" />
       <div className="flex items-center pt-2">
         <Button
           className="bg-accent text-secondary"
           disabled={!selectedMenu?.name}
           onClick={() => console.log({ selectedMenu })}
         >
-          Tambah
+          Tambah Pesanan
           <AiOutlineRight size={15} />
         </Button>
       </div>
