@@ -11,7 +11,7 @@ const Button = (props) => {
     <button
       type={type}
       onClick={onClick}
-      className={`btn ${className}`}
+      className={`btn disabled:bg-gray-300 disabled:text-gray-400 ${className}`}
       {...rest}
     >
       {children}

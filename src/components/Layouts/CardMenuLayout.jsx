@@ -31,6 +31,7 @@ const CardMenuLayout = () => {
               <CardMenu
                 key={item._id}
                 onClick={() => dispatch(handleSelectedMenu(item._id))}
+                className="cursor-pointer hover:scale-105 duration-300"
               >
                 <CardMenu.Figure
                   src="https://picsum.photos/200"

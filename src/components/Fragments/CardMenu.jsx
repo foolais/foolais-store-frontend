@@ -34,7 +34,7 @@ const Price = ({ price, className }) => {
 };
 
 const Notes = (props) => {
-  const { data, textButton, title, btnClassName } = props;
+  const { data, textButton, title, btnClassName, disabled } = props;
   const [showModal, setShowModal] = useState(false);
 
   const handleModal = (type) => {
@@ -43,7 +43,11 @@ const Notes = (props) => {
 
   return (
     <>
-      <Button className={btnClassName} onClick={() => handleModal("open")}>
+      <Button
+        className={btnClassName}
+        onClick={() => handleModal("open")}
+        disabled={disabled}
+      >
         {textButton}
       </Button>
       <Modal
@@ -66,7 +70,7 @@ const Notes = (props) => {
   );
 };
 
-const Type = ({ id, isTakeAway, handleIsTakeAway }) => {
+const Type = ({ id, isTakeAway, handleIsTakeAway, disabled }) => {
   const classButton = `btn-sm`;
   return (
     <div className="flex gap-2">
@@ -75,6 +79,7 @@ const Type = ({ id, isTakeAway, handleIsTakeAway }) => {
           isTakeAway ? "btn-outline" : "btn-active bg-secondary text-neutral"
         } `}
         onClick={() => handleIsTakeAway(id, false)}
+        disabled={disabled}
       >
         <AiOutlineShoppingCart />
         <span>Dine-in</span>
@@ -84,6 +89,7 @@ const Type = ({ id, isTakeAway, handleIsTakeAway }) => {
           isTakeAway ? "btn-active bg-secondary text-neutral" : "btn-outline"
         } `}
         onClick={() => handleIsTakeAway(id, true)}
+        disabled={disabled}
       >
         <AiOutlineHome />
         <span>Take away</span>

@@ -61,7 +61,7 @@ const menuSlice = createSlice({
         if (menu._id !== id) {
           menu.is_selected = false;
         } else {
-          menu.is_selected = true;
+          menu.is_selected = !menu.is_selected;
         }
       });
     },

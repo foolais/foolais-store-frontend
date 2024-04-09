@@ -37,16 +37,15 @@ const FooterAction = () => {
   return (
     <div className="fixed bottom-0 right-0 left-0 h-28 bg-neutral ml-16 flex">
       {/* Title Name */}
-      {selectedMenu && (
-        <div className="absolute -top-6 left-0 bg-accent py-2 px-4 rounded-r-md text-secondary font-semibold">
-          {selectedMenu.name}
-        </div>
-      )}
+      <div className="absolute -top-6 left-0 bg-accent py-2 px-4 rounded-r-md text-secondary font-semibold">
+        {selectedMenu?.name || "Silahkan Pilih Menu"}
+      </div>
       {/* Counter */}
       <Counter
-        value={selectedMenu ? selectedMenu.quantity : 1}
+        value={selectedMenu ? selectedMenu?.quantity : 1}
         className="ml-2 pt-2"
         handleCounter={handleChangeQuantity}
+        disabled={!selectedMenu?.name}
       />
       <Divider className="divider-horizontal" />
       <div className="flex flex-col gap-2 justify-center pt-2">
@@ -55,6 +54,7 @@ const FooterAction = () => {
           id={selectedMenu?._id}
           isTakeAway={selectedMenu?.is_take_away}
           handleIsTakeAway={handleIsTakeAway}
+          disabled={!selectedMenu?.name}
         />
         {/* Catatan */}
         <CardMenu.Notes
@@ -66,12 +66,14 @@ const FooterAction = () => {
           } Catatan`}
           title="Catatan"
           btnClassName="btn-sm btn-outline"
+          disabled={!selectedMenu?.name}
         />
       </div>
       <Divider className="divider-horizontal" />
       <div className="flex items-center pt-2">
         <Button
           className="bg-accent text-secondary"
+          disabled={!selectedMenu?.name}
           onClick={() => console.log({ selectedMenu })}
         >
           Tambah
