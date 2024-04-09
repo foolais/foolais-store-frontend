@@ -37,7 +37,11 @@ const CardMenuLayout = () => {
                   src="https://picsum.photos/200"
                   alt={item.name}
                 />
-                <div className="card-body over">
+                <div
+                  className={`card-body ${
+                    item.is_selected && "bg-accent text-secondary"
+                  }`}
+                >
                   <CardMenu.Title title={item.name} className="font-semibold" />
                   <CardMenu.Price price={item.price} className="text-lg" />
                 </div>
