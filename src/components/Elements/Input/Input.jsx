@@ -6,6 +6,7 @@ const Input = (props) => {
     name,
     autoComplete = "off",
     className,
+    ...rest
   } = props;
   return (
     <input
@@ -15,6 +16,7 @@ const Input = (props) => {
       name={name}
       autoComplete={autoComplete}
       className={className}
+      {...rest}
     />
   );
 };
