@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const ErrorPage = () => {
+const ErrorPages = () => {
   return (
     <div className="w-screen h-screen bg-accent grid justify-items-center content-center text-secondary">
       <h1 className="font-extralight text-9xl tracking-widest font mb-5">
@@ -16,4 +16,4 @@ const ErrorPage = () => {
   );
 };
 
-export default ErrorPage;
+export default ErrorPages;

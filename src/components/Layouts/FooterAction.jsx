@@ -1,6 +1,6 @@
 import Counter from "../Fragments/Counter";
 import Divider from "../Elements/Divider/Divider";
-import CardMenu from "../Fragments/CardMenu";
+import Card from "../Fragments/Card";
 import Button from "../Elements/Button/Button";
 import { AiOutlineRight } from "react-icons/ai";
 import { getMenuData, resetSelectedMenu } from "../../redux/slice/menuSlice";
@@ -69,14 +69,14 @@ const FooterAction = () => {
       <Divider className="divider-horizontal ml-0.5 mr-0.5" />
       <div className="flex flex-col gap-2 justify-center pt-2">
         {/* Tipe */}
-        <CardMenu.Type
+        <Card.Type
           id={selectedMenu?._id}
           isTakeAway={selectedMenu?.is_take_away}
           handleIsTakeAway={handleIsTakeAway}
           disabled={!selectedMenu?.name}
         />
         {/* Catatan */}
-        <CardMenu.Notes
+        <Card.Notes
           data={selectedMenu?.notes}
           textButton={`${
             selectedMenu?.notes && selectedMenu?.notes.length > 1

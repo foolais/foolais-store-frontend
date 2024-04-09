@@ -1,6 +1,5 @@
-import CardMenu from "../Fragments/CardMenu";
+import Card from "../Fragments/Card";
 import { useEffect } from "react";
-// import Button from "../Elements/Button/Button";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -13,7 +12,7 @@ import { getSearchData } from "../../redux/slice/searchBarSlice";
 const CardMenuLayout = () => {
   const dispatch = useDispatch();
 
-  const [menu, setMenu] = useState();
+  const [menu, setMenu] = useState(null);
   const dataMenu = useSelector(getMenuData);
   const statusMenu = useSelector(getMenuStatus);
   const searchData = useSelector(getSearchData);
@@ -41,24 +40,20 @@ const CardMenuLayout = () => {
         {menu && menu.length > 0 ? (
           menu.map((item) => {
             return (
-              <CardMenu
+              <Card
                 key={item._id}
                 onClick={() => dispatch(handleSelectedMenu(item._id))}
                 className="cursor-pointer hover:scale-105 duration-300"
               >
-                <CardMenu.Figure
-                  src="https://picsum.photos/200"
-                  alt={item.name}
-                />
                 <div
                   className={`card-body ${
                     item.is_selected && "bg-accent text-secondary"
                   }`}
                 >
-                  <CardMenu.Title title={item.name} className="font-semibold" />
-                  <CardMenu.Price price={item.price} className="text-lg" />
+                  <Card.Title title={item.name} className="font-semibold" />
+                  <Card.Price price={item.price} className="text-lg" />
                 </div>
-              </CardMenu>
+              </Card>
             );
           })
         ) : (

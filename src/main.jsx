@@ -4,13 +4,15 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import HomePage from "./pages/HomePage";
-import MenuPage from "./pages/MenuPage";
-import ErrorPage from "./pages/ErrorPage";
+import HomePages from "./pages/HomePages";
+import MenuPages from "./pages/MenuPages";
+import ErrorPages from "./pages/ErrorPages";
+import TablePages from "./pages/TablePages";
 
 const router = createBrowserRouter([
-  { path: "/", element: <HomePage />, errorElement: <ErrorPage /> },
-  { path: "/menu", element: <MenuPage /> },
+  { path: "/", element: <HomePages />, errorElement: <ErrorPages /> },
+  { path: "/menu", element: <MenuPages /> },
+  { path: "/meja", element: <TablePages /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

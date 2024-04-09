@@ -1,6 +1,6 @@
 import MainLayout from "../components/Layouts/MainLayout";
 
-const HomePage = () => {
+const HomePages = () => {
   return (
     <MainLayout>
       <h1 className="text-neutral">Homepage</h1>
@@ -8,4 +8,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default HomePages;
