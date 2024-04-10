@@ -14,9 +14,6 @@ const FooterCartAction = ({ onClick }) => {
       0
     );
 
-    console.log(typeof totalPrice);
-    console.log({ totalPrice });
-
     return formatRupiah(totalPrice);
   };
 

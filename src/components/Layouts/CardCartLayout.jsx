@@ -3,11 +3,12 @@ import {
   getCartData,
   getCartStatus,
   handleChangeNotes,
+  handleRemoveCart,
 } from "../../redux/slice/cartSlice";
 import { useState, useEffect } from "react";
 import Card from "../Fragments/Card";
 import Button from "../Elements/Button/Button";
-import { AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
 const CardCartLayout = () => {
   const dispatch = useDispatch();
@@ -29,19 +30,32 @@ const CardCartLayout = () => {
     dispatch(handleChangeNotes({ _id, is_take_away, notes }));
   };
 
+  const onRemoveCart = ({ _id, is_take_away }) => {
+    dispatch(handleRemoveCart({ _id, is_take_away }));
+  };
+
   return (
     <div className="w-full h-auto">
       <div className="flex items-center justify-around lg:justify-between flex-wrap gap-8">
         {cart && cart.length > 0 ? (
           cart.map((item) => {
             return (
-              <Card key={item._id}>
+              <Card key={`${item._id}-${item.is_take_away}`}>
                 <div className="card-body">
-                  {/* Judul */}
-                  <Card.Title
-                    title={`x${item.quantity} ${item.name}`}
-                    className="font-semibold"
-                  />
+                  {/* HEADER */}
+                  <div className="flex items-start justify-between">
+                    {/* Judul */}
+                    <Card.Title
+                      title={`x${item.quantity} ${item.name}`}
+                      className="font-semibold"
+                    />
+                    <Button
+                      className="btn-circle btn-outline btn-sm btn-error"
+                      onClick={() => onRemoveCart(item._id, item.quantity)}
+                    >
+                      <AiOutlineDelete />
+                    </Button>
+                  </div>
                   {/* Tipe Makan */}
                   <p>
                     {item.is_take_away ? "Dibawa Pulang" : "Makan Ditempat"}

@@ -53,6 +53,12 @@ const cartSlice = createSlice({
 
       state.totalPrice = totalPrice;
     },
+    handleRemoveCart: (state, action) => {
+      const { _id, is_take_away } = action.payload;
+      const { existingCartIndex } = getExistingCart(_id, is_take_away, state);
+
+      state.data.splice(existingCartIndex, 1);
+    },
   },
 });
 
@@ -60,6 +66,7 @@ export const getCartData = (state) => state.cart.data;
 export const getCartStatus = (state) => state.cart.status;
 export const getCartError = (state) => state.cart.error;
 
-export const { handleAddToCart, handleChangeNotes } = cartSlice.actions;
+export const { handleAddToCart, handleChangeNotes, handleRemoveCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;
