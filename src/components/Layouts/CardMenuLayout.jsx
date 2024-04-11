@@ -85,7 +85,7 @@ const CardMenuLayout = () => {
                 onClick={() =>
                   isValidateMenu(item) && dispatch(handleSelectedMenu(item._id))
                 }
-                className="cursor-pointer hover:scale-105 duration-300 min-h-28 max-h-28"
+                className="cursor-pointer hover:scale-105 duration-300 min-h-32 max-h-32"
               >
                 <div
                   className={`card-body ${
@@ -94,7 +94,10 @@ const CardMenuLayout = () => {
                 >
                   <div className="flex items-start justify-between">
                     {/* Nama Menu */}
-                    <Card.Title title={item.name} className="font-semibold" />
+                    <Card.Title
+                      title={item.name}
+                      className="font-semibold max-w-[80%]"
+                    />
                     {/* Button Delete */}
                     <Button
                       className="btn-circle btn-outline btn-sm btn-error absolute right-4"
@@ -103,16 +106,16 @@ const CardMenuLayout = () => {
                       <AiOutlineDelete />
                     </Button>
                   </div>
-                  <Card.Price price={item.price} className="text-lg" />
+                  <Card.Price price={item.price} className="text-lg " />
                 </div>
               </Card>
             );
           })}
         <CardAddNew
           title="Tambah Menu Baru"
-          cardClassName="min-h-28 max-h-28"
+          cardClassName="min-h-32 max-h-32"
           titleClassName="font-semibold mt-4"
-          actionClassName="mt-2"
+          actionClassName="mt-4"
           btnOnClick={() => handleModal(true)}
         />
         <Modal
