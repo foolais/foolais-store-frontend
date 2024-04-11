@@ -38,14 +38,14 @@ const Notes = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleModal = (type) => {
-    setShowModal(type === "open" ? true : false);
+    setShowModal(type);
   };
 
   return (
     <>
       <Button
         className={btnClassName}
-        onClick={() => handleModal("open")}
+        onClick={() => handleModal(true)}
         disabled={disabled}
       >
         {textButton}
@@ -55,7 +55,7 @@ const Notes = (props) => {
         title={title}
         btnClassName={btnClassName}
         showModal={showModal}
-        closeModal={() => handleModal("close")}
+        closeModal={() => handleModal(false)}
       >
         <form className=" flex flex-col gap-4 w-4/5" onSubmit={onSubmit}>
           <TextArea
@@ -63,7 +63,7 @@ const Notes = (props) => {
             className="textarea textarea-bordered textarea-md"
             defaultValue={data}
           />
-          <Button className="btn-sm btn-neutral w-1/2 ">Simpan</Button>
+          <Button className="btn-sm btn-accent w-1/2 ">Simpan</Button>
         </form>
       </Modal>
     </>
