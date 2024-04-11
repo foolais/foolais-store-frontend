@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   getMenuData,
   getMenuStatus,
+  handleAddMenu,
   handleSelectedMenu,
 } from "../../redux/slice/menuSlice";
 import { getSearchData } from "../../redux/slice/searchBarSlice";
@@ -20,6 +21,7 @@ const CardMenuLayout = () => {
 
   const dataMenu = useSelector(getMenuData);
   const statusMenu = useSelector(getMenuStatus);
+
   const searchData = useSelector(getSearchData);
 
   useEffect(() => {
@@ -43,18 +45,25 @@ const CardMenuLayout = () => {
     setAddMenuModal(type);
   };
 
-  const handleAddMenu = (event) => {
+  const onAddMenu = (event) => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-    console.log({ data });
+
+    dispatch(handleAddMenu(data));
   };
 
   return (
     <div className="w-full h-auto">
-      <div className="flex items-center justify-around sm:justify-between flex-wrap gap-8">
-        {menu && menu.length > 0 ? (
+      <div className="flex items-center justify-around flex-wrap gap-8">
+        {searchData && menu && menu.length === 0 && (
+          <div className="w-full flex items-center justify-center text-neutral p-4 font-semibold">
+            {`Tidak Ada Menu Untuk "${searchData}" `}
+          </div>
+        )}
+        {menu &&
+          menu.length > 0 &&
           menu.map((item) => {
             return (
               <Card
@@ -72,12 +81,7 @@ const CardMenuLayout = () => {
                 </div>
               </Card>
             );
-          })
-        ) : (
-          <div className="w-full flex items-center justify-center text-neutral p-4 font-semibold">
-            {`Tidak Ada Menu Untuk "${searchData}" `}
-          </div>
-        )}
+          })}
         <CardAddNew
           title="Tambah Menu Baru"
           cardClassName="min-h-28 max-h-28"
@@ -91,7 +95,7 @@ const CardMenuLayout = () => {
           showModal={addMenuModal}
           closeModal={() => handleModal(false)}
         >
-          <FormMenu onSubmit={(event) => handleAddMenu(event)} />
+          <FormMenu onSubmit={(event) => onAddMenu(event)} />
         </Modal>
       </div>
     </div>

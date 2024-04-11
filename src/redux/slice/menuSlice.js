@@ -1,41 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const storedData = localStorage.getItem("menu");
+const initialData = storedData ? JSON.parse(storedData) : [];
+
 const initialState = {
-  data: [
-    {
-      _id: 1,
-      name: "Soto Bakso Daging",
-      price: 9000,
-      quantity: 1,
-      is_take_away: false,
-      is_available: true,
-      is_selected: false,
-      category: "Food",
-      notes: "hello",
-    },
-    {
-      _id: 2,
-      name: "Bakso",
-      price: 10000,
-      quantity: 1,
-      is_take_away: false,
-      is_available: true,
-      is_selected: false,
-      category: "Food",
-      notes: "hello",
-    },
-    {
-      _id: 3,
-      name: "Mie Ayam Bakso",
-      price: 8000,
-      quantity: 1,
-      is_take_away: false,
-      is_available: true,
-      is_selected: false,
-      category: "Food",
-      notes: "",
-    },
-  ],
+  data: initialData,
   status: "idle",
   error: null,
 };
@@ -70,6 +39,40 @@ const menuSlice = createSlice({
         menu.is_selected = false;
       });
     },
+    handleAddMenu: (state, action) => {
+      const newData = action.payload;
+      const isExistingMenu = state.data.some(
+        (menu) => menu.name.toLowerCase() === newData.name.toLowerCase()
+      );
+
+      if (isExistingMenu)
+        return {
+          ...state,
+          status: "failed",
+          error: "Menu sudah ada",
+        };
+
+      // add default field
+      const newMenu = {
+        ...newData,
+        price: +newData.price,
+        is_take_away: false,
+        is_available: true,
+        is_selected: false,
+        notes: "",
+        _id: state.data.length + 1,
+      };
+
+      // Update localStorage
+      const updatedMenu = [...state.data, newMenu];
+      localStorage.setItem("menu", JSON.stringify(updatedMenu));
+
+      return {
+        data: updatedMenu,
+        status: "idle",
+        error: null,
+      };
+    },
   },
 });
 
@@ -77,6 +80,7 @@ export const getMenuData = (state) => state.menu.data;
 export const getMenuStatus = (state) => state.menu.status;
 export const getMenuError = (state) => state.menu.error;
 
-export const { handleSelectedMenu, resetSelectedMenu } = menuSlice.actions;
+export const { handleSelectedMenu, resetSelectedMenu, handleAddMenu } =
+  menuSlice.actions;
 
 export default menuSlice.reducer;
