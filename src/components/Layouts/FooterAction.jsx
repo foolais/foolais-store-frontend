@@ -69,8 +69,8 @@ const FooterAction = () => {
     const newMenu = {
       ...data,
       price: +data.price,
-      is_take_away: !!data.is_take_away,
-      is_available: !!data.is_available,
+      is_take_away: eval(data.is_take_away),
+      is_available: eval(data.is_available),
       quantity: 1,
       notes: data.notes || "",
       _id: id,
@@ -91,8 +91,8 @@ const FooterAction = () => {
       menu?.name &&
       menu?.price &&
       menu?.category &&
-      menu?.is_take_away &&
-      menu?.is_available
+      menu?.is_take_away !== undefined &&
+      menu?.is_available !== undefined
     );
   };
 
@@ -154,6 +154,7 @@ const FooterAction = () => {
         </Button>
       </div>
       <Modal
+        key={selectedMenu?._id}
         title={`Ubah Menu ${selectedMenu?.name}`}
         showModal={updateMenuModal}
         closeModal={() => setUpdateMenuModal(false)}

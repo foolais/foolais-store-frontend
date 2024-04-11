@@ -80,8 +80,6 @@ const menuSlice = createSlice({
       const _id = action.payload;
       const { existingMenuIndex } = getExistingMenu(_id, state);
 
-      console.log({ existingMenuIndex });
-
       // saat ada data id yang sama
       if (existingMenuIndex !== -1) {
         state.data.splice(existingMenuIndex, 1);

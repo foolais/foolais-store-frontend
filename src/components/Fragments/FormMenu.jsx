@@ -8,8 +8,8 @@ const FormMenu = (props) => {
   const { onSubmit, isEdit = false, btnText, defaultValue } = props;
 
   const typeData = [
-    { text: "Makan Ditempat", value: true },
-    { text: "Bawa Pulang", value: false },
+    { text: "Makan Ditempat", value: false },
+    { text: "Bawa Pulang", value: true },
   ];
 
   const statusData = [
