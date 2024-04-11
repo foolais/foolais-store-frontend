@@ -5,7 +5,17 @@ import TextArea from "../Elements/Input/TextArea";
 
 /* eslint-disable react/prop-types */
 const FormMenu = (props) => {
-  const { onSubmit } = props;
+  const { onSubmit, isEdit = false, btnText, defaultValue } = props;
+
+  const typeData = [
+    { text: "Makan Ditempat", value: true },
+    { text: "Bawa Pulang", value: false },
+  ];
+
+  const statusData = [
+    { text: "Tersedia", value: true },
+    { text: "Habis", value: false },
+  ];
 
   const categoryData = [
     { text: "Makanan", value: "food" },
@@ -20,6 +30,7 @@ const FormMenu = (props) => {
         name="name"
         placeholder="Masukkan Nama"
         isInput={true}
+        defaultValue={defaultValue?.name}
       />
       <FormInput
         title="Harga"
@@ -27,14 +38,41 @@ const FormMenu = (props) => {
         name="price"
         placeholder="Masukkan Harga"
         isInput={true}
+        defaultValue={defaultValue?.price}
       />
       <FormInput
         title="Kategori"
         data={categoryData}
         name="category"
         isSelect={true}
+        defaultValue={defaultValue?.category}
       />
-      <Button className="bg-accent my-4">Tambah Menu</Button>
+      {isEdit && (
+        <>
+          <FormInput
+            title="Tipe Makan"
+            data={typeData}
+            name="is_take_away"
+            isSelect={true}
+            defaultValue={defaultValue?.is_take_away}
+          />
+          <FormInput
+            title="Status"
+            data={statusData}
+            name="is_available"
+            isSelect={true}
+            defaultValue={defaultValue?.is_available}
+          />
+          <FormInput
+            title="Catatan"
+            placeholder="Masukkan Catatan"
+            name="notes"
+            isTextArea={true}
+            defaultValue={defaultValue?.notes || "-"}
+          />
+        </>
+      )}
+      <Button className="bg-accent my-4">{btnText}</Button>
     </form>
   );
 };
@@ -47,6 +85,7 @@ const FormInput = (props) => {
     isInput = false,
     isTextArea = false,
     isSelect = false,
+    defaultValue = null,
   } = props;
 
   const type = props?.type;
@@ -64,6 +103,7 @@ const FormInput = (props) => {
           className="textarea textarea-bordered"
           placeholder={placeholder}
           required={required}
+          defaultValue={defaultValue}
         />
       )}
       {isInput && (
@@ -73,6 +113,7 @@ const FormInput = (props) => {
           className="input input-bordered w-full "
           placeholder={placeholder}
           required={required}
+          defaultValue={defaultValue}
         />
       )}
       {isSelect && (
@@ -81,6 +122,7 @@ const FormInput = (props) => {
           className=" select-bordered "
           data={data}
           required={required}
+          defaultValue={defaultValue}
         />
       )}
     </label>

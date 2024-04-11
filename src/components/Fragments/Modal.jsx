@@ -7,7 +7,7 @@ const Modal = (props) => {
   return (
     <>
       <dialog className={`modal z-[1] ${showModal && "modal-open"}`}>
-        <div className="modal-box ml-8">
+        <div className="modal-box ml-8 max-h-[80vh]">
           <form method="dialog">
             <Button
               className="btn-sm btn-circle btn-ghost absolute right-2 top-2"

@@ -44,10 +44,6 @@ const CardMenuLayout = () => {
     }
   }, [searchData, dataMenu]);
 
-  const handleModal = (type) => {
-    setAddMenuModal(type);
-  };
-
   const onAddMenu = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -116,15 +112,17 @@ const CardMenuLayout = () => {
           cardClassName="min-h-32 max-h-32"
           titleClassName="font-semibold mt-4"
           actionClassName="mt-4"
-          btnOnClick={() => handleModal(true)}
+          btnOnClick={() => setAddMenuModal(true)}
         />
         <Modal
-          textButton="Tambah"
           title="Tambah Menu Baru"
           showModal={addMenuModal}
-          closeModal={() => handleModal(false)}
+          closeModal={() => setAddMenuModal(false)}
         >
-          <FormMenu onSubmit={(event) => onAddMenu(event)} />
+          <FormMenu
+            onSubmit={(event) => onAddMenu(event)}
+            btnText="Tambah Menu"
+          />
         </Modal>
       </div>
     </div>

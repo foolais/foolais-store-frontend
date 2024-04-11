@@ -89,6 +89,16 @@ const menuSlice = createSlice({
         localStorage.setItem("menu", JSON.stringify(state.data));
       }
     },
+    handleUpdateMenu: (state, action) => {
+      const { _id } = action.payload;
+      const { existingMenuIndex } = getExistingMenu(_id, state);
+
+      if (existingMenuIndex !== -1) {
+        state.data[existingMenuIndex] = action.payload;
+        // update local storage
+        localStorage.setItem("menu", JSON.stringify(state.data));
+      }
+    },
   },
 });
 
@@ -101,6 +111,7 @@ export const {
   resetSelectedMenu,
   handleAddMenu,
   handleDeleteMenu,
+  handleUpdateMenu,
 } = menuSlice.actions;
 
 export default menuSlice.reducer;
