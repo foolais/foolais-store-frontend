@@ -58,7 +58,10 @@ const cartSlice = createSlice({
       const { _id, is_take_away } = action.payload;
       const { existingCartIndex } = getExistingCart(_id, is_take_away, state);
 
-      state.data.splice(existingCartIndex, 1);
+      // saat ada data id dan is_take_away yang sama
+      if (existingCartIndex !== -1) {
+        state.data.splice(existingCartIndex, 1);
+      }
     },
   },
 });

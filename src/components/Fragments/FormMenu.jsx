@@ -7,11 +7,6 @@ import TextArea from "../Elements/Input/TextArea";
 const FormMenu = (props) => {
   const { onSubmit } = props;
 
-  // const typeData = [
-  //   { text: "Makan Ditempat", value: "dine_in" },
-  //   { text: "Bawa Pulang", value: "take_away" },
-  // ];
-
   const categoryData = [
     { text: "Makanan", value: "food" },
     { text: "Minuman", value: "drink" },
@@ -33,18 +28,6 @@ const FormMenu = (props) => {
         placeholder="Masukkan Harga"
         isInput={true}
       />
-      <FormInput
-        title="Catatan"
-        name="notes"
-        placeholder="Masukkan Catatan"
-        isTextArea={true}
-      />
-      {/* <FormInput
-        title="Cara Makan"
-        data={typeData}
-        name="notes"
-        isSelect={true}
-      /> */}
       <FormInput
         title="Kategori"
         data={categoryData}

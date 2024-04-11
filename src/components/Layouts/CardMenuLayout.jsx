@@ -7,11 +7,14 @@ import {
   getMenuStatus,
   handleAddMenu,
   handleSelectedMenu,
+  handleDeleteMenu,
 } from "../../redux/slice/menuSlice";
 import { getSearchData } from "../../redux/slice/searchBarSlice";
 import CardAddNew from "../Fragments/CardAddNew";
 import Modal from "../Fragments/Modal";
 import FormMenu from "../Fragments/FormMenu";
+import Button from "../Elements/Button/Button";
+import { AiOutlineDelete } from "react-icons/ai";
 
 const CardMenuLayout = () => {
   const dispatch = useDispatch();
@@ -51,7 +54,18 @@ const CardMenuLayout = () => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    dispatch(handleAddMenu(data));
+    const validate = isValidateMenu(data);
+
+    if (validate) {
+      dispatch(handleAddMenu(data));
+      setAddMenuModal(false);
+    } else {
+      alert("Data tidak boleh ada yang kosong");
+    }
+  };
+
+  const isValidateMenu = (menu) => {
+    return menu?.name && menu?.price && menu?.category;
   };
 
   return (
@@ -68,7 +82,9 @@ const CardMenuLayout = () => {
             return (
               <Card
                 key={item._id}
-                onClick={() => dispatch(handleSelectedMenu(item._id))}
+                onClick={() =>
+                  isValidateMenu(item) && dispatch(handleSelectedMenu(item._id))
+                }
                 className="cursor-pointer hover:scale-105 duration-300 min-h-28 max-h-28"
               >
                 <div
@@ -76,7 +92,17 @@ const CardMenuLayout = () => {
                     item.is_selected && "bg-accent text-secondary"
                   }`}
                 >
-                  <Card.Title title={item.name} className="font-semibold" />
+                  <div className="flex items-start justify-between">
+                    {/* Nama Menu */}
+                    <Card.Title title={item.name} className="font-semibold" />
+                    {/* Button Delete */}
+                    <Button
+                      className="btn-circle btn-outline btn-sm btn-error absolute right-4"
+                      onClick={() => dispatch(handleDeleteMenu(item._id))}
+                    >
+                      <AiOutlineDelete />
+                    </Button>
+                  </div>
                   <Card.Price price={item.price} className="text-lg" />
                 </div>
               </Card>

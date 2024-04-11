@@ -24,6 +24,8 @@ const menuSlice = createSlice({
       const id = action.payload;
       const { existingMenu } = getExistingMenu(id, state);
 
+      if (!existingMenu?.name) return;
+
       if (existingMenu === -1) return;
 
       state.data.forEach((menu) => {
@@ -59,6 +61,7 @@ const menuSlice = createSlice({
         is_take_away: false,
         is_available: true,
         is_selected: false,
+        quantity: 1,
         notes: "",
         _id: state.data.length + 1,
       };
@@ -73,6 +76,19 @@ const menuSlice = createSlice({
         error: null,
       };
     },
+    handleDeleteMenu: (state, action) => {
+      const _id = action.payload;
+      const { existingMenuIndex } = getExistingMenu(_id, state);
+
+      console.log({ existingMenuIndex });
+
+      // saat ada data id yang sama
+      if (existingMenuIndex !== -1) {
+        state.data.splice(existingMenuIndex, 1);
+        // update local storage
+        localStorage.setItem("menu", JSON.stringify(state.data));
+      }
+    },
   },
 });
 
@@ -80,7 +96,11 @@ export const getMenuData = (state) => state.menu.data;
 export const getMenuStatus = (state) => state.menu.status;
 export const getMenuError = (state) => state.menu.error;
 
-export const { handleSelectedMenu, resetSelectedMenu, handleAddMenu } =
-  menuSlice.actions;
+export const {
+  handleSelectedMenu,
+  resetSelectedMenu,
+  handleAddMenu,
+  handleDeleteMenu,
+} = menuSlice.actions;
 
 export default menuSlice.reducer;
