@@ -31,7 +31,8 @@ const cartSlice = createSlice({
       if (existingCartIndex !== -1) {
         existingCart.quantity += quantity;
       } else {
-        state.data.push(action.payload);
+        const newCart = { ...action.payload, quantity: quantity || 1 };
+        state.data.push(newCart);
       }
 
       const text =
