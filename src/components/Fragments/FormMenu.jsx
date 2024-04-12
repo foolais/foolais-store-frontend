@@ -1,7 +1,5 @@
 import Button from "../Elements/Button/Button";
-import Input from "../Elements/Input/Input";
-import Select from "../Elements/Input/Select";
-import TextArea from "../Elements/Input/TextArea";
+import FormInput from "../Fragments/Form/FormInput";
 
 /* eslint-disable react/prop-types */
 const FormMenu = (props) => {
@@ -74,58 +72,6 @@ const FormMenu = (props) => {
       )}
       <Button className="bg-accent my-4">{btnText}</Button>
     </form>
-  );
-};
-
-const FormInput = (props) => {
-  const {
-    title,
-    name,
-    required,
-    isInput = false,
-    isTextArea = false,
-    isSelect = false,
-    defaultValue = null,
-  } = props;
-
-  const type = props?.type;
-  const data = props?.data;
-  const placeholder = props?.placeholder;
-
-  return (
-    <label className="form-control w-full">
-      <div className="label">
-        <span className="label-text font-semibold">{title}</span>
-      </div>
-      {isTextArea && (
-        <TextArea
-          name={name}
-          className="textarea textarea-bordered"
-          placeholder={placeholder}
-          required={required}
-          defaultValue={defaultValue}
-        />
-      )}
-      {isInput && (
-        <Input
-          type={type}
-          name={name}
-          className="input input-bordered w-full "
-          placeholder={placeholder}
-          required={required}
-          defaultValue={defaultValue}
-        />
-      )}
-      {isSelect && (
-        <Select
-          name={name}
-          className=" select-bordered "
-          data={data}
-          required={required}
-          defaultValue={defaultValue}
-        />
-      )}
-    </label>
   );
 };
 
