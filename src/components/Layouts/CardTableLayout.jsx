@@ -14,6 +14,11 @@ import BadgeStatus from "../Fragments/BadgeStatus";
 import CardAddNew from "../Fragments/CardAddNew";
 import Modal from "../Fragments/Modal";
 import FormTable from "../Fragments/Form/FormTable";
+import {
+  exitConfirmationDialog,
+  showConfirmationDialog,
+  warningDialog,
+} from "../../utils/utils";
 
 const CardTableLayout = () => {
   const [table, setTable] = useState(null);
@@ -105,7 +110,7 @@ const CardTableLayout = () => {
       dispatch(handleAddTable(data));
       setAddTableModal(false);
     } else {
-      alert("Tidak boleh ada data yang kosong");
+      warningDialog("Tidak boleh ada data yang kosong");
     }
   };
 
@@ -128,6 +133,24 @@ const CardTableLayout = () => {
     } else {
       alert("Tidak boleh ada data yang kosong");
     }
+  };
+
+  // Delete Table Card
+  const onDeleteTable = ({ _id, name }) => {
+    const title = `Apakah anda yakin ingin menghapus meja ${name}?`;
+    const successTitle = `Meja ${name} telah dihapus`;
+    showConfirmationDialog(title, successTitle, (isConfirmed) => {
+      isConfirmed && dispatch(handleDeleteTable(_id));
+    });
+  };
+
+  const onCloseModal = (type) => {
+    exitConfirmationDialog((isConfirmed) => {
+      if (isConfirmed) {
+        if (type === "ADD") setAddTableModal(false);
+        if (type === "UPDATE") setEditTableModal(false);
+      }
+    });
   };
 
   return (
@@ -177,7 +200,7 @@ const CardTableLayout = () => {
                     {/* Button Delete */}
                     <Button
                       className="btn-circle btn-outline btn-sm btn-error absolute right-4"
-                      onClick={() => dispatch(handleDeleteTable(item._id))}
+                      onClick={() => onDeleteTable(item)}
                     >
                       <AiOutlineDelete />
                     </Button>
@@ -217,7 +240,7 @@ const CardTableLayout = () => {
         <Modal
           title="Tambah Meja Baru"
           showModal={addTableModal}
-          closeModal={() => setAddTableModal(false)}
+          closeModal={() => onCloseModal("ADD")}
         >
           <FormTable
             onSubmit={(event) => onAddTable(event)}
@@ -229,7 +252,7 @@ const CardTableLayout = () => {
           key={selectedTable?._id}
           title={`Ubah Meja ${selectedTable?.name}`}
           showModal={editTableModal}
-          closeModal={() => setEditTableModal(false)}
+          closeModal={() => onCloseModal("UPDATE")}
         >
           <FormTable
             onSubmit={(event) => onUpdateTable(event)}

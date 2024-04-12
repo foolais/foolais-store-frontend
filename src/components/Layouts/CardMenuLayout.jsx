@@ -15,6 +15,11 @@ import Modal from "../Fragments/Modal";
 import FormMenu from "../Fragments/FormMenu";
 import Button from "../Elements/Button/Button";
 import { AiOutlineDelete } from "react-icons/ai";
+import {
+  exitConfirmationDialog,
+  showConfirmationDialog,
+  warningDialog,
+} from "../../utils/utils";
 
 const CardMenuLayout = () => {
   const dispatch = useDispatch();
@@ -56,12 +61,26 @@ const CardMenuLayout = () => {
       dispatch(handleAddMenu(data));
       setAddMenuModal(false);
     } else {
-      alert("Tidak boleh ada data yang kosong");
+      warningDialog("Tidak boleh ada data yang kosong");
     }
   };
 
   const isValidateMenu = (menu) => {
     return menu?.name && menu?.price && menu?.category;
+  };
+
+  const onDeleteMenu = ({ _id, name }) => {
+    const title = `Apakah anda yakin ingin menghapus menu ${name}?`;
+    const successTitle = `Menu ${name} telah dihapus`;
+    showConfirmationDialog(title, successTitle, (isConfirmed) => {
+      isConfirmed && dispatch(handleDeleteMenu(_id));
+    });
+  };
+
+  const onCloseModal = () => {
+    exitConfirmationDialog((isConfirmed) => {
+      isConfirmed && setAddMenuModal(false);
+    });
   };
 
   return (
@@ -97,7 +116,7 @@ const CardMenuLayout = () => {
                     {/* Button Delete */}
                     <Button
                       className="btn-circle btn-outline btn-sm btn-error absolute right-4"
-                      onClick={() => dispatch(handleDeleteMenu(item._id))}
+                      onClick={() => onDeleteMenu(item)}
                     >
                       <AiOutlineDelete />
                     </Button>
@@ -117,7 +136,7 @@ const CardMenuLayout = () => {
         <Modal
           title="Tambah Menu Baru"
           showModal={addMenuModal}
-          closeModal={() => setAddMenuModal(false)}
+          closeModal={() => onCloseModal()}
         >
           <FormMenu
             onSubmit={(event) => onAddMenu(event)}

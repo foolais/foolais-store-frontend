@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import Modal from "../Fragments/Modal";
 import FormMenu from "../Fragments/FormMenu";
+import { exitConfirmationDialog } from "../../utils/utils";
 
 const FooterAction = () => {
   const dispatch = useDispatch();
@@ -96,6 +97,12 @@ const FooterAction = () => {
     );
   };
 
+  const onCloseModal = () => {
+    exitConfirmationDialog((isConfirmed) => {
+      isConfirmed && setUpdateMenuModal(false);
+    });
+  };
+
   return (
     <div className="fixed bottom-0 right-0 left-0 h-[7.5rem] bg-neutral ml-16 flex">
       {/* Title Name */}
@@ -157,7 +164,7 @@ const FooterAction = () => {
         key={selectedMenu?._id}
         title={`Ubah Menu ${selectedMenu?.name}`}
         showModal={updateMenuModal}
-        closeModal={() => setUpdateMenuModal(false)}
+        closeModal={() => onCloseModal()}
       >
         <FormMenu
           isEdit={true}
