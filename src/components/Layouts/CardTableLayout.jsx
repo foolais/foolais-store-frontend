@@ -3,12 +3,13 @@ import {
   getTableData,
   getTableStatus,
   handleAddTable,
+  handleDeleteTable,
   handleUpdateTable,
 } from "../../redux/slice/tableSlice";
 import { useState, useEffect } from "react";
 import Card from "../Fragments/Card";
 import Button from "../Elements/Button/Button";
-import { AiOutlineRight, AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineRight, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import BadgeStatus from "../Fragments/BadgeStatus";
 import CardAddNew from "../Fragments/CardAddNew";
 import Modal from "../Fragments/Modal";
@@ -46,10 +47,53 @@ const CardTableLayout = () => {
     { text: "Selesai", color: "accent" },
   ];
 
+  const setStatus = (status) => {
+    switch (status) {
+      case "empty":
+        return "Kosong";
+      case "waiting":
+        return "Menunggu";
+      case "eating":
+        return "Makan";
+      case "finished":
+        return "Selesai";
+      default:
+        return "Kosong";
+    }
+  };
+
+  const setCategory = (category) => {
+    switch (category) {
+      case "regular":
+        return "Makan Ditempat";
+      case "take_away":
+        return "Bawa Pulang";
+      case "custom":
+        return "Kustom";
+      default:
+        return "Makan Ditempat";
+    }
+  };
+
   useEffect(() => {
     if (statusTable === "idle") setTable(tableData);
   }, [statusTable, tableData]);
 
+  // Validate Table
+  const isValidateTable = (table, type) => {
+    if (type === "ADD") return table?.name && table?.category;
+    if (type === "UPDATE")
+      return table?.name && table?.category && table?.status;
+    return false;
+  };
+
+  // Click Edit Table
+  const onClickEdit = (data) => {
+    setEditTableModal(true);
+    setSelectedTable(data);
+  };
+
+  // Create Table Card
   const onAddTable = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -65,18 +109,7 @@ const CardTableLayout = () => {
     }
   };
 
-  const isValidateTable = (table, type) => {
-    if (type === "ADD") return table?.name && table?.category;
-    if (type === "UPDATE")
-      return table?.name && table?.category && table?.status;
-    return false;
-  };
-
-  const onClickEdit = (data) => {
-    setEditTableModal(true);
-    setSelectedTable(data);
-  };
-
+  // Update Table Card
   const onUpdateTable = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -121,22 +154,38 @@ const CardTableLayout = () => {
               >
                 {/* Card Body */}
                 <div className="card-body">
+                  {/* TOP */}
                   <div className="flex items-start justify-between">
-                    {/* name */}
-                    <Card.Title title={item.name} className="font-semibold " />
-                    {/* Tooltip */}
-                    <div
-                      className="tooltip tooltip-left"
-                      data-tip={item.status}
-                    >
+                    <div className="flex items-center gap-3">
+                      {/* name */}
+                      <Card.Title
+                        title={item.name}
+                        className="font-semibold "
+                      />
+                      {/* Status Tooltip  */}
                       <div
-                        className={`w-4 h-4 rounded-full ${statusColor(
-                          item.status
-                        )}`}
-                      ></div>
+                        className="tooltip tooltip-right"
+                        data-tip={setStatus(item.status)}
+                      >
+                        <div
+                          className={`w-4 h-4 rounded-full ${statusColor(
+                            item.status
+                          )}`}
+                        ></div>
+                      </div>
                     </div>
+                    {/* Button Delete */}
+                    <Button
+                      className="btn-circle btn-outline btn-sm btn-error absolute right-4"
+                      onClick={() => dispatch(handleDeleteTable(item._id))}
+                    >
+                      <AiOutlineDelete />
+                    </Button>
                   </div>
-                  <p className="text-sm font-semibold mb-6">{`Kategori : ${item.category}`}</p>
+                  {/* Middle */}
+                  <p className="text-sm font-semibold mb-6">{`Tipe : ${setCategory(
+                    item.category
+                  )}`}</p>
                   {/* Button action */}
                   <div className="card-actions justify-between ">
                     <div className="tooltip tooltip-top" data-tip="Edit">

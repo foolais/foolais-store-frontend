@@ -59,6 +59,16 @@ const tableSlice = createSlice({
         localStorage.setItem("table", JSON.stringify(state.data));
       }
     },
+    handleDeleteTable: (state, action) => {
+      const _id = action.payload;
+      const { existingTableIndex } = getExistingTable(_id, state);
+
+      if (existingTableIndex !== -1) {
+        state.data.splice(existingTableIndex, 1);
+        // Update localStorage
+        localStorage.setItem("table", JSON.stringify(state.data));
+      }
+    },
   },
 });
 
@@ -66,6 +76,7 @@ export const getTableData = (state) => state.table.data;
 export const getTableStatus = (state) => state.table.status;
 export const getTableError = (state) => state.table.error;
 
-export const { handleAddTable, handleUpdateTable } = tableSlice.actions;
+export const { handleAddTable, handleUpdateTable, handleDeleteTable } =
+  tableSlice.actions;
 
 export default tableSlice.reducer;
