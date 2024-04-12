@@ -10,7 +10,7 @@ const CartPages = () => {
     { text: "Keranjang", link: "/keranjang" },
   ];
   return (
-    <MainLayout>
+    <MainLayout className="pb-[8.5rem]">
       <Title>Keranjang</Title>
       <Breadcrumbs data={data} />
       <CardCartLayout />

@@ -10,7 +10,7 @@ const MenuPages = () => {
     { text: "Menu", link: "/menu" },
   ];
   return (
-    <MainLayout>
+    <MainLayout className="pb-[8.5rem]">
       <Title>Daftar Menu</Title>
       <Breadcrumbs data={data} />
       <CardMenuLayout />
