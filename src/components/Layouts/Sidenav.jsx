@@ -34,7 +34,7 @@ const data = [
   },
   {
     id: 5,
-    title: "Antrian",
+    title: "Pesanan",
     icon: <AiOutlineOrderedList size={sizeIcon} />,
   },
   {
