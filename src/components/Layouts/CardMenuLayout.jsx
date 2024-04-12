@@ -56,7 +56,7 @@ const CardMenuLayout = () => {
       dispatch(handleAddMenu(data));
       setAddMenuModal(false);
     } else {
-      alert("Data tidak boleh ada yang kosong");
+      alert("Tidak boleh ada data yang kosong");
     }
   };
 

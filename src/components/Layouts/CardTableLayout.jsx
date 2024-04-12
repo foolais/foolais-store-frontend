@@ -1,13 +1,26 @@
-import { useSelector } from "react-redux";
-import { getTableData, getTableStatus } from "../../redux/slice/tableSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getTableData,
+  getTableStatus,
+  handleAddTable,
+  handleUpdateTable,
+} from "../../redux/slice/tableSlice";
 import { useState, useEffect } from "react";
 import Card from "../Fragments/Card";
 import Button from "../Elements/Button/Button";
 import { AiOutlineRight, AiOutlineEdit } from "react-icons/ai";
 import BadgeStatus from "../Fragments/BadgeStatus";
+import CardAddNew from "../Fragments/CardAddNew";
+import Modal from "../Fragments/Modal";
+import FormTable from "../Fragments/Form/FormTable";
 
 const CardTableLayout = () => {
   const [table, setTable] = useState(null);
+  const [addTableModal, setAddTableModal] = useState(false);
+  const [editTableModal, setEditTableModal] = useState(false);
+  const [selectedTable, setSelectedTable] = useState(null);
+
+  const dispatch = useDispatch();
   const tableData = useSelector(getTableData);
   const statusTable = useSelector(getTableStatus);
 
@@ -37,6 +50,53 @@ const CardTableLayout = () => {
     if (statusTable === "idle") setTable(tableData);
   }, [statusTable, tableData]);
 
+  const onAddTable = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    const validate = isValidateTable(data, "ADD");
+
+    if (validate) {
+      dispatch(handleAddTable(data));
+      setAddTableModal(false);
+    } else {
+      alert("Tidak boleh ada data yang kosong");
+    }
+  };
+
+  const isValidateTable = (table, type) => {
+    if (type === "ADD") return table?.name && table?.category;
+    if (type === "UPDATE")
+      return table?.name && table?.category && table?.status;
+    return false;
+  };
+
+  const onClickEdit = (data) => {
+    setEditTableModal(true);
+    setSelectedTable(data);
+  };
+
+  const onUpdateTable = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    const validate = isValidateTable(data, "UPDATE");
+
+    const newTable = {
+      ...data,
+      _id: selectedTable?._id,
+    };
+
+    if (validate) {
+      dispatch(handleUpdateTable(newTable));
+      setEditTableModal(false);
+    } else {
+      alert("Tidak boleh ada data yang kosong");
+    }
+  };
+
   return (
     <div className="w-full h-auto">
       {/* Status */}
@@ -45,8 +105,14 @@ const CardTableLayout = () => {
         <BadgeStatus data={statusData} />
       </div>
       {/* Daftar Meja */}
-      <div className="flex items-center justify-around sm:justify-between flex-wrap gap-8">
-        {table && table.length > 0 ? (
+      {table && table.length === 0 && (
+        <div className="w-full flex items-center justify-center text-neutral p-4 font-semibold">
+          Tidak ada Data Meja
+        </div>
+      )}
+      <div className="flex items-center justify-around  flex-wrap gap-8">
+        {table &&
+          table.length > 0 &&
           table.map((item) => {
             return (
               <Card
@@ -57,10 +123,7 @@ const CardTableLayout = () => {
                 <div className="card-body">
                   <div className="flex items-start justify-between">
                     {/* name */}
-                    <Card.Title
-                      title={`Meja ${item.name}`}
-                      className="font-semibold "
-                    />
+                    <Card.Title title={item.name} className="font-semibold " />
                     {/* Tooltip */}
                     <div
                       className="tooltip tooltip-left"
@@ -77,7 +140,10 @@ const CardTableLayout = () => {
                   {/* Button action */}
                   <div className="card-actions justify-between ">
                     <div className="tooltip tooltip-top" data-tip="Edit">
-                      <Button className="btn-sm btn-circle btn-ghost">
+                      <Button
+                        className="btn-sm btn-circle btn-ghost"
+                        onClick={() => onClickEdit(item)}
+                      >
                         <AiOutlineEdit size={20} />
                       </Button>
                     </div>
@@ -89,12 +155,40 @@ const CardTableLayout = () => {
                 </div>
               </Card>
             );
-          })
-        ) : (
-          <div className="w-full flex items-center justify-center text-neutral p-4 font-semibold">
-            Tidak ada Data Meja
-          </div>
-        )}
+          })}
+        {/* Add New Table Card */}
+        <CardAddNew
+          title="Tambah Meja Baru"
+          cardClassName="min-h-40 max-h-40 justify-center"
+          titleClassName="font-semibold"
+          actionClassName="mt-4"
+          btnOnClick={() => setAddTableModal(true)}
+        />
+        {/* Add New Table Modal */}
+        <Modal
+          title="Tambah Meja Baru"
+          showModal={addTableModal}
+          closeModal={() => setAddTableModal(false)}
+        >
+          <FormTable
+            onSubmit={(event) => onAddTable(event)}
+            btnText="Tambah Meja"
+          />
+        </Modal>
+        {/* Edit Table Modal */}
+        <Modal
+          key={selectedTable?._id}
+          title={`Ubah Meja ${selectedTable?.name}`}
+          showModal={editTableModal}
+          closeModal={() => setEditTableModal(false)}
+        >
+          <FormTable
+            onSubmit={(event) => onUpdateTable(event)}
+            btnText="Ubah Meja"
+            defaultValue={selectedTable}
+            isEdit={true}
+          />
+        </Modal>
       </div>
     </div>
   );
