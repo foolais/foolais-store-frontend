@@ -2,13 +2,17 @@ import Counter from "../Fragments/Counter";
 import Divider from "../Elements/Divider/Divider";
 import Card from "../Fragments/Card";
 import Button from "../Elements/Button/Button";
-import { AiOutlineRight } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineRight } from "react-icons/ai";
 import {
   getMenuData,
   handleUpdateMenu,
   resetSelectedMenu,
 } from "../../redux/slice/menuSlice";
-import { handleAddToCart } from "../../redux/slice/cartSlice";
+import {
+  getCartTable,
+  handleAddToCart,
+  handleSetTableCart,
+} from "../../redux/slice/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import Modal from "../Fragments/Modal";
@@ -18,6 +22,8 @@ import { exitConfirmationDialog } from "../../utils/utils";
 const FooterAction = () => {
   const dispatch = useDispatch();
   const dataMenu = useSelector(getMenuData);
+  const tableCart = useSelector(getCartTable);
+
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [updateMenuModal, setUpdateMenuModal] = useState(false);
 
@@ -106,8 +112,19 @@ const FooterAction = () => {
   return (
     <div className="fixed bottom-0 right-0 left-0 h-[7.5rem] bg-neutral ml-16 flex">
       {/* Title Name */}
-      <div className="absolute -top-6 left-0 bg-accent py-2 px-4 rounded-r-md text-secondary font-semibold">
-        {selectedMenu?.name || "Silahkan Pilih Menu"}
+      <div className="absolute -top-6 left-0 bg-accent py-2 px-4 rounded-r-md text-secondary font-semibold gap-4 flex items-center">
+        <p>
+          {selectedMenu?.name || "Silahkan Pilih Menu"}
+          {tableCart && " Untuk Meja " + tableCart?.name}
+        </p>
+        {tableCart && (
+          <Button
+            className="btn-circle btn-xs btn-outline"
+            onClick={() => dispatch(handleSetTableCart(null))}
+          >
+            <AiOutlineClose size={12} />
+          </Button>
+        )}
       </div>
       {/* Counter */}
       <Counter

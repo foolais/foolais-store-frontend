@@ -14,6 +14,7 @@ const initialState = {
   status: "idle",
   error: null,
   totalPrice: 0,
+  table: null,
 };
 
 const cartSlice = createSlice({
@@ -63,14 +64,22 @@ const cartSlice = createSlice({
         state.data.splice(existingCartIndex, 1);
       }
     },
+    handleSetTableCart: (state, action) => {
+      state.table = action.payload;
+    },
   },
 });
 
 export const getCartData = (state) => state.cart.data;
 export const getCartStatus = (state) => state.cart.status;
 export const getCartError = (state) => state.cart.error;
+export const getCartTable = (state) => state.cart.table;
 
-export const { handleAddToCart, handleChangeNotes, handleRemoveCart } =
-  cartSlice.actions;
+export const {
+  handleAddToCart,
+  handleChangeNotes,
+  handleRemoveCart,
+  handleSetTableCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

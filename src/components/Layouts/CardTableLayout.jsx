@@ -19,6 +19,8 @@ import {
   showConfirmationDialog,
   warningDialog,
 } from "../../utils/utils";
+import { handleSetTableCart } from "../../redux/slice/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const CardTableLayout = () => {
   const [table, setTable] = useState(null);
@@ -26,7 +28,9 @@ const CardTableLayout = () => {
   const [editTableModal, setEditTableModal] = useState(false);
   const [selectedTable, setSelectedTable] = useState(null);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const tableData = useSelector(getTableData);
   const statusTable = useSelector(getTableStatus);
 
@@ -153,6 +157,11 @@ const CardTableLayout = () => {
     });
   };
 
+  const onAddOrder = (item) => {
+    dispatch(handleSetTableCart(item));
+    navigate("/menu");
+  };
+
   return (
     <div className="w-full h-auto">
       {/* Status */}
@@ -219,7 +228,10 @@ const CardTableLayout = () => {
                         <AiOutlineEdit size={20} />
                       </Button>
                     </div>
-                    <Button className="btn-sm bg-secondary text-neutral">
+                    <Button
+                      className="btn-sm bg-secondary text-neutral"
+                      onClick={() => onAddOrder(item)}
+                    >
                       <span>Buat Pesanan</span>
                       <AiOutlineRight size={15} />
                     </Button>

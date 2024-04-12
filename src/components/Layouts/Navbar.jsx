@@ -5,8 +5,10 @@ import Divider from "../Elements/Divider/Divider";
 import SearchBar from "../Fragments/SearchBar";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const cartData = useSelector(getCartData);
   const url = window.location.href;
   const isMenuURL = url.includes("/menu");
@@ -24,7 +26,10 @@ const Navbar = () => {
             {cartData.length}
           </span>
 
-          <Button className="btn-circle btn-sm btn-outline">
+          <Button
+            onClick={() => navigate("/keranjang")}
+            className="btn-circle btn-sm btn-outline"
+          >
             <AiOutlineShoppingCart size={20} />
           </Button>
         </div>
