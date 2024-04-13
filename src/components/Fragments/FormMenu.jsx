@@ -18,6 +18,7 @@ const FormMenu = (props) => {
   const categoryData = [
     { text: "Makanan", value: "food" },
     { text: "Minuman", value: "drink" },
+    { text: "Tambahan", value: "extra" },
   ];
 
   return (

@@ -6,9 +6,13 @@ const FormTable = (props) => {
   const { onSubmit, isEdit = false, btnText, defaultValue } = props;
 
   const categoryTable = [
-    { text: "Makan Ditempat", value: "regular" },
-    { text: "Bawa Pulang", value: "take_away" },
+    { text: "Regular", value: "regular" },
     { text: "Kustom", value: "custom" },
+  ];
+
+  const typeTable = [
+    { text: "Makan Ditempat", value: "dine_in" },
+    { text: "Bawa Pulang", value: "take_away" },
   ];
 
   const statusTable = [
@@ -37,14 +41,24 @@ const FormTable = (props) => {
         defaultValue={defaultValue?.category}
       />
       {isEdit && (
-        <FormInput
-          title="Status"
-          data={statusTable}
-          name="status"
-          placeholder="Masukkan Status"
-          isSelect={true}
-          defaultValue={defaultValue?.status}
-        />
+        <>
+          <FormInput
+            title="Tipe"
+            data={typeTable}
+            name="type"
+            placeholder="Masukkan Tipe"
+            isSelect={true}
+            defaultValue={defaultValue?.type}
+          />
+          <FormInput
+            title="Status"
+            data={statusTable}
+            name="status"
+            placeholder="Masukkan Status"
+            isSelect={true}
+            defaultValue={defaultValue?.status}
+          />
+        </>
       )}
       <Button className="bg-accent my-4">{btnText}</Button>
     </form>

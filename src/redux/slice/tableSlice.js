@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { warningDialog } from "../../utils/utils";
 
 const storedData = localStorage.getItem("table");
 const initialData = storedData ? JSON.parse(storedData) : [];
@@ -26,15 +27,18 @@ const tableSlice = createSlice({
         (table) => table.name.toLowerCase() === newData.name.toLowerCase()
       );
 
-      if (isExistingTable)
+      if (isExistingTable) {
+        warningDialog(`Meja ${newData.name} Sudah Ada`);
         return {
           ...state,
           status: "failed",
           error: "Meja sudah ada",
         };
+      }
 
       const newTable = {
         ...newData,
+        type: "dine_in",
         status: "empty",
         _id: state.data.length + 1,
       };

@@ -71,14 +71,12 @@ const CardTableLayout = () => {
     }
   };
 
-  const setCategory = (category) => {
-    switch (category) {
-      case "regular":
+  const setType = (type) => {
+    switch (type) {
+      case "dine_in":
         return "Makan Ditempat";
       case "take_away":
         return "Bawa Pulang";
-      case "custom":
-        return "Kustom";
       default:
         return "Makan Ditempat";
     }
@@ -126,13 +124,13 @@ const CardTableLayout = () => {
     const data = Object.fromEntries(formData.entries());
     const validate = isValidateTable(data, "UPDATE");
 
-    const newTable = {
+    const updatedTable = {
       ...data,
       _id: selectedTable?._id,
     };
 
     if (validate) {
-      dispatch(handleUpdateTable(newTable));
+      dispatch(handleUpdateTable(updatedTable));
       setEditTableModal(false);
     } else {
       alert("Tidak boleh ada data yang kosong");
@@ -215,8 +213,8 @@ const CardTableLayout = () => {
                     </Button>
                   </div>
                   {/* Middle */}
-                  <p className="text-sm font-semibold mb-6">{`Tipe : ${setCategory(
-                    item.category
+                  <p className="text-sm font-semibold mb-6">{`Tipe : ${setType(
+                    item.type
                   )}`}</p>
                   {/* Button action */}
                   <div className="card-actions justify-between ">
