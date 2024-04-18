@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { successDialog } from "../../utils/utils";
+
+const storedData = localStorage.getItem("cart");
+const initialData = storedData ? JSON.parse(storedData) : [];
 
 const getExistingCart = (_id, is_take_away, state) => {
   const existingCartIndex = state.data.findIndex(
@@ -10,11 +14,11 @@ const getExistingCart = (_id, is_take_away, state) => {
 };
 
 const initialState = {
-  data: [],
+  data: initialData?.data || [],
   status: "idle",
   error: null,
   totalPrice: 0,
-  table: null,
+  table: initialData?.table || null,
 };
 
 const cartSlice = createSlice({
@@ -36,17 +40,27 @@ const cartSlice = createSlice({
         state.data.push(newCart);
       }
 
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({ data: state.data, table: state.table })
+      );
+
       const text =
         existingCartIndex !== -1
-          ? `Mengupdate ${existingCart.name} di Keranjang`
+          ? `Memperbarui ${existingCart.name} di Keranjang`
           : `Menambahkan ${action.payload.name} di Keranjang`;
-      console.log(text);
+      successDialog(text);
     },
     handleChangeNotes: (state, action) => {
       const { _id, is_take_away, notes } = action.payload;
       const { existingCart } = getExistingCart(_id, is_take_away, state);
 
       existingCart.notes = notes;
+
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({ data: state.data, table: state.table })
+      );
     },
     calculateTotalPrice: (state) => {
       const totalPrice = state.data.reduce((acc, item) => {
@@ -59,13 +73,25 @@ const cartSlice = createSlice({
       const { _id, is_take_away } = action.payload;
       const { existingCartIndex } = getExistingCart(_id, is_take_away, state);
 
+      console.log({ existingCartIndex });
+
       // saat ada data id dan is_take_away yang sama
       if (existingCartIndex !== -1) {
         state.data.splice(existingCartIndex, 1);
+
+        localStorage.setItem(
+          "cart",
+          JSON.stringify({ data: state.data, table: state.table })
+        );
       }
     },
+
     handleSetTableCart: (state, action) => {
       state.table = action.payload;
+    },
+    handleRemoveAllCart: (state) => {
+      state.data = [];
+      localStorage.setItem("cart", JSON.stringify({ data: [], table: null }));
     },
   },
 });
@@ -74,12 +100,14 @@ export const getCartData = (state) => state.cart.data;
 export const getCartStatus = (state) => state.cart.status;
 export const getCartError = (state) => state.cart.error;
 export const getCartTable = (state) => state.cart.table;
+export const getCartTotalPrice = (state) => state.cart.totalPrice;
 
 export const {
   handleAddToCart,
   handleChangeNotes,
   handleRemoveCart,
   handleSetTableCart,
+  handleRemoveAllCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

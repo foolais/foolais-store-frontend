@@ -139,9 +139,9 @@ const CardTableLayout = () => {
 
   // Delete Table Card
   const onDeleteTable = ({ _id, name }) => {
-    const title = `Apakah anda yakin ingin menghapus meja ${name}?`;
-    const successTitle = `Meja ${name} telah dihapus`;
-    showConfirmationDialog(title, successTitle, (isConfirmed) => {
+    const text = `Apakah anda yakin ingin menghapus meja ${name}?`;
+    const successText = `Meja ${name} telah dihapus`;
+    showConfirmationDialog(text, successText, (isConfirmed) => {
       isConfirmed && dispatch(handleDeleteTable(_id));
     });
   };

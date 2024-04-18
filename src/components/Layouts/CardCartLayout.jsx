@@ -3,12 +3,14 @@ import {
   getCartData,
   getCartStatus,
   handleChangeNotes,
+  handleRemoveAllCart,
   handleRemoveCart,
 } from "../../redux/slice/cartSlice";
 import { useState, useEffect } from "react";
 import Card from "../Fragments/Card";
 import Button from "../Elements/Button/Button";
-import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineDelete, AiFillWarning } from "react-icons/ai";
+import { showConfirmationDialog } from "../../utils/utils";
 
 const CardCartLayout = () => {
   const dispatch = useDispatch();
@@ -30,12 +32,31 @@ const CardCartLayout = () => {
     dispatch(handleChangeNotes({ _id, is_take_away, notes }));
   };
 
-  const onRemoveCart = ({ _id, is_take_away }) => {
-    dispatch(handleRemoveCart({ _id, is_take_away }));
+  const onDeleteCart = ({ _id, name, is_take_away }) => {
+    const text = `Apakah anda yakin ingin menghapus pesanan ${name}?`;
+    const successText = `Pesanan ${name} telah dihapus`;
+    showConfirmationDialog(text, successText, (isConfirmed) => {
+      isConfirmed && dispatch(handleRemoveCart({ _id, is_take_away }));
+    });
+  };
+
+  const handleDeleteAllCart = () => {
+    const title = `Hapus Semua Pesananan ?`;
+    const successText = `Semua Pesanan telah dihapus`;
+    showConfirmationDialog(title, successText, (isConfirmed) => {
+      isConfirmed && dispatch(handleRemoveAllCart());
+    });
   };
 
   return (
     <div className="w-full h-auto">
+      <Button
+        className="font-semibold btn-outline btn-error btn-sm mb-6 justify-end"
+        onClick={handleDeleteAllCart}
+      >
+        <AiFillWarning />
+        Hapus Semua Keranjang
+      </Button>
       <div className="flex items-center justify-around lg:justify-between flex-wrap gap-8">
         {cart && cart.length > 0 ? (
           cart.map((item) => {
@@ -51,7 +72,7 @@ const CardCartLayout = () => {
                     />
                     <Button
                       className="btn-circle btn-outline btn-sm btn-error"
-                      onClick={() => onRemoveCart(item._id, item.quantity)}
+                      onClick={() => onDeleteCart(item)}
                     >
                       <AiOutlineDelete />
                     </Button>

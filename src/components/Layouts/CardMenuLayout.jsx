@@ -70,9 +70,9 @@ const CardMenuLayout = () => {
   };
 
   const onDeleteMenu = ({ _id, name }) => {
-    const title = `Apakah anda yakin ingin menghapus menu ${name}?`;
-    const successTitle = `Menu ${name} telah dihapus`;
-    showConfirmationDialog(title, successTitle, (isConfirmed) => {
+    const text = `Apakah anda yakin ingin menghapus menu ${name}?`;
+    const successText = `Menu ${name} telah dihapus`;
+    showConfirmationDialog(text, successText, (isConfirmed) => {
       isConfirmed && dispatch(handleDeleteMenu(_id));
     });
   };
