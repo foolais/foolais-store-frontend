@@ -98,10 +98,15 @@ const Type = ({ id, isTakeAway, handleIsTakeAway, disabled }) => {
   );
 };
 
+const Category = ({ category, bgColor }) => {
+  return <div className={`badge bg-${bgColor} text-neutral`}>{category}</div>;
+};
+
 CardMenu.Figure = Figure;
 CardMenu.Title = Title;
 CardMenu.Price = Price;
 CardMenu.Notes = Notes;
 CardMenu.Type = Type;
+CardMenu.Category = Category;
 
 export default CardMenu;

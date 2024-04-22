@@ -1,6 +1,4 @@
-import Card from "../Fragments/Card";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getMenuData,
@@ -14,13 +12,12 @@ import { getSearchData } from "../../redux/slice/searchBarSlice";
 import CardAddNew from "../Fragments/CardAddNew";
 import Modal from "../Fragments/Modal";
 import FormMenu from "../Fragments/FormMenu";
-import Button from "../Elements/Button/Button";
-import { AiOutlineDelete } from "react-icons/ai";
 import {
   exitConfirmationDialog,
   showConfirmationDialog,
   warningDialog,
 } from "../../utils/utils";
+import CardMenu from "../Fragments/Card/CardMenu";
 
 const CardMenuLayout = () => {
   const dispatch = useDispatch();
@@ -35,16 +32,15 @@ const CardMenuLayout = () => {
 
   useEffect(() => {
     if (statusMenu === "idle") {
-      dispatch(getAllMenu());
+      try {
+        // GET data menu from database
+        dispatch(getAllMenu());
+      } catch (error) {
+        // GET data from local storage
+        setMenu(dataMenu);
+      }
     }
-  }, [statusMenu, dispatch]);
-
-  // get data menu from local storage
-  useEffect(() => {
-    if (statusMenu === "idle") {
-      setMenu(dataMenu);
-    }
-  }, [statusMenu, dataMenu]);
+  }, [statusMenu, dispatch, dataMenu]);
 
   // filter menu by search data navbar
   useEffect(() => {
@@ -100,41 +96,6 @@ const CardMenuLayout = () => {
             {`Tidak Ada Menu Untuk "${searchData}" `}
           </div>
         )}
-        {menu &&
-          menu.length > 0 &&
-          menu.map((item) => {
-            return (
-              <Card
-                key={item._id}
-                onClick={() =>
-                  isValidateMenu(item) && dispatch(handleSelectedMenu(item._id))
-                }
-                className="cursor-pointer hover:scale-105 duration-300 min-h-32 max-h-32"
-              >
-                <div
-                  className={`card-body ${
-                    item.is_selected && "bg-accent text-secondary"
-                  }`}
-                >
-                  <div className="flex items-start justify-between">
-                    {/* Nama Menu */}
-                    <Card.Title
-                      title={item.name}
-                      className="font-semibold max-w-[80%]"
-                    />
-                    {/* Button Delete */}
-                    <Button
-                      className="btn-circle btn-outline btn-sm btn-error absolute right-4"
-                      onClick={() => onDeleteMenu(item)}
-                    >
-                      <AiOutlineDelete />
-                    </Button>
-                  </div>
-                  <Card.Price price={item.price} className="text-lg " />
-                </div>
-              </Card>
-            );
-          })}
         <CardAddNew
           title="Tambah Menu Baru"
           cardClassName="min-h-32 max-h-32"
@@ -142,6 +103,18 @@ const CardMenuLayout = () => {
           actionClassName="mt-4"
           btnOnClick={() => setAddMenuModal(true)}
         />
+        {menu &&
+          menu.length > 0 &&
+          menu.map((item) => {
+            return (
+              <CardMenu
+                key={item._id}
+                item={item}
+                onCardClick={() => dispatch(handleSelectedMenu(item._id))}
+                onCardDelete={() => onDeleteMenu(item)}
+              />
+            );
+          })}
         <Modal
           title="Tambah Menu Baru"
           showModal={addMenuModal}

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { sortDataByArray } from "../../utils/utils";
 
 const storedData = localStorage.getItem("menu");
 const initialData = storedData ? JSON.parse(storedData) : [];
@@ -16,7 +17,10 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const getAllMenu = createAsyncThunk("menu/getAllMenu", async () => {
   try {
     const response = await axios.get(`${BASE_URL}/menu`);
-    return response.data;
+    const { data } = response.data;
+    const category = ["food", "drink", "extra"];
+    const sortedData = sortDataByArray(data, category);
+    return { ...response.data, data: sortedData };
   } catch (error) {
     return error.message;
   }
