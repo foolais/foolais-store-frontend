@@ -7,11 +7,19 @@ export const formatRupiah = (amount) => {
   });
 };
 
+export const sortDataByArray = (data, sortOrder) => {
+  data.sort(
+    (a, b) => sortOrder.indexOf(a.category) - sortOrder.indexOf(b.category)
+  );
+  return data;
+};
+
 // Alert
-export const showConfirmationDialog = (title, successTitle, callback) => {
+export const showConfirmationDialog = (text, successTitle, callback) => {
   Swal.fire({
-    title,
     icon: "warning",
+    title: "Warning",
+    text,
     showCancelButton: true,
     confirmButtonText: "Ya",
     cancelButtonText: "Tidak",
@@ -24,7 +32,8 @@ export const showConfirmationDialog = (title, successTitle, callback) => {
       callback(true);
       Swal.fire({
         icon: "success",
-        title: successTitle,
+        title: "Success",
+        text: successTitle,
         showConfirmButton: false,
         timer: 1500,
       });
@@ -34,8 +43,9 @@ export const showConfirmationDialog = (title, successTitle, callback) => {
 
 export const exitConfirmationDialog = (callback) => {
   Swal.fire({
-    title: "Apakah anda yakin ingin keluar?",
     icon: "warning",
+    title: "Warning",
+    text: "Apakah anda yakin ingin keluar?",
     showCancelButton: true,
     confirmButtonText: "Ya",
     cancelButtonText: "Tidak",
@@ -50,10 +60,21 @@ export const exitConfirmationDialog = (callback) => {
   });
 };
 
-export const warningDialog = (title) => {
+export const warningDialog = (text) => {
   Swal.fire({
     icon: "warning",
-    title,
+    title: "Warning",
+    text,
     confirmButtonColor: "#3085d6",
+  });
+};
+
+export const successDialog = (text) => {
+  Swal.fire({
+    icon: "success",
+    title: "Success",
+    text,
+    showConfirmButton: false,
+    timer: 1500,
   });
 };

@@ -8,6 +8,7 @@ import {
   handleAddMenu,
   handleSelectedMenu,
   handleDeleteMenu,
+  getAllMenu,
 } from "../../redux/slice/menuSlice";
 import { getSearchData } from "../../redux/slice/searchBarSlice";
 import CardAddNew from "../Fragments/CardAddNew";
@@ -34,10 +35,18 @@ const CardMenuLayout = () => {
 
   useEffect(() => {
     if (statusMenu === "idle") {
+      dispatch(getAllMenu());
+    }
+  }, [statusMenu, dispatch]);
+
+  // get data menu from local storage
+  useEffect(() => {
+    if (statusMenu === "idle") {
       setMenu(dataMenu);
     }
   }, [statusMenu, dataMenu]);
 
+  // filter menu by search data navbar
   useEffect(() => {
     if (searchData) {
       const filteredMenu = dataMenu.filter((item) =>

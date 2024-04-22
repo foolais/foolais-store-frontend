@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const storedData = localStorage.getItem("menu");
 const initialData = storedData ? JSON.parse(storedData) : [];
@@ -9,6 +10,19 @@ const initialState = {
   error: null,
 };
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+// Fetch Get All Menu
+export const getAllMenu = createAsyncThunk("menu/getAllMenu", async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/menu`);
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+
+// get same data by id
 const getExistingMenu = (id, state) => {
   const existingMenuIndex = state.data.findIndex((item) => item._id === id);
   const existingMenu = state.data[existingMenuIndex];
@@ -97,6 +111,26 @@ const menuSlice = createSlice({
         localStorage.setItem("menu", JSON.stringify(state.data));
       }
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(getAllMenu.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getAllMenu.fulfilled, (state, action) => {
+        state.status = "success";
+        const data = action.payload.data.map((item) => {
+          return {
+            ...item,
+            is_selected: false,
+          };
+        });
+        state.data = data;
+      })
+      .addCase(getAllMenu.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload.message;
+      });
   },
 });
 

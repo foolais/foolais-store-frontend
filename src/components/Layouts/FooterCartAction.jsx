@@ -1,12 +1,23 @@
 /* eslint-disable react/prop-types */
-import { AiOutlineRight } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineRight } from "react-icons/ai";
 import Button from "../Elements/Button/Button";
 import { useSelector } from "react-redux";
-import { getCartData } from "../../redux/slice/cartSlice";
+import {
+  getCartData,
+  getCartStatus,
+  getCartTable,
+} from "../../redux/slice/cartSlice";
 import { formatRupiah } from "../../utils/utils";
+import { useState, useEffect } from "react";
+import ModalPayment from "../Fragments/Modal/ModalPayment";
 
-const FooterCartAction = ({ onClick }) => {
+const FooterCartAction = () => {
+  const [cartTable, setCartTable] = useState(null);
+  const [showModalPayment, setShowModalPayment] = useState(false);
+
   const cartData = useSelector(getCartData);
+  const cartTableData = useSelector(getCartTable);
+  const cartStatus = useSelector(getCartStatus);
 
   const calculateTotalPrice = () => {
     const totalPrice = cartData.reduce(
@@ -15,6 +26,18 @@ const FooterCartAction = ({ onClick }) => {
     );
 
     return formatRupiah(totalPrice);
+  };
+
+  useEffect(() => {
+    if (cartStatus === "idle") setCartTable(cartTableData);
+  }, [cartStatus, cartTableData]);
+
+  const onChangeTable = (type) => {
+    if (type === "ADD") {
+      console.log("ADD Table");
+    } else if (type === "UPDATE") {
+      console.log({ cartTable });
+    }
   };
 
   return (
@@ -27,13 +50,28 @@ const FooterCartAction = ({ onClick }) => {
       <div className="flex flex-col gap-2">
         {/* Select Meja */}
         <div className="flex items-center gap-4">
-          <span className="font-semibold">Pilih Meja : </span>
-          <select className="select select-bordered select-sm">
-            <option>01</option>
-            <option>02</option>
-            <option>03</option>
-            <option>04</option>
-          </select>
+          <span className="font-semibold">Meja : </span>
+          {cartTable ? (
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">{cartTable?.name}</span>
+              <Button
+                className="btn-sm btn-circle btn-ghost"
+                onClick={() => onChangeTable("UPDATE")}
+              >
+                <AiOutlineEdit size={18} />
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <span className="font-semibold">Pilih Meja</span>
+              <Button
+                className="btn-sm btn-circle btn-ghost"
+                onClick={() => onChangeTable("ADD")}
+              >
+                <AiOutlineEdit size={18} />
+              </Button>
+            </div>
+          )}
         </div>
         {/* Total Price */}
         <div>
@@ -41,11 +79,24 @@ const FooterCartAction = ({ onClick }) => {
           {calculateTotalPrice()}
         </div>
       </div>
-      {/* Button */}
-      <Button className="bg-accent text-secondary" onClick={onClick}>
-        Buat Pesananan
-        <AiOutlineRight size={15} />
-      </Button>
+      <div>
+        {/* <Button className="bg-accent text-secondary" onClick={onClick}>
+          Buat Pesananan
+          <AiCash size={15} />
+        </Button> */}
+        {/* Button Tambah pesanan */}
+        <Button
+          className="bg-accent text-secondary"
+          onClick={() => setShowModalPayment(true)}
+        >
+          Bayar
+          <AiOutlineRight size={15} />
+        </Button>
+      </div>
+      <ModalPayment
+        showModal={showModalPayment}
+        closeModal={() => setShowModalPayment(false)}
+      />
     </div>
   );
 };
