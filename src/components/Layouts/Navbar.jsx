@@ -6,6 +6,7 @@ import SearchBar from "../Fragments/SearchBar";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -34,9 +35,11 @@ const Navbar = () => {
           </Button>
         </div>
         <Divider className="divider-horizontal mr-0.5 ml-0.5" />
-        <Avatar width="w-8" isWithText={true} username="testa">
-          SA
-        </Avatar>
+        <Link to={"/login"}>
+          <Avatar width="w-8" isWithText={true} username="testa">
+            SA
+          </Avatar>
+        </Link>
       </div>
     </div>
   );
