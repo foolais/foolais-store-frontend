@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Breadcrumbs = ({ data }) => {
   return (
-    <div className="text-sm breadcrumbs text-neutral font-semibold mb-4">
+    <div className="text-sm breadcrumbs text-primary font-semibold mb-4">
       <ul>
         {data &&
           data.map((item) => (

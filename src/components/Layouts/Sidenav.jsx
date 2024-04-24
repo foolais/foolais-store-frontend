@@ -66,11 +66,11 @@ const Sidenav = () => {
         return (
           <div
             key={item.id}
-            className="tooltip tooltip-right tooltip-accent"
+            className="tooltip tooltip-right"
             data-tip={item.title}
           >
             <Button
-              className={`btn-circle btn-accent ${
+              className={`btn-circle bg-neutral text-primary ${
                 !isActive(item.title) && "btn-outline"
               }`}
               onClick={() => handleNavigate(item.title)}

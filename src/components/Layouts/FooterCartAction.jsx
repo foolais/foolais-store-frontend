@@ -41,16 +41,16 @@ const FooterCartAction = () => {
   };
 
   return (
-    <div className="fixed bottom-0 right-0 left-0 h-28 bg-neutral ml-16 flex items-center justify-between p-4">
+    <div className="fixed bottom-0 right-0 left-0 h-28 bg-secondary ml-16 flex items-center justify-between p-4">
       {/* Title Name */}
-      <div className="absolute -top-6 left-0 bg-accent py-2 px-4 rounded-r-md text-secondary font-semibold">
+      <div className="absolute -top-6 left-0 bg-primary py-2 px-4 rounded-r-md text-neutral font-semibold">
         Pesanan
       </div>
       {/* Content */}
       <div className="flex flex-col gap-2">
         {/* Select Meja */}
-        <div className="flex items-center gap-4">
-          <span className="font-semibold">Meja : </span>
+        <div className="flex items-center gap-4 text-neutral">
+          <span className="font-semibold ">Meja : </span>
           {cartTable ? (
             <div className="flex items-center gap-2">
               <span className="font-semibold">{cartTable?.name}</span>
@@ -74,19 +74,19 @@ const FooterCartAction = () => {
           )}
         </div>
         {/* Total Price */}
-        <div>
+        <div className="text-neutral">
           <span className="font-semibold">Total Harga</span> :{" "}
           {calculateTotalPrice()}
         </div>
       </div>
       <div>
-        {/* <Button className="bg-accent text-secondary" onClick={onClick}>
+        {/* <Button className="bg-secondary text-neutral" onClick={onClick}>
           Buat Pesananan
           <AiCash size={15} />
         </Button> */}
         {/* Button Tambah pesanan */}
         <Button
-          className="bg-accent text-secondary"
+          className="bg-secondary text-neutral"
           onClick={() => setShowModalPayment(true)}
         >
           Bayar

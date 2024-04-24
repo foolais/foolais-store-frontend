@@ -127,6 +127,7 @@ const menuSlice = createSlice({
           return {
             ...item,
             is_selected: false,
+            quantity: 1,
           };
         });
         state.data = data;

@@ -23,9 +23,7 @@ const Navbar = () => {
       {isMenuURL && <SearchBar />}
       <div className="flex items-center justify-center gap-4">
         <div className="indicator">
-          <span className="indicator-item badge badge-accent">
-            {cartData.length}
-          </span>
+          <span className="indicator-item badge">{cartData.length}</span>
 
           <Button
             onClick={() => navigate("/keranjang")}

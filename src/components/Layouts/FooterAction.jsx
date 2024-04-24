@@ -110,9 +110,9 @@ const FooterAction = () => {
   };
 
   return (
-    <div className="fixed bottom-0 right-0 left-0 h-[7.5rem] bg-neutral ml-16 flex">
+    <div className="fixed bottom-0 right-0 left-0 h-[7.5rem] bg-secondary ml-16 flex shadow-md">
       {/* Title Name */}
-      <div className="absolute -top-6 left-0 bg-accent py-2 px-4 rounded-r-md text-secondary font-semibold gap-4 flex items-center">
+      <div className="absolute -top-6 left-0 bg-primary py-2 px-4 rounded-r-md text-neutral font-semibold gap-4 flex items-center">
         <p>
           {selectedMenu?.name || "Silahkan Pilih Menu"}
           {tableCart && " Untuk Meja " + tableCart?.name}
@@ -151,7 +151,7 @@ const FooterAction = () => {
               : "Tambah"
           } Catatan`}
           title="Catatan"
-          btnClassName="btn-sm btn-outline"
+          btnClassName="btn-sm bg-secondary text-neutral"
           disabled={!selectedMenu?.name}
           onSubmit={handleSubmitFormNotes}
         />
@@ -160,7 +160,7 @@ const FooterAction = () => {
       <div className="flex flex-col items-center pt-2 gap-2">
         {/* Button Delete Menu */}
         <Button
-          className="bg-accent text-secondary"
+          className="bg-secondary text-neutral"
           disabled={!selectedMenu?.name}
           onClick={() => setUpdateMenuModal(true)}
         >
@@ -169,7 +169,7 @@ const FooterAction = () => {
         </Button>
         {/* Button Add */}
         <Button
-          className="bg-accent text-secondary"
+          className="bg-secondary text-neutral"
           disabled={!selectedMenu?.name}
           onClick={onAddToCart}
         >

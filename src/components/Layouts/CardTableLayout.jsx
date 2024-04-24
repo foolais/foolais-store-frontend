@@ -43,7 +43,7 @@ const CardTableLayout = () => {
       case "eating":
         return "bg-info";
       case "finished":
-        return "bg-accent";
+        return "bg-primary";
       default:
         return "bg-success";
     }
@@ -53,7 +53,7 @@ const CardTableLayout = () => {
     { text: "Kosong", color: "success" },
     { text: "Menunggu", color: "warning" },
     { text: "Makan", color: "info" },
-    { text: "Selesai", color: "accent" },
+    { text: "Selesai", color: "primary" },
   ];
 
   const setStatus = (status) => {

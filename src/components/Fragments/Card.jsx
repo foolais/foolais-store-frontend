@@ -9,7 +9,7 @@ import { AiOutlineShoppingCart, AiOutlineHome } from "react-icons/ai";
 const CardMenu = ({ children, className, onClick = () => {} }) => {
   return (
     <div
-      className={`card card-compact bg-neutral min-w-[45%] max-w-[45%] sm:min-w-[30%] overflow-hidden sm:max-w-[30%] ${className}`}
+      className={`card card-compact bg-primary text-neutral min-w-[45%] max-w-[45%] sm:min-w-[30%] overflow-hidden sm:max-w-[30%] ${className}`}
       onClick={onClick}
     >
       {children}
@@ -63,7 +63,9 @@ const Notes = (props) => {
             className="textarea textarea-bordered textarea-md"
             defaultValue={data}
           />
-          <Button className="btn-sm btn-accent w-1/2 ">Simpan</Button>
+          <Button className="btn-sm bg-primary text-neutral w-1/2 ">
+            Simpan
+          </Button>
         </form>
       </Modal>
     </>
@@ -76,7 +78,7 @@ const Type = ({ id, isTakeAway, handleIsTakeAway, disabled }) => {
     <div className="flex gap-2">
       <Button
         className={`${classButton} ${
-          isTakeAway ? "btn-outline" : "btn-active bg-secondary text-neutral"
+          isTakeAway ? "bg-secondary text-neutral" : "bg-neutral text-secondary"
         } `}
         onClick={() => handleIsTakeAway(id, false)}
         disabled={disabled}
@@ -86,7 +88,7 @@ const Type = ({ id, isTakeAway, handleIsTakeAway, disabled }) => {
       </Button>
       <Button
         className={`${classButton} ${
-          isTakeAway ? "btn-active bg-secondary text-neutral" : "btn-outline"
+          isTakeAway ? "bg-neutral text-secondary" : "bg-secondary text-neutral"
         } `}
         onClick={() => handleIsTakeAway(id, true)}
         disabled={disabled}

@@ -60,7 +60,7 @@ const FormTable = (props) => {
           />
         </>
       )}
-      <Button className="bg-accent my-4">{btnText}</Button>
+      <Button className="bg-primary text-neutral my-4">{btnText}</Button>
     </form>
   );
 };

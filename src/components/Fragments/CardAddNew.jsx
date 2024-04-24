@@ -16,7 +16,7 @@ const CardAddNew = (props) => {
       <Card.Title title={title} className={titleClassName} />
       <div className={`card-actions ${actionClassName}`}>
         <Button
-          className="btn btn-circle bg-accent btn-sm"
+          className="btn btn-circle bg-neutral btn-sm"
           onClick={btnOnClick}
         >
           <AiOutlinePlus />

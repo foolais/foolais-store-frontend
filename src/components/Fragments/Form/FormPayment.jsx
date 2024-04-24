@@ -21,7 +21,7 @@ const FormPayment = (props) => {
         disabled={true}
         defaultValue={totalPrice}
       />
-      <Button className="bg-accent my-4">Bayar</Button>
+      <Button className="bg-primary text-neutral my-4">Bayar</Button>
     </form>
   );
 };

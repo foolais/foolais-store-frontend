@@ -26,7 +26,7 @@ const FormLogin = () => {
         placeholder="*****"
         isInput={true}
       />
-      <Button className="bg-accent my-4">Login</Button>
+      <Button className="bg-primary text-neutral my-4">Login</Button>
     </form>
   );
 };

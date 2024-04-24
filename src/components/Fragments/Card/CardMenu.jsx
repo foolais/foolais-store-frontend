@@ -24,7 +24,7 @@ const CardMenu = (props) => {
       case "food":
         return "success";
       case "drink":
-        return "accent";
+        return "warning";
       case "extra":
         return "primary";
       default:
@@ -38,16 +38,14 @@ const CardMenu = (props) => {
       onClick={onCardClick}
     >
       <div
-        className={`card-body ${
-          item.is_selected && "bg-accent text-secondary"
-        }`}
+        className={`card-body ${item.is_selected && "bg-primary text-neutral"}`}
       >
         <div className="flex items-start justify-between">
           {/* Nama Menu */}
           <Card.Title title={item.name} className="font-semibold max-w-[80%]" />
           {/* Button Delete */}
           <Button
-            className="btn-circle btn-outline btn-sm btn-error absolute right-4"
+            className="btn-circle btn-sm btn-error absolute right-4"
             onClick={onCardDelete}
           >
             <AiOutlineDelete />
