@@ -9,7 +9,7 @@ import { AiOutlineShoppingCart, AiOutlineHome } from "react-icons/ai";
 const CardMenu = ({ children, className, onClick = () => {} }) => {
   return (
     <div
-      className={`card card-compact bg-primary text-neutral min-w-[45%] max-w-[45%] sm:min-w-[30%] overflow-hidden sm:max-w-[30%] ${className}`}
+      className={`card card-compact bg-white shadow-lg text-primary min-w-[45%] max-w-[45%] sm:min-w-[30%] overflow-hidden sm:max-w-[30%] ${className}`}
       onClick={onClick}
     >
       {children}
@@ -63,7 +63,7 @@ const Notes = (props) => {
             className="textarea textarea-bordered textarea-md"
             defaultValue={data}
           />
-          <Button className="btn-sm bg-primary text-neutral w-1/2 ">
+          <Button className="btn-sm bg-secondary text-primary w-1/2 border-none">
             Simpan
           </Button>
         </form>
@@ -88,8 +88,8 @@ const Type = ({ id, isTakeAway, handleIsTakeAway, disabled }) => {
       </Button>
       <Button
         className={`${classButton} ${
-          isTakeAway ? "bg-neutral text-secondary" : "bg-secondary text-neutral"
-        } `}
+          isTakeAway ? "bg-neutral" : "bg-secondary "
+        } border-none text-primary `}
         onClick={() => handleIsTakeAway(id, true)}
         disabled={disabled}
       >
@@ -101,7 +101,11 @@ const Type = ({ id, isTakeAway, handleIsTakeAway, disabled }) => {
 };
 
 const Category = ({ category, bgColor }) => {
-  return <div className={`badge bg-${bgColor} text-neutral`}>{category}</div>;
+  return (
+    <div className={`badge ${bgColor} text-primary font-medium`}>
+      {category}
+    </div>
+  );
 };
 
 CardMenu.Figure = Figure;

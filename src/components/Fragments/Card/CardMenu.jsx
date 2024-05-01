@@ -22,13 +22,13 @@ const CardMenu = (props) => {
   const setColor = (category) => {
     switch (category) {
       case "food":
-        return "success";
+        return "bg-primary-badge";
       case "drink":
-        return "warning";
+        return "bg-secondary-badge";
       case "extra":
-        return "primary";
+        return "bg-ternary-badge";
       default:
-        return "success";
+        return "bg-primary-badge";
     }
   };
 
@@ -55,7 +55,7 @@ const CardMenu = (props) => {
         <Card.Price price={item.price} className="text-lg" />
         <Card.Category
           category={setCategory(item.category)}
-          bgColor={setColor(item.category)}
+          bgColor={setColor(item.category) || ""}
         />
       </div>
     </Card>
