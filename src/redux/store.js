@@ -3,6 +3,7 @@ import menuReducer from "./slice/menuSlice";
 import searchBarReducer from "./slice/searchBarSlice";
 import cartReducer from "./slice/cartSlice";
 import tableReducer from "./slice/tableSlice";
+import loginReducer from "./slice/loginSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     searchBar: searchBarReducer,
     cart: cartReducer,
     table: tableReducer,
+    login: loginReducer,
   },
 });
 

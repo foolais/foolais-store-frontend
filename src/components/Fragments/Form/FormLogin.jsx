@@ -1,13 +1,31 @@
+import { useDispatch } from "react-redux";
 import Button from "../../Elements/Button/Button";
 import FormInput from "./FormInput";
+import { postLogin } from "../../../redux/slice/loginSlice";
+import { useNavigate } from "react-router-dom";
+import { warningDialog } from "../../../utils/utils";
+import { useSelector } from "react-redux";
 
 const FormLogin = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { loading } = useSelector((state) => state.login);
+
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-    console.log({ data });
+    dispatch(postLogin(data))
+      .then((response) => {
+        if (response.payload?.statusCode === 200) {
+          navigate("/");
+        } else {
+          warningDialog("Email atau Password salah");
+        }
+      })
+      .catch((error) => warningDialog(error));
   };
 
   return (
@@ -26,7 +44,13 @@ const FormLogin = () => {
         placeholder="*****"
         isInput={true}
       />
-      <Button className="bg-primary text-neutral my-4">Login</Button>
+      <Button className="bg-secondary text-primary my-4">
+        {loading ? (
+          <span className="loading loading-spinner loading-md" />
+        ) : (
+          "Login"
+        )}
+      </Button>
     </form>
   );
 };

@@ -7,7 +7,10 @@ import {
   AiOutlineShoppingCart,
   AiOutlineOrderedList,
   AiOutlineUser,
+  AiOutlineLogout,
 } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { handleLogout } from "../../redux/slice/loginSlice";
 
 const sizeIcon = 20;
 
@@ -47,6 +50,7 @@ const data = [
 const Sidenav = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const isActive = (title) => {
     return location.pathname.includes(`/${title.toLowerCase()}`);
@@ -60,8 +64,13 @@ const Sidenav = () => {
     }
   };
 
+  const onLogoutBtn = () => {
+    dispatch(handleLogout());
+    navigate("/login");
+  };
+
   return (
-    <aside className="fixed top-0 left-0 h-screen w-16 m-0 flex flex-col items-center gap-3 z-30 bg-primary text-neutral p-4">
+    <aside className="fixed top-0 left-0 h-screen w-16 m-0 flex flex-col items-center gap-3 z-30 bg-neutral shadow-md text-neutral p-4">
       {data.map((item) => {
         return (
           <div
@@ -70,8 +79,10 @@ const Sidenav = () => {
             data-tip={item.title}
           >
             <Button
-              className={`btn-circle bg-neutral text-primary ${
-                !isActive(item.title) && "btn-outline"
+              className={`btn-circle border-2 border-primary ${
+                isActive(item.title)
+                  ? "btn-outline "
+                  : "bg-primary text-neutral"
               }`}
               onClick={() => handleNavigate(item.title)}
             >
@@ -80,6 +91,17 @@ const Sidenav = () => {
           </div>
         );
       })}
+      <div
+        className="tooltip tooltip-right absolute bottom-5"
+        data-tip="Logout"
+      >
+        <Button
+          onClick={() => onLogoutBtn()}
+          className="btn-outline text-primary border-2 btn-circle hover:bg-primary hover:text-neutral"
+        >
+          <AiOutlineLogout />
+        </Button>
+      </div>
     </aside>
   );
 };

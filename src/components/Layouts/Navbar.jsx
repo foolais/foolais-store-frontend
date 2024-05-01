@@ -11,8 +11,10 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const navigate = useNavigate();
   const cartData = useSelector(getCartData);
+
   const url = window.location.href;
   const isMenuURL = url.includes("/menu");
+  const sessionData = JSON.parse(localStorage.getItem("user"));
 
   return (
     <div
@@ -33,11 +35,20 @@ const Navbar = () => {
           </Button>
         </div>
         <Divider className="divider-horizontal mr-0.5 ml-0.5" />
-        <Link to={"/login"}>
-          <Avatar width="w-8" isWithText={true} username="testa">
-            SA
+
+        {sessionData ? (
+          <Avatar
+            width="w-8"
+            isWithText={true}
+            username={sessionData ? sessionData?.username : ""}
+          >
+            FX
           </Avatar>
-        </Link>
+        ) : (
+          <Link to={"/login"}>
+            <Button className="btn-circle btn-sm bg-primary w-8" />
+          </Link>
+        )}
       </div>
     </div>
   );
