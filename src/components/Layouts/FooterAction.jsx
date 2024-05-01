@@ -112,7 +112,7 @@ const FooterAction = () => {
   return (
     <div className="fixed bottom-0 right-0 left-0 h-[7.5rem] bg-primary ml-16 flex shadow-md">
       {/* Title Name */}
-      <div className="absolute -top-6 left-0 bg-primary py-2 px-4 rounded-r-md text-neutral border-[3px] border-l-0 border-neutral font-semibold gap-4 flex items-center">
+      <div className="absolute -top-6 left-0 bg-secondary py-2 px-4 rounded-r-md text-primary font-semibold gap-4 flex items-center">
         <p>
           {selectedMenu?.name || "Silahkan Pilih Menu"}
           {tableCart && " Untuk Meja " + tableCart?.name}
