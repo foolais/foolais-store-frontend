@@ -12,6 +12,7 @@ const initialState = {
 };
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+const token = JSON.parse(localStorage.getItem("user"))?.token;
 
 // Fetch Get All Menu
 export const getAllMenu = createAsyncThunk("menu/getAllMenu", async () => {
@@ -25,6 +26,41 @@ export const getAllMenu = createAsyncThunk("menu/getAllMenu", async () => {
     return error.message;
   }
 });
+
+//Fetch POST New Menu
+export const postNewMenu = createAsyncThunk(
+  "menu/postNewMenu",
+  async (payload) => {
+    try {
+      const headers = { Authorization: token };
+      const response = await axios.post(`${BASE_URL}/menu/add`, payload, {
+        headers,
+      });
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+//Fetch DELETE Menu
+export const deleteMenu = createAsyncThunk(
+  "menu/deleteMenu",
+  async (payload) => {
+    try {
+      const headers = { Authorization: token };
+      console.log({ headers });
+      const response = await axios.delete(
+        `${BASE_URL}/menu/delete/${payload}`,
+        {
+          headers,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
 
 // get same data by id
 const getExistingMenu = (id, state) => {
@@ -59,52 +95,6 @@ const menuSlice = createSlice({
         menu.is_selected = false;
       });
     },
-    handleAddMenu: (state, action) => {
-      const newData = action.payload;
-      const isExistingMenu = state.data.some(
-        (menu) => menu.name.toLowerCase() === newData.name.toLowerCase()
-      );
-
-      if (isExistingMenu)
-        return {
-          ...state,
-          status: "failed",
-          error: "Menu sudah ada",
-        };
-
-      // add default field
-      const newMenu = {
-        ...newData,
-        price: +newData.price,
-        is_take_away: false,
-        is_available: true,
-        is_selected: false,
-        quantity: 1,
-        notes: "",
-        _id: state.data.length + 1,
-      };
-
-      // Update localStorage
-      const updatedMenu = [...state.data, newMenu];
-      localStorage.setItem("menu", JSON.stringify(updatedMenu));
-
-      return {
-        data: updatedMenu,
-        status: "idle",
-        error: null,
-      };
-    },
-    handleDeleteMenu: (state, action) => {
-      const _id = action.payload;
-      const { existingMenuIndex } = getExistingMenu(_id, state);
-
-      // saat ada data id yang sama
-      if (existingMenuIndex !== -1) {
-        state.data.splice(existingMenuIndex, 1);
-        // update local storage
-        localStorage.setItem("menu", JSON.stringify(state.data));
-      }
-    },
     handleUpdateMenu: (state, action) => {
       const { _id } = action.payload;
       const { existingMenuIndex } = getExistingMenu(_id, state);
@@ -135,6 +125,26 @@ const menuSlice = createSlice({
       .addCase(getAllMenu.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload.message;
+      })
+      .addCase(postNewMenu.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(postNewMenu.fulfilled, (state) => {
+        state.status = "success";
+      })
+      .addCase(postNewMenu.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload.message;
+      })
+      .addCase(deleteMenu.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteMenu.fulfilled, (state) => {
+        state.status = "success";
+      })
+      .addCase(deleteMenu.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload.message;
       });
   },
 });
@@ -143,12 +153,7 @@ export const getMenuData = (state) => state.menu.data;
 export const getMenuStatus = (state) => state.menu.status;
 export const getMenuError = (state) => state.menu.error;
 
-export const {
-  handleSelectedMenu,
-  resetSelectedMenu,
-  handleAddMenu,
-  handleDeleteMenu,
-  handleUpdateMenu,
-} = menuSlice.actions;
+export const { handleSelectedMenu, resetSelectedMenu, handleUpdateMenu } =
+  menuSlice.actions;
 
 export default menuSlice.reducer;

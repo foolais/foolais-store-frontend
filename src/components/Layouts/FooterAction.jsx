@@ -28,7 +28,7 @@ const FooterAction = () => {
   const [updateMenuModal, setUpdateMenuModal] = useState(false);
 
   useEffect(() => {
-    const data = dataMenu.find((item) => item.is_selected);
+    const data = dataMenu.find((item) => item?.is_selected);
     setSelectedMenu(data);
   }, [dataMenu]);
 

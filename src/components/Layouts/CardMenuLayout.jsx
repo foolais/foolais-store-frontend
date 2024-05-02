@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   getMenuData,
   getMenuStatus,
-  handleAddMenu,
   handleSelectedMenu,
-  handleDeleteMenu,
   getAllMenu,
+  postNewMenu,
+  deleteMenu,
 } from "../../redux/slice/menuSlice";
 import { getSearchData } from "../../redux/slice/searchBarSlice";
 import CardAddNew from "../Fragments/CardAddNew";
@@ -15,6 +15,7 @@ import FormMenu from "../Fragments/FormMenu";
 import {
   exitConfirmationDialog,
   showConfirmationDialog,
+  successDialog,
   warningDialog,
 } from "../../utils/utils";
 import CardMenu from "../Fragments/Card/CardMenu";
@@ -61,12 +62,24 @@ const CardMenuLayout = () => {
     const data = Object.fromEntries(formData.entries());
 
     const validate = isValidateMenu(data);
+    const isSameMenu = menu.some(
+      (item) =>
+        item.name.toLowerCase().trim() === data.name.toLocaleLowerCase().trim()
+    );
 
-    if (validate) {
-      dispatch(handleAddMenu(data));
-      setAddMenuModal(false);
-    } else {
+    if (isSameMenu) {
+      warningDialog("Menu sudah ada");
+    } else if (!validate) {
       warningDialog("Tidak boleh ada data yang kosong");
+    } else {
+      const payload = { ...data, price: +data.price };
+      dispatch(postNewMenu(payload)).then((response) => {
+        if (response.payload?.statusCode === 201) {
+          successDialog(response.payload.message);
+          dispatch(getAllMenu());
+        }
+      });
+      setAddMenuModal(false);
     }
   };
 
@@ -78,7 +91,10 @@ const CardMenuLayout = () => {
     const text = `Apakah anda yakin ingin menghapus menu ${name}?`;
     const successText = `Menu ${name} telah dihapus`;
     showConfirmationDialog(text, successText, (isConfirmed) => {
-      isConfirmed && dispatch(handleDeleteMenu(_id));
+      isConfirmed &&
+        dispatch(deleteMenu(_id)).then((response) => {
+          if (response.payload?.statusCode === 200) dispatch(getAllMenu());
+        });
     });
   };
 
