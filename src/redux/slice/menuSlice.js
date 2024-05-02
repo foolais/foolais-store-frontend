@@ -12,7 +12,6 @@ const initialState = {
 };
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-const token = JSON.parse(localStorage.getItem("user"))?.token;
 
 // Fetch Get All Menu
 export const getAllMenu = createAsyncThunk("menu/getAllMenu", async () => {
@@ -32,6 +31,7 @@ export const postNewMenu = createAsyncThunk(
   "menu/postNewMenu",
   async (payload) => {
     try {
+      const token = JSON.parse(localStorage.getItem("user"))?.token;
       const headers = { Authorization: token };
       const response = await axios.post(`${BASE_URL}/menu/add`, payload, {
         headers,
@@ -47,8 +47,8 @@ export const deleteMenu = createAsyncThunk(
   "menu/deleteMenu",
   async (payload) => {
     try {
+      const token = JSON.parse(localStorage.getItem("user"))?.token;
       const headers = { Authorization: token };
-      console.log({ headers });
       const response = await axios.delete(
         `${BASE_URL}/menu/delete/${payload}`,
         {
