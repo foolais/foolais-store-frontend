@@ -47,29 +47,13 @@ const FormMenu = (props) => {
         defaultValue={defaultValue?.category}
       />
       {isEdit && (
-        <>
-          <FormInput
-            title="Tipe Makan"
-            data={typeData}
-            name="is_take_away"
-            isSelect={true}
-            defaultValue={defaultValue?.is_take_away}
-          />
-          <FormInput
-            title="Status"
-            data={statusData}
-            name="is_available"
-            isSelect={true}
-            defaultValue={defaultValue?.is_available}
-          />
-          <FormInput
-            title="Catatan"
-            placeholder="Masukkan Catatan"
-            name="notes"
-            isTextArea={true}
-            defaultValue={defaultValue?.notes || "-"}
-          />
-        </>
+        <FormInput
+          title="Status"
+          data={statusData}
+          name="is_available"
+          isSelect={true}
+          defaultValue={defaultValue?.is_available}
+        />
       )}
       <Button className="bg-primary text-neutral my-4">{btnText}</Button>
     </form>

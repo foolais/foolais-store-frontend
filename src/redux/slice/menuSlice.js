@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { sortDataByArray } from "../../utils/utils";
+import { getToken, sortDataByArray } from "../../utils/utils";
 
 const initialState = {
   data: [],
@@ -28,7 +28,7 @@ export const postNewMenu = createAsyncThunk(
   "menu/postNewMenu",
   async (payload) => {
     try {
-      const token = JSON.parse(localStorage.getItem("user"))?.token;
+      const token = getToken();
       const headers = { Authorization: token };
       const response = await axios.post(`${BASE_URL}/menu/add`, payload, {
         headers,
@@ -44,10 +44,33 @@ export const deleteMenu = createAsyncThunk(
   "menu/deleteMenu",
   async (payload) => {
     try {
-      const token = JSON.parse(localStorage.getItem("user"))?.token;
+      const token = getToken();
       const headers = { Authorization: token };
       const response = await axios.delete(
         `${BASE_URL}/menu/delete/${payload}`,
+        {
+          headers,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+// Fetch PUT Menu
+export const updateMenu = createAsyncThunk(
+  "menu/updateMenu",
+  async (payload) => {
+    try {
+      const token = getToken();
+      const headers = { Authorization: token };
+      const { _id, ...updatedPayload } = payload;
+
+      const response = await axios.put(
+        `${BASE_URL}/menu/update/${_id}`,
+        updatedPayload,
         {
           headers,
         }
@@ -139,6 +162,16 @@ const menuSlice = createSlice({
         state.loading = false;
       })
       .addCase(deleteMenu.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(updateMenu.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateMenu.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(updateMenu.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });

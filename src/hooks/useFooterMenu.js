@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { handleUpdateMenu, resetSelectedMenu } from "../redux/slice/menuSlice";
+import {
+  getAllMenu,
+  handleUpdateMenu,
+  resetSelectedMenu,
+  updateMenu,
+} from "../redux/slice/menuSlice";
 import {
   getCartTable,
   handleAddToCart,
   handleSetTableCart,
 } from "../redux/slice/cartSlice";
-import { exitConfirmationDialog } from "../utils/utils";
+import {
+  exitConfirmationDialog,
+  showConfirmationDialog,
+  warningDialog,
+} from "../utils/utils";
 
 const useFooterMenu = () => {
   // state
@@ -70,7 +79,6 @@ const useFooterMenu = () => {
       menu?.name &&
       menu?.price &&
       menu?.category &&
-      menu?.is_take_away !== undefined &&
       menu?.is_available !== undefined
     );
   };
@@ -82,21 +90,17 @@ const useFooterMenu = () => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    const newMenu = {
+    const payload = {
       ...data,
-      price: +data.price,
-      is_take_away: eval(data.is_take_away),
-      is_available: eval(data.is_available),
-      quantity: 1,
-      notes: data.notes || "",
       _id: id,
+      price: +data.price,
+      is_available: eval(data.is_available),
     };
 
-    const validate = isValidateMenu(newMenu);
+    const validate = isValidateMenu(payload);
 
     if (validate) {
-      dispatch(handleUpdateMenu(newMenu));
-      setUpdateMenuModal(false);
+      fetchUpdateMenu(payload);
     } else {
       alert("Data tidak boleh ada yang kosong kecuali catatan");
     }
@@ -119,6 +123,31 @@ const useFooterMenu = () => {
   // reset setTableCart
   const resetTableCart = () => {
     dispatch(handleSetTableCart(null));
+  };
+
+  // CRUD EVENT
+  // UPDATE MENU
+  const fetchUpdateMenu = (payload) => {
+    const text = `Apakah anda yakin ingin mengubah menu ${payload.name}?`;
+    const successText = `Menu ${payload.name} berhasil diubah`;
+
+    showConfirmationDialog(text, successText, (isConfirmed) => {
+      isConfirmed &&
+        dispatch(updateMenu(payload))
+          .then((response) => {
+            if (response.payload?.statusCode === 200) {
+              dispatch(getAllMenu());
+              setUpdateMenuModal(false);
+            } else if (response?.payload.includes("403")) {
+              warningDialog("Mohon login terlebih dahulu");
+            } else {
+              warningDialog(response?.payload);
+            }
+          })
+          .catch((error) => {
+            warningDialog(error);
+          });
+    });
   };
 
   return {

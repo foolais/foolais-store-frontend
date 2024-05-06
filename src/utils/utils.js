@@ -14,6 +14,10 @@ export const sortDataByArray = (data, sortOrder) => {
   return data;
 };
 
+export const getToken = () => {
+  return JSON.parse(localStorage.getItem("user"))?.token || "";
+};
+
 // Alert
 export const showConfirmationDialog = (text, successTitle, callback) => {
   Swal.fire({
