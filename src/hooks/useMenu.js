@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  getMenuData,
-  getMenuStatus,
   handleSelectedMenu,
   getAllMenu,
   postNewMenu,
@@ -22,23 +20,26 @@ const useMenu = () => {
   const [menu, setMenu] = useState(null);
   const [addMenuModal, setAddMenuModal] = useState(false);
 
-  const dataMenu = useSelector(getMenuData);
-  const statusMenu = useSelector(getMenuStatus);
+  const { data: dataMenu, loading } = useSelector((state) => state.menu);
 
   const searchData = useSelector(getSearchData);
 
   // GET data menu from database
-  useEffect(() => {
-    if (statusMenu === "idle") {
-      try {
-        // GET data menu from database
-        dispatch(getAllMenu());
-      } catch (error) {
-        // GET data from local storage
-        setMenu(dataMenu);
-      }
+  const getAllMenuData = () => {
+    if (loading) return;
+    try {
+      // GET data menu from database
+      dispatch(getAllMenu());
+    } catch (error) {
+      // GET data from local storage
+      setMenu(dataMenu);
     }
-  }, [statusMenu, dispatch, dataMenu]);
+  };
+
+  useEffect(() => {
+    getAllMenuData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // filter menu by search data navbar
   useEffect(() => {

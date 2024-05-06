@@ -4,7 +4,6 @@ import Card from "../Fragments/Card";
 import Button from "../Elements/Button/Button";
 import { AiOutlineClose, AiOutlineRight } from "react-icons/ai";
 import {
-  getMenuData,
   handleUpdateMenu,
   resetSelectedMenu,
 } from "../../redux/slice/menuSlice";
@@ -21,7 +20,8 @@ import { exitConfirmationDialog } from "../../utils/utils";
 
 const FooterAction = () => {
   const dispatch = useDispatch();
-  const dataMenu = useSelector(getMenuData);
+  const { data: dataMenu } = useSelector((state) => state.menu);
+
   const tableCart = useSelector(getCartTable);
 
   const [selectedMenu, setSelectedMenu] = useState(null);

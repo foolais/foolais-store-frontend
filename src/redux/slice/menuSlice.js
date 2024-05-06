@@ -7,7 +7,7 @@ const initialData = storedData ? JSON.parse(storedData) : [];
 
 const initialState = {
   data: initialData,
-  status: "idle",
+  loading: false,
   error: null,
 };
 
@@ -109,10 +109,10 @@ const menuSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getAllMenu.pending, (state) => {
-        state.status = "loading";
+        state.loading = true;
       })
       .addCase(getAllMenu.fulfilled, (state, action) => {
-        state.status = "success";
+        state.loading = false;
         const data = action.payload.data.map((item) => {
           return {
             ...item,
@@ -123,35 +123,31 @@ const menuSlice = createSlice({
         state.data = data;
       })
       .addCase(getAllMenu.rejected, (state, action) => {
-        state.status = "failed";
+        state.loading = false;
         state.error = action.payload.message;
       })
       .addCase(postNewMenu.pending, (state) => {
-        state.status = "loading";
+        state.loading = true;
       })
       .addCase(postNewMenu.fulfilled, (state) => {
-        state.status = "success";
+        state.loading = false;
       })
       .addCase(postNewMenu.rejected, (state, action) => {
-        state.status = "failed";
+        state.loading = false;
         state.error = action.payload.message;
       })
       .addCase(deleteMenu.pending, (state) => {
-        state.status = "loading";
+        state.loading = true;
       })
       .addCase(deleteMenu.fulfilled, (state) => {
-        state.status = "success";
+        state.loading = false;
       })
       .addCase(deleteMenu.rejected, (state, action) => {
-        state.status = "failed";
+        state.loading = false;
         state.error = action.payload.message;
       });
   },
 });
-
-export const getMenuData = (state) => state.menu.data;
-export const getMenuStatus = (state) => state.menu.status;
-export const getMenuError = (state) => state.menu.error;
 
 export const { handleSelectedMenu, resetSelectedMenu, handleUpdateMenu } =
   menuSlice.actions;
