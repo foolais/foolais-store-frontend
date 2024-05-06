@@ -2,11 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { sortDataByArray } from "../../utils/utils";
 
-const storedData = localStorage.getItem("menu");
-const initialData = storedData ? JSON.parse(storedData) : [];
-
 const initialState = {
-  data: initialData,
+  data: [],
   loading: false,
   error: null,
 };
@@ -100,9 +97,8 @@ const menuSlice = createSlice({
       const { existingMenuIndex } = getExistingMenu(_id, state);
 
       if (existingMenuIndex !== -1) {
-        state.data[existingMenuIndex] = action.payload;
-        // update local storage
-        localStorage.setItem("menu", JSON.stringify(state.data));
+        const payload = { ...action.payload, is_selected: true };
+        state.data[existingMenuIndex] = payload;
       }
     },
   },

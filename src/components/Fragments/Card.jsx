@@ -41,6 +41,11 @@ const Notes = (props) => {
     setShowModal(type);
   };
 
+  const handleSubmitForm = (event) => {
+    onSubmit(event);
+    setShowModal(false);
+  };
+
   return (
     <>
       <Button
@@ -57,7 +62,10 @@ const Notes = (props) => {
         showModal={showModal}
         closeModal={() => handleModal(false)}
       >
-        <form className=" flex flex-col gap-4 w-4/5" onSubmit={onSubmit}>
+        <form
+          className=" flex flex-col gap-4 w-4/5"
+          onSubmit={handleSubmitForm}
+        >
           <TextArea
             name="notes"
             className="textarea textarea-bordered textarea-md"
@@ -78,7 +86,7 @@ const Type = ({ id, isTakeAway, handleIsTakeAway, disabled }) => {
     <div className="flex gap-2">
       <Button
         className={`${classButton} ${
-          isTakeAway ? "bg-secondary text-neutral" : "bg-neutral text-secondary"
+          isTakeAway ? "bg-secondary text-neutral" : "bg-neutral text-primary"
         } `}
         onClick={() => handleIsTakeAway(id, false)}
         disabled={disabled}

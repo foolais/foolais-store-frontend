@@ -65,6 +65,7 @@ const useMenu = () => {
 
   //   When click/select menu
   const onSelectedMenu = (id) => {
+    console.log({ id });
     dispatch(handleSelectedMenu(id));
   };
 
