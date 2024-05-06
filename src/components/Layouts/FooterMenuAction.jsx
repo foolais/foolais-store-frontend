@@ -28,7 +28,7 @@ const FooterMenuAction = () => {
     <FooterLayout
       title={getTitleData()}
       isWithCloseBtn={tableCart !== null}
-      onClickCloseBtn={resetTableCart()}
+      onClickCloseBtn={resetTableCart}
     >
       {/* LEFT */}
       {/* Counter */}
