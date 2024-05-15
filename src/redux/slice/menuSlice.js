@@ -103,9 +103,9 @@ const menuSlice = createSlice({
       if (existingMenu === -1) return;
 
       state.data.forEach((menu) => {
-        if (menu._id !== id) {
+        if (menu.is_selected) {
           menu.is_selected = false;
-        } else {
+        } else if (menu._id === id) {
           menu.is_selected = !menu.is_selected;
         }
       });
