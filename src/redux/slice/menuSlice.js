@@ -112,7 +112,7 @@ const menuSlice = createSlice({
     },
     resetSelectedMenu: (state) => {
       state.data.forEach((menu) => {
-        menu.is_selected = false;
+        if (menu.is_selected) menu.is_selected = false;
       });
     },
     handleUpdateMenu: (state, action) => {
