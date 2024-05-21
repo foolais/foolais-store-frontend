@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  getTableData,
-  getTableStatus,
   handleAddTable,
   handleDeleteTable,
   handleUpdateTable,
@@ -26,12 +24,12 @@ const useTable = () => {
   const [selectedTable, setSelectedTable] = useState(null);
 
   // Selector
-  const tableData = useSelector(getTableData);
-  const statusTabel = useSelector(getTableStatus);
+  const { data: tableData, loading } = useSelector((state) => state.table);
 
   useEffect(() => {
-    if (statusTabel === "idle") setTable(tableData);
-  }, [statusTabel, tableData]);
+    setTable(tableData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Validate Table
   const isValidateTable = (table, type) => {

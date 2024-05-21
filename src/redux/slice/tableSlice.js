@@ -6,7 +6,7 @@ const initialData = storedData ? JSON.parse(storedData) : [];
 
 const initialState = {
   data: initialData,
-  status: "idle",
+  loading: false,
   error: null,
 };
 
@@ -31,7 +31,7 @@ const tableSlice = createSlice({
         warningDialog(`Meja ${newData.name} Sudah Ada`);
         return {
           ...state,
-          status: "failed",
+          loading: false,
           error: "Meja sudah ada",
         };
       }
@@ -49,7 +49,7 @@ const tableSlice = createSlice({
 
       return {
         data: updatedTable,
-        status: "idle",
+        loading: false,
         error: null,
       };
     },
@@ -75,10 +75,6 @@ const tableSlice = createSlice({
     },
   },
 });
-
-export const getTableData = (state) => state.table.data;
-export const getTableStatus = (state) => state.table.status;
-export const getTableError = (state) => state.table.error;
 
 export const { handleAddTable, handleUpdateTable, handleDeleteTable } =
   tableSlice.actions;
