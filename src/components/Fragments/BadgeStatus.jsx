@@ -6,7 +6,7 @@ const BadgeStatus = ({ data }) => {
         data.map((item) => (
           <div
             key={item.text}
-            className={`badge badge-ghost gap-2 bg-${item.color} border-none text-secondary font-semibold`}
+            className={`badge badge-ghost gap-2 bg-${item.color} border-none text-neutral p-3 font-semibold`}
           >
             {item.text}
           </div>
