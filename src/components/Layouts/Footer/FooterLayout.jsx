@@ -17,7 +17,9 @@ const FooterLayout = ({ title, children, isWithCloseBtn, onClickCloseBtn }) => {
           </Button>
         )}
       </div>
-      {children}
+      <div className="w-full flex justify-evenly md:justify-between md:mx-4 gap-4">
+        {children}
+      </div>
     </div>
   );
 };

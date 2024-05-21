@@ -34,7 +34,7 @@ const CardMenu = (props) => {
 
   return (
     <Card
-      className="cursor-pointer hover:scale-105 duration-300 min-h-[8.5rem] max-h-[8.5rem]"
+      className="cursor-pointer hover:scale-105 duration-300 min-w-48"
       onClick={onCardClick}
     >
       <div

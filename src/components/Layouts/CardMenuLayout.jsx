@@ -18,7 +18,7 @@ const CardMenuLayout = () => {
 
   return (
     <div className="w-full h-auto">
-      <div className="flex items-center justify-around flex-wrap gap-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {searchData && menu && menu.length === 0 && (
           <div className="w-full flex items-center justify-center text-neutral p-4 font-semibold">
             {`Tidak Ada Menu Untuk "${searchData}" `}
@@ -26,7 +26,7 @@ const CardMenuLayout = () => {
         )}
         <CardAddNew
           title="Tambah Menu Baru"
-          cardClassName="min-h-32 max-h-32"
+          cardClassName="min-h-auto min-w-48"
           titleClassName="font-semibold mt-4"
           actionClassName="mt-4"
           btnOnClick={() => setAddMenuModal(true)}

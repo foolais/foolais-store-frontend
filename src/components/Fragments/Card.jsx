@@ -9,7 +9,7 @@ import { AiOutlineShoppingCart, AiOutlineHome } from "react-icons/ai";
 const CardMenu = ({ children, className, onClick = () => {} }) => {
   return (
     <div
-      className={`card card-compact bg-white shadow-lg text-primary min-w-[45%] max-w-[45%] sm:min-w-[30%] overflow-hidden sm:max-w-[30%] ${className}`}
+      className={`card card-compact bg-white shadow-lg text-primary min-w-[45%] sm:min-w-[30%] overflow-hidden ${className}`}
       onClick={onClick}
     >
       {children}
@@ -81,9 +81,9 @@ const Notes = (props) => {
 };
 
 const Type = ({ id, isTakeAway, handleIsTakeAway, disabled }) => {
-  const classButton = `btn-sm`;
+  const classButton = `btn-sm md:w-[48%]`;
   return (
-    <div className="flex gap-2">
+    <div className="flex md:justify-between gap-2 w-full">
       <Button
         className={`${classButton} ${
           isTakeAway ? "bg-secondary text-neutral" : "bg-neutral text-primary"
