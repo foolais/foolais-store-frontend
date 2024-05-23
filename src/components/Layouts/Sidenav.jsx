@@ -70,7 +70,7 @@ const Sidenav = () => {
   };
 
   return (
-    <aside className="fixed top-0 left-0 h-screen w-16 m-0 flex flex-col items-center gap-3 z-30 bg-neutral shadow-md text-neutral p-4">
+    <aside className="fixed top-0 left-0 h-screen w-16 m-0 flex flex-col items-center gap-3 bg-neutral shadow-md text-neutral p-4">
       {data.map((item) => {
         return (
           <div

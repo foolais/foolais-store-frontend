@@ -18,7 +18,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed top-0 right-0 left-0 z-20 ml-16 h-14 shadow-md bg-neutral flex items-center px-4 ${
+      className={`fixed top-0 right-0 left-0 ml-16 h-14 shadow-md bg-neutral flex items-center px-4 ${
         isMenuURL ? "justify-between" : "justify-end"
       }`}
     >
