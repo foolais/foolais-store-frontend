@@ -40,11 +40,11 @@ const CardTableLayout = () => {
           Tidak ada Data Meja
         </div>
       )}
-      <div className="flex items-center justify-around  flex-wrap gap-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {/* Add New Table Card */}
         <CardAddNew
           title="Tambah Meja Baru"
-          cardClassName="min-h-40 max-h-40 justify-center"
+          cardClassName="min-h-auto min-w-48 justify-center"
           titleClassName="font-semibold"
           actionClassName="mt-4"
           btnOnClick={() => setAddTableModal(true)}
