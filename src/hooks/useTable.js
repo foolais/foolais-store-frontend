@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getAllTable,
-  handleAddTable,
   handleDeleteTable,
   handleUpdateTable,
+  postNewTable,
 } from "../redux/slice/tableSlice";
 import { useNavigate } from "react-router-dom";
 import {
   exitConfirmationDialog,
   showConfirmationDialog,
+  successDialog,
   warningDialog,
 } from "../utils/utils";
 import { handleSetTableCart } from "../redux/slice/cartSlice";
@@ -57,8 +58,15 @@ const useTable = () => {
     const validate = isValidateTable(data, "ADD");
 
     if (validate) {
-      dispatch(handleAddTable(data));
-      setAddTableModal(false);
+      dispatch(postNewTable(data)).then((response) => {
+        if (response.payload?.statusCode === 201) {
+          successDialog(response.payload.message);
+          dispatch(getAllTable());
+          setAddTableModal(false);
+        } else if (response?.payload.includes("403")) {
+          warningDialog("Mohon login terlebih dahulu");
+        }
+      });
     } else {
       warningDialog("Tidak boleh ada data yang kosong");
     }

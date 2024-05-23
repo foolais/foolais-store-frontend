@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { warningDialog } from "../../utils/utils";
+import { getToken, warningDialog } from "../../utils/utils";
 import axios from "axios";
 
 const initialState = {
@@ -27,42 +27,27 @@ export const getAllTable = createAsyncThunk("table/getAllTable", async () => {
   }
 });
 
+// Fetch POST All Table
+export const postNewTable = createAsyncThunk(
+  "menu/postNewTable",
+  async (payload) => {
+    try {
+      const token = getToken();
+      const headers = { Authorization: token };
+      const response = await axios.post(`${BASE_URL}/table/add`, payload, {
+        headers,
+      });
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 const tableSlice = createSlice({
   name: "table",
   initialState,
   reducers: {
-    handleAddTable: (state, action) => {
-      const newData = action.payload;
-      const isExistingTable = state.data.some(
-        (table) => table.name.toLowerCase() === newData.name.toLowerCase()
-      );
-
-      if (isExistingTable) {
-        warningDialog(`Meja ${newData.name} Sudah Ada`);
-        return {
-          ...state,
-          loading: false,
-          error: "Meja sudah ada",
-        };
-      }
-
-      const newTable = {
-        ...newData,
-        type: "dine_in",
-        status: "empty",
-        _id: state.data.length + 1,
-      };
-
-      // Update localStorage
-      const updatedTable = [...state.data, newTable];
-      localStorage.setItem("table", JSON.stringify(updatedTable));
-
-      return {
-        data: updatedTable,
-        loading: false,
-        error: null,
-      };
-    },
     handleUpdateTable: (state, action) => {
       const { _id } = action.payload;
       const { existingTableIndex } = getExistingTable(_id, state);
@@ -97,11 +82,20 @@ const tableSlice = createSlice({
       .addCase(getAllTable.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(postNewTable.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(postNewTable.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(postNewTable.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
       });
   },
 });
 
-export const { handleAddTable, handleUpdateTable, handleDeleteTable } =
-  tableSlice.actions;
+export const { handleUpdateTable, handleDeleteTable } = tableSlice.actions;
 
 export default tableSlice.reducer;
