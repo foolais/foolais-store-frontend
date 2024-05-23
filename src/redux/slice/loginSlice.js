@@ -43,12 +43,8 @@ const loginSlice = createSlice({
         const { data } = action.payload;
         if (data !== undefined) {
           state.loading = false;
-          state.data = data.token;
-          const user = {
-            username: "foolaisx",
-            token: data.token,
-          };
-          localStorage.setItem("user", JSON.stringify(user));
+          state.data = data;
+          localStorage.setItem("user", JSON.stringify(data));
         } else {
           state.data = "";
           state.loading = false;
