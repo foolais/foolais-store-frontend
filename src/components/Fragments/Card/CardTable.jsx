@@ -48,7 +48,11 @@ const CardTable = (props) => {
   };
 
   return (
-    <Card className="cursor-pointer hover:scale-105 duration-300">
+    <Card
+      className={`cursor-pointer hover:scale-105 duration-300 border-[1px] ${
+        item.category === "custom" ? " border-primary" : "border-secondary"
+      }`}
+    >
       <div className="card-body">
         {/* TOP */}
         <div className="flex items-start justify-between">
@@ -77,7 +81,7 @@ const CardTable = (props) => {
         {/* MID */}
         <p className="text-sm font-semibold mb-6">
           {" "}
-          {`Tipe : ${setType(item.category)}`}
+          {` Tipe : ${setType(item.type)}`}
         </p>
         {/* BOTTOM */}
         <div className="card-actions justify-between">

@@ -40,25 +40,23 @@ const FormTable = (props) => {
         isSelect={true}
         defaultValue={defaultValue?.category}
       />
+      <FormInput
+        title="Tipe"
+        data={typeTable}
+        name="type"
+        placeholder="Masukkan Tipe"
+        isSelect={true}
+        defaultValue={defaultValue?.type}
+      />
       {isEdit && (
-        <>
-          <FormInput
-            title="Tipe"
-            data={typeTable}
-            name="type"
-            placeholder="Masukkan Tipe"
-            isSelect={true}
-            defaultValue={defaultValue?.type}
-          />
-          <FormInput
-            title="Status"
-            data={statusTable}
-            name="status"
-            placeholder="Masukkan Status"
-            isSelect={true}
-            defaultValue={defaultValue?.status}
-          />
-        </>
+        <FormInput
+          title="Status"
+          data={statusTable}
+          name="status"
+          placeholder="Masukkan Status"
+          isSelect={true}
+          defaultValue={defaultValue?.status}
+        />
       )}
       <Button className="bg-primary text-neutral my-4">{btnText}</Button>
     </form>
