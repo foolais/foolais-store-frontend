@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  getAllTable,
   handleAddTable,
   handleDeleteTable,
   handleUpdateTable,
@@ -27,9 +28,12 @@ const useTable = () => {
   const { data: tableData, loading } = useSelector((state) => state.table);
 
   useEffect(() => {
-    setTable(tableData);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(getAllTable());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (tableData && tableData.length > 0 && !loading) setTable(tableData);
+  }, [tableData, loading]);
 
   // Validate Table
   const isValidateTable = (table, type) => {

@@ -1,14 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { warningDialog } from "../../utils/utils";
-
-const storedData = localStorage.getItem("table");
-const initialData = storedData ? JSON.parse(storedData) : [];
+import axios from "axios";
 
 const initialState = {
-  data: initialData,
+  data: [],
   loading: false,
   error: null,
 };
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const getExistingTable = (id, state) => {
   const existingTableIndex = state.data.findIndex((item) => item._id === id);
@@ -16,6 +16,16 @@ const getExistingTable = (id, state) => {
 
   return { existingTableIndex, existingTable };
 };
+
+// Fetch Get All Table
+export const getAllTable = createAsyncThunk("table/getAllTable", async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/table`);
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+});
 
 const tableSlice = createSlice({
   name: "table",
@@ -73,6 +83,21 @@ const tableSlice = createSlice({
         localStorage.setItem("table", JSON.stringify(state.data));
       }
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(getAllTable.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllTable.fulfilled, (state, action) => {
+        state.loading = false;
+        const { data } = action.payload;
+        state.data = data;
+      })
+      .addCase(getAllTable.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
   },
 });
 

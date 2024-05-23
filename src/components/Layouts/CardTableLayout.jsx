@@ -35,16 +35,17 @@ const CardTableLayout = () => {
         <BadgeStatus data={statusData} />
       </div>
       {/* Daftar Meja */}
-      {table && table.length === 0 && (
-        <div className="w-full flex items-center justify-center text-neutral p-4 font-semibold">
-          Tidak ada Data Meja
-        </div>
-      )}
+      {(table && table.length === 0) ||
+        (!table && (
+          <div className="w-full flex items-center justify-center text-primary p-4 font-semibold">
+            Tidak ada Data Meja
+          </div>
+        ))}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {/* Add New Table Card */}
         <CardAddNew
           title="Tambah Meja Baru"
-          cardClassName="min-h-auto min-w-48 justify-center"
+          cardClassName="min-h-36 h-auto min-w-48 justify-center"
           titleClassName="font-semibold"
           actionClassName="mt-4"
           btnOnClick={() => setAddTableModal(true)}

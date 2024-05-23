@@ -77,7 +77,7 @@ const CardTable = (props) => {
         {/* MID */}
         <p className="text-sm font-semibold mb-6">
           {" "}
-          {`Tipe : ${setType(item.type)}`}
+          {`Tipe : ${setType(item.category)}`}
         </p>
         {/* BOTTOM */}
         <div className="card-actions justify-between">
