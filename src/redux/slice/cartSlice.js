@@ -16,6 +16,7 @@ const getExistingCart = (_id, is_take_away, state) => {
 const initialState = {
   data: initialData?.data || [],
   status: "idle",
+  loading: false,
   error: null,
   totalPrice: 0,
   table: initialData?.table || null,
