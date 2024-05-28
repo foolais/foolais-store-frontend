@@ -44,6 +44,28 @@ export const postNewTable = createAsyncThunk(
   }
 );
 
+export const updateTable = createAsyncThunk(
+  "table/updateTable",
+  async (payload) => {
+    try {
+      const token = getToken();
+      const headers = { Authorization: token };
+      const { _id, ...updatedPayload } = payload;
+      console.log({ headers });
+
+      const response = await axios.put(
+        `${BASE_URL}/table/update/${_id}`,
+        updatedPayload,
+        { headers }
+      );
+
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 const tableSlice = createSlice({
   name: "table",
   initialState,
@@ -90,6 +112,16 @@ const tableSlice = createSlice({
         state.loading = false;
       })
       .addCase(postNewTable.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(updateTable.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateTable.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(updateTable.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });

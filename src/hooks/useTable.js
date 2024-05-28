@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   getAllTable,
   handleDeleteTable,
-  handleUpdateTable,
   postNewTable,
+  updateTable,
 } from "../redux/slice/tableSlice";
 import { useNavigate } from "react-router-dom";
 import {
@@ -86,8 +86,15 @@ const useTable = () => {
     };
 
     if (validate) {
-      dispatch(handleUpdateTable(updatedTable));
-      setEditTableModal(false);
+      dispatch(updateTable(updatedTable)).then((response) => {
+        if (response.payload?.statusCode === 200) {
+          successDialog(response.payload.message);
+          dispatch(getAllTable());
+          setEditTableModal(false);
+        } else if (response?.payload.includes("403")) {
+          warningDialog("Mohon login terlebih dahulu");
+        }
+      });
     } else {
       alert("Tidak boleh ada data yang kosong");
     }
