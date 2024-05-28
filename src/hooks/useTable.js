@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  deleteTable,
   getAllTable,
   handleDeleteTable,
   postNewTable,
@@ -105,7 +106,18 @@ const useTable = () => {
     const text = `Apakah anda yakin ingin menghapus meja ${name}?`;
     const successText = `Meja ${name} telah dihapus`;
     showConfirmationDialog(text, successText, (isConfirmed) => {
-      isConfirmed && dispatch(handleDeleteTable(_id));
+      isConfirmed &&
+        dispatch(deleteTable(_id))
+          .then((response) => {
+            if (response.payload?.statusCode === 200) {
+              dispatch(getAllTable());
+            } else if (response?.payload.includes("403")) {
+              warningDialog("Mohon login terlebih dahulu");
+            }
+          })
+          .catch((error) => {
+            warningDialog(error);
+          });
     });
   };
 

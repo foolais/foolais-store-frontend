@@ -66,6 +66,24 @@ export const updateTable = createAsyncThunk(
   }
 );
 
+export const deleteTable = createAsyncThunk(
+  "table/deleteTable",
+  async (payload) => {
+    try {
+      const token = getToken();
+      const headers = { Authorization: token };
+      const response = await axios.delete(
+        `${BASE_URL}/table/delete/${payload}`,
+        { headers }
+      );
+
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 const tableSlice = createSlice({
   name: "table",
   initialState,
@@ -122,6 +140,16 @@ const tableSlice = createSlice({
         state.loading = false;
       })
       .addCase(updateTable.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(deleteTable.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteTable.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(deleteTable.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });
