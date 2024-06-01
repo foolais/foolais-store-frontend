@@ -6,7 +6,8 @@ import OrderDetails from "../Fragments/OrderDetails";
 const OrderLayout = () => {
   const initialBadgeData = [
     { text: "Semua", color: "secondary", value: "all" },
-    { text: "Sedang Dalam Proses", color: "primary", value: "onProccess" },
+    { text: "Dalam Proses", color: "primary", value: "onProccess" },
+    { text: "Menunggu Pembayaran", color: "primary", value: "waitingPayment" },
     { text: "Selesai", color: "primary", value: "finished" },
   ];
 

@@ -10,9 +10,14 @@ const CardAddNew = (props) => {
     actionClassName,
     title,
     btnOnClick = () => {},
+    onEdit = false,
   } = props;
   return (
-    <Card className={`${cardClassName} flex items-center`}>
+    <Card
+      className={`${cardClassName} flex items-center ${
+        onEdit ? "opacity-0" : "opacity-100"
+      } ease-in-out duration-300`}
+    >
       <Card.Title title={title} className={titleClassName} />
       <div className={`card-actions ${actionClassName}`}>
         <Button

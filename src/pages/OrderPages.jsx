@@ -10,7 +10,7 @@ const OrderPages = () => {
   ];
   return (
     <MainLayout>
-      <Title>Daftar Pesanan</Title>
+      <Title>Pesanan</Title>
       <Breadcrumbs data={data} />
       <OrderLayout />
     </MainLayout>

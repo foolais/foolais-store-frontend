@@ -5,9 +5,16 @@ import Card from "../Card";
 import useCart from "../../../hooks/useCart";
 
 const CardCart = (props) => {
-  const { item, onDeleteCart, handleSubmitFormNotes } = props;
+  const {
+    item,
+    onDeleteCart,
+    handleSubmitFormNotes,
+    isDisabledAction = false,
+  } = props;
 
   const { isNotesFilled } = useCart();
+
+  console.log({ isDisabledAction });
 
   return (
     <Card>
@@ -20,7 +27,9 @@ const CardCart = (props) => {
             className="font-semibold"
           />
           <Button
-            className="btn-circle btn-outline btn-sm btn-error"
+            className={`btn-circle btn-outline btn-sm btn-error ${
+              isDisabledAction ? "opacity-0 scale-0" : "opacity-100"
+            } ease-in-out duration-300`}
             onClick={() => onDeleteCart(item)}
           >
             <AiOutlineDelete />
@@ -32,7 +41,12 @@ const CardCart = (props) => {
         <Card.Price price={item.price * item.quantity} className="text-lg" />
         {/* FOOTER */}
         <div className="card-actions justify-between">
-          <div className="tooltip tooltip-top" data-tip="Edit">
+          <div
+            className={`tooltip tooltip-top ${
+              isDisabledAction ? "opacity-0 scale-0" : "opacity-100"
+            } ease-in-out duration-300`}
+            data-tip="Edit"
+          >
             <Button className="btn-sm btn-circle btn-ghost">
               <AiOutlineEdit size={20} />
             </Button>
@@ -45,7 +59,9 @@ const CardCart = (props) => {
             title={`${
               isNotesFilled(item.notes) ? "Catatan " : "Tambah Catatan "
             } untuk ${item.name}`}
-            btnClassName="btn-sm btn-outline"
+            btnClassName={`btn-sm btn-outline ${
+              isDisabledAction ? "opacity-0 scale-0" : "opacity-100"
+            } ease-in-out duration-300`}
             onSubmit={(event) =>
               handleSubmitFormNotes(event, item._id, item.is_take_away)
             }

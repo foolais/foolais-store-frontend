@@ -8,8 +8,8 @@ const CardOrder = () => {
         <p className="font-semibold text-lg my-1">Meja : 2</p>
         <p className="font-semibold text-sm">Status: Selesai</p>
       </div>
-      <div className="w-auto">
-        <p className="text-right">20:30 PM</p>
+      <div className="w-auto flex flex-col justify-end">
+        <p className="text-right">17/11/2022, 20:30 PM</p>
         <p className="text-right font-semibold my-1">Rp. 100.000</p>
         <Button className="btn-sm bg-secondary">Lihat Detail -</Button>
       </div>
