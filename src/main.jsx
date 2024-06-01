@@ -11,6 +11,7 @@ import TablePages from "./pages/TablePages";
 import CartPages from "./pages/CartPages";
 import LoginPages from "./pages/LoginPages";
 import OrderPages from "./pages/OrderPages";
+import OrderDetailsPages from "./pages/OrderDetailsPages";
 
 const router = createBrowserRouter([
   { path: "/", element: <HomePages />, errorElement: <ErrorPages /> },
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
   { path: "/meja", element: <TablePages /> },
   { path: "/keranjang", element: <CartPages /> },
   { path: "/pesanan", element: <OrderPages /> },
+  { path: "/pesanan/:id", element: <OrderDetailsPages /> },
   { path: "/login", element: <LoginPages /> },
 ]);
 

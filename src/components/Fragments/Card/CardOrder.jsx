@@ -1,6 +1,10 @@
 import Button from "../../Elements/Button/Button";
+import { useNavigate } from "react-router-dom";
 
 const CardOrder = () => {
+  const navigate = useNavigate();
+  const id = 1;
+
   return (
     <div className="w-full p-4 bg-white shadow-md rounded-lg flex justify-between border-[1px] border-secondary">
       <div className="w-1/2">
@@ -11,7 +15,12 @@ const CardOrder = () => {
       <div className="w-auto flex flex-col justify-end">
         <p className="text-right">17/11/2022, 20:30 PM</p>
         <p className="text-right font-semibold my-1">Rp. 100.000</p>
-        <Button className="btn-sm bg-secondary">Lihat Detail -</Button>
+        <Button
+          onClick={() => navigate(`/pesanan/${id}`)}
+          className="btn-sm bg-secondary"
+        >
+          Lihat Detail -
+        </Button>
       </div>
     </div>
   );

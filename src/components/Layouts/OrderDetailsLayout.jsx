@@ -1,11 +1,11 @@
 import { useState } from "react";
-import BadgeStatus from "./BadgeStatus";
-import CardCart from "./Card/CardCart";
-import CardAddNew from "./CardAddNew";
-import Button from "../Elements/Button/Button";
 import { AiOutlineEdit, AiOutlineFileAdd } from "react-icons/ai";
+import Button from "../Elements/Button/Button";
+import CardAddNew from "../Fragments/CardAddNew";
+import CardCart from "../Fragments/Card/CardCart";
+import BadgeStatus from "../Fragments/BadgeStatus";
 
-const OrderDetails = () => {
+const OrderDetailsLayout = () => {
   const dummyData = [
     {
       id: 1,
@@ -112,4 +112,4 @@ const OrderDetails = () => {
   );
 };
 
-export default OrderDetails;
+export default OrderDetailsLayout;
