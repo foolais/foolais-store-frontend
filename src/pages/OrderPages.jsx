@@ -9,7 +9,7 @@ const OrderPages = () => {
     { text: "Pesanan", link: "/pesanan" },
   ];
   return (
-    <MainLayout className="pb-[8.5rem]">
+    <MainLayout>
       <Title>Daftar Pesanan</Title>
       <Breadcrumbs data={data} />
       <OrderLayout />

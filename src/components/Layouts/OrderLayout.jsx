@@ -1,5 +1,7 @@
 import { useState } from "react";
 import BadgeStatus from "../Fragments/BadgeStatus";
+import CardOrder from "../Fragments/Card/CardOrder";
+import OrderDetails from "../Fragments/OrderDetails";
 
 const OrderLayout = () => {
   const initialBadgeData = [
@@ -29,6 +31,13 @@ const OrderLayout = () => {
         isClickable={true}
         onBadgeChange={onBadgeChange}
       />
+      <div className="my-4 grid gap-4">
+        <CardOrder />
+        <CardOrder />
+      </div>
+      <div className="mt-4 w-full h-auto">
+        <OrderDetails />
+      </div>
     </div>
   );
 };
