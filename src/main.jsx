@@ -10,12 +10,14 @@ import ErrorPages from "./pages/ErrorPages";
 import TablePages from "./pages/TablePages";
 import CartPages from "./pages/CartPages";
 import LoginPages from "./pages/LoginPages";
+import OrderPages from "./pages/OrderPages";
 
 const router = createBrowserRouter([
   { path: "/", element: <HomePages />, errorElement: <ErrorPages /> },
   { path: "/menu", element: <MenuPages /> },
   { path: "/meja", element: <TablePages /> },
   { path: "/keranjang", element: <CartPages /> },
+  { path: "/pesanan", element: <OrderPages /> },
   { path: "/login", element: <LoginPages /> },
 ]);
 
