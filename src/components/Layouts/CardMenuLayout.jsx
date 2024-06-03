@@ -3,21 +3,30 @@ import Modal from "../Fragments/Modal";
 import FormMenu from "../Fragments/FormMenu";
 import CardMenu from "../Fragments/Card/CardMenu";
 import useMenu from "../../hooks/useMenu";
+import BadgeStatus from "../Fragments/BadgeStatus";
 
 const CardMenuLayout = () => {
   const {
     menu,
+    badgeData,
+    filteredMenu,
     searchData,
     addMenuModal,
     setAddMenuModal,
     onCloseModal,
     onSelectedMenu,
-    onDeleteMenu,
+    onBadgeChange,
     onAddMenu,
+    onDeleteMenu,
   } = useMenu();
 
   return (
     <div className="w-full h-auto">
+      <BadgeStatus
+        data={badgeData}
+        isClickable={true}
+        onBadgeChange={onBadgeChange}
+      />
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {searchData && menu && menu.length === 0 && (
           <div className="w-full flex items-center justify-center text-neutral p-4 font-semibold">
@@ -26,14 +35,14 @@ const CardMenuLayout = () => {
         )}
         <CardAddNew
           title="Tambah Menu Baru"
-          cardClassName="min-h-auto min-w-48"
+          cardClassName="min-h-32 h-auto min-w-48"
           titleClassName="font-semibold mt-4"
           actionClassName="mt-4"
           btnOnClick={() => setAddMenuModal(true)}
         />
-        {menu &&
-          menu.length > 0 &&
-          menu.map((item) => {
+        {filteredMenu &&
+          filteredMenu.length > 0 &&
+          filteredMenu.map((item) => {
             return (
               <CardMenu
                 key={item._id}
