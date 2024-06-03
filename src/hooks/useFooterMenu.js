@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getAllMenu,
-  handleUpdateMenu,
   resetSelectedMenu,
   updateMenu,
 } from "../redux/slice/menuSlice";
@@ -152,6 +151,7 @@ const useFooterMenu = () => {
 
   return {
     selectedMenu,
+    setSelectedMenu,
     tableCart,
     updateMenuModal,
     setUpdateMenuModal,

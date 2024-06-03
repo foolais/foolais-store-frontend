@@ -27,7 +27,7 @@ const CardMenuLayout = () => {
         isClickable={true}
         onBadgeChange={onBadgeChange}
       />
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-36">
         {searchData && menu && menu.length === 0 && (
           <div className="w-full flex items-center justify-center text-neutral p-4 font-semibold">
             {`Tidak Ada Menu Untuk "${searchData}" `}

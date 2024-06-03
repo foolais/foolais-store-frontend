@@ -3,19 +3,19 @@ import Button from "../Elements/Button/Button";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
 const Counter = (props) => {
-  const { id, value, handleCounter, className, disabled } = props;
+  const { id, value = 1, handleCounter, className, disabled } = props;
   return (
-    <div className={`flex items-center justify-center gap-2 ${className}`}>
+    <div className={`flex items-center gap-2 ${className}`}>
       <Button
-        className="btn-circle btn-sm bg-neutral"
+        className="btn-circle btn-sm bg-secondary text-white"
         onClick={() => value > 1 && handleCounter(id, "minus")}
         disabled={disabled}
       >
         <AiOutlineMinus size={20} />
       </Button>
-      <span className="font-semibold text-xl text-neutral">{value}</span>
+      <span className="font-semibold text-xl text-primary">{value}</span>
       <Button
-        className="btn-circle btn-sm bg-neutral"
+        className="btn-circle btn-sm bg-secondary text-white"
         onClick={() => handleCounter(id, "plus")}
         disabled={disabled}
       >

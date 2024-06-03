@@ -1,22 +1,26 @@
 import Counter from "../Fragments/Counter";
-import Divider from "../Elements/Divider/Divider";
-import Card from "../Fragments/Card";
-import Button from "../Elements/Button/Button";
-import { AiOutlineRight } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 import Modal from "../Fragments/Modal";
 import FormMenu from "../Fragments/FormMenu";
-import FooterLayout from "./Footer/FooterLayout";
 import useFooterMenu from "../../hooks/useFooterMenu";
+import useBadge from "../../hooks/useBadge";
+import FooterLayouts from "./Footer/FooterLayouts";
+import BadgeStatus from "../Fragments/BadgeStatus";
+import { useEffect } from "react";
 
 const FooterMenuAction = () => {
+  const initialBadge = [
+    { text: "Makan Di Tempat", color: "secondary", value: "dine_in" },
+    { text: "Bawa Pulang", color: "primary", value: "take_away" },
+  ];
+
   const {
     selectedMenu,
+    setSelectedMenu,
     tableCart,
     updateMenuModal,
     setUpdateMenuModal,
     handleChangeQuantity,
-    handleIsTakeAway,
-    handleSubmitFormNotes,
     onUpdateMenu,
     onCloseModal,
     getTitleData,
@@ -24,66 +28,58 @@ const FooterMenuAction = () => {
     onAddToCart,
   } = useFooterMenu();
 
+  const { badgeData, badgeValue, onBadgeChange } = useBadge(initialBadge);
+
+  useEffect(() => {
+    setSelectedMenu((prev) => {
+      return {
+        ...prev,
+        is_take_away: badgeValue === "take_away",
+      };
+    });
+  }, [badgeValue, setSelectedMenu]);
+
   return (
-    <FooterLayout
-      title={getTitleData()}
-      isWithCloseBtn={tableCart !== null}
-      onClickCloseBtn={resetTableCart}
-    >
-      {/* LEFT */}
-      <div className="max-w-1/4 flex items-center justify-center">
-        {/* Counter */}
+    <FooterLayouts>
+      <div className="flex items-center gap-2 mb-2">
+        <FooterLayouts.Title
+          title={getTitleData()}
+          isWithCloseBtn={tableCart !== null}
+          onClickCloseBtn={resetTableCart}
+        />
+        <div
+          className={`tooltip tooltip-right ${
+            !selectedMenu?.name ? "opacity-0 scale-0" : "opacity-100"
+          } ease-in-out duration-300 cursor-pointer`}
+          data-tip="Ubah Menu"
+          onClick={() => setUpdateMenuModal(true)}
+        >
+          <AiOutlineEdit size={20} />
+        </div>
+      </div>
+      <div className="grid grid-cols-[30%_10px_auto] gap-4">
+        <p className="font-bold text-md flex items-center">Tipe Makan </p>
+        <span className="flex items-center">:</span>
+        <BadgeStatus
+          data={badgeData}
+          isClickable={selectedMenu?.name}
+          onBadgeChange={onBadgeChange}
+        />
+        <p className="font-bold text-md flex items-center">Jumlah</p>
+        <span className="flex items-center">:</span>
         <Counter
           value={selectedMenu ? selectedMenu?.quantity : 1}
-          className="ml-2 pt-2"
+          className="justify-start"
           handleCounter={handleChangeQuantity}
           disabled={!selectedMenu?.name}
         />
       </div>
-      {/* MID*/}
-      <div className="min-w-max md:w-1/2 lg:w-1/3 flex flex-col gap-2 justify-center pt-2">
-        {/* Tipe */}
-        <Card.Type
-          id={selectedMenu?._id}
-          isTakeAway={selectedMenu?.is_take_away}
-          handleIsTakeAway={handleIsTakeAway}
-          disabled={!selectedMenu?.name}
-        />
-        {/* Catatan */}
-        <Card.Notes
-          data={selectedMenu?.notes}
-          textButton={`${
-            selectedMenu?.notes && selectedMenu?.notes.length > 1
-              ? "Lihat"
-              : "Tambah"
-          } Catatan`}
-          title="Catatan"
-          btnClassName="btn-sm bg-secondary text-primary border-0"
-          disabled={!selectedMenu?.name}
-          onSubmit={handleSubmitFormNotes}
-        />
-      </div>
-      {/* RIGHT */}
-      <div className="w-auto lg:w-5/12 flex flex-col md:flex-row items-center pt-2 gap-2">
-        {/* Button Delete Menu */}
-        <Button
-          className="bg-secondary text-primary border-none lg:w-[48%]"
-          disabled={!selectedMenu?.name}
-          onClick={() => setUpdateMenuModal(true)}
-        >
-          Ubah Menu
-          <AiOutlineRight size={15} />
-        </Button>
-        {/* Button Add */}
-        <Button
-          className="bg-secondary text-primary border-none lg:w-[48%]"
-          disabled={!selectedMenu?.name}
-          onClick={onAddToCart}
-        >
-          Tambah
-          <AiOutlineRight size={15} />
-        </Button>
-      </div>
+      <FooterLayouts.BtnAction
+        disabled={!selectedMenu?.name}
+        onClick={onAddToCart}
+      >
+        Tambah Ke Keranjang
+      </FooterLayouts.BtnAction>
       {/* Modal Update Menu  */}
       <Modal
         key={selectedMenu?._id}
@@ -98,7 +94,7 @@ const FooterMenuAction = () => {
           onSubmit={(event) => onUpdateMenu(event, selectedMenu._id)}
         />
       </Modal>
-    </FooterLayout>
+    </FooterLayouts>
   );
 };
 
