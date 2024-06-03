@@ -17,31 +17,38 @@ import {
 const useMenu = () => {
   const dispatch = useDispatch();
 
+  // Data
+  const initialBadgeData = [
+    { text: "Semua", color: "secondary", value: "all" },
+    { text: "Makanan", color: "primary", value: "food" },
+    { text: "Minuman", color: "primary", value: "drink" },
+    { text: "Tambahan", color: "primary", value: "extra" },
+  ];
+
+  // state
   const [menu, setMenu] = useState(null);
   const [addMenuModal, setAddMenuModal] = useState(false);
+  const [badgeData, setBadgeData] = useState(initialBadgeData);
+  const [filteredMenu, setFilteredMenu] = useState([]);
 
+  // redux selctor
   const { data: dataMenu, loading } = useSelector((state) => state.menu);
 
   const searchData = useSelector(getSearchData);
 
-  // GET data menu from database
-  const getAllMenuData = () => {
-    if (loading) return;
-    try {
-      // GET data menu from database
-      dispatch(getAllMenu());
-    } catch (error) {
-      // GET data from local storage
-      setMenu(dataMenu);
-    }
-  };
-
+  // * Use Effect
+  // ! get all menu
   useEffect(() => {
     getAllMenuData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // filter menu by search data navbar
+  // ! set Filtered menu
+  useEffect(() => {
+    setFilteredMenu(menu);
+  }, [menu]);
+
+  // ! filter menu by search data navbar
   useEffect(() => {
     if (searchData) {
       const filteredMenu = dataMenu.filter((item) =>
@@ -63,13 +70,40 @@ const useMenu = () => {
     return menu?.name && menu?.price && menu?.category;
   };
 
-  //   When click/select menu
+  // ! When click/select menu
   const onSelectedMenu = (id) => {
     dispatch(handleSelectedMenu(id));
   };
 
-  //   CRUD Event
-  //   POST new menu
+  // ! When change badge
+  const onBadgeChange = (value) => {
+    const updateBadgeData = badgeData.map((item) => {
+      return {
+        ...item,
+        color: item.value === value ? "secondary" : "primary",
+      };
+    });
+    const updatedMenu =
+      value === "all" ? menu : menu.filter((item) => item.category === value);
+
+    setFilteredMenu(updatedMenu);
+
+    setBadgeData(updateBadgeData);
+  };
+
+  //  * CRUD Event
+  // ! GET menu from database
+  const getAllMenuData = () => {
+    if (loading) return;
+    try {
+      // GET data menu from database
+      dispatch(getAllMenu());
+    } catch (error) {
+      // GET data from local storage
+      setMenu(dataMenu);
+    }
+  };
+  //  ! POST new menu
   const onAddMenu = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -103,7 +137,7 @@ const useMenu = () => {
         });
     }
   };
-  //   DELETE menu
+  //  ! DELETE menu
   const onDeleteMenu = ({ _id, name }) => {
     const text = `Apakah anda yakin ingin menghapus menu ${name}?`;
     const successText = `Menu ${name} telah dihapus`;
@@ -125,13 +159,16 @@ const useMenu = () => {
 
   return {
     menu,
+    badgeData,
+    filteredMenu,
     searchData,
     addMenuModal,
     setAddMenuModal,
     onCloseModal,
     onSelectedMenu,
-    onDeleteMenu,
+    onBadgeChange,
     onAddMenu,
+    onDeleteMenu,
   };
 };
 
