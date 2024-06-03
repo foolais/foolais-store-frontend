@@ -1,9 +1,10 @@
-import { useState } from "react";
 import { AiOutlineEdit, AiOutlineFileAdd } from "react-icons/ai";
 import Button from "../Elements/Button/Button";
 import CardAddNew from "../Fragments/CardAddNew";
 import CardCart from "../Fragments/Card/CardCart";
-import BadgeStatus from "../Fragments/BadgeStatus";
+import useOrder from "../../hooks/useOrder";
+import Modal from "../Fragments/Modal";
+import TextArea from "../Elements/Input/TextArea";
 
 const OrderDetailsLayout = () => {
   const dummyData = [
@@ -12,40 +13,28 @@ const OrderDetailsLayout = () => {
       name: "Soto",
       price: 12000,
       quantity: 2,
-      is_selected: false,
     },
     {
       id: 2,
       name: "Bakso",
       price: 12000,
       quantity: 2,
-      is_selected: false,
     },
   ];
 
-  const initialBadgeData = [
-    { text: "Tunai", color: "secondary", value: "cash" },
-    { text: "QRIS", color: "primary", value: "qris" },
-  ];
-
-  const [badgeData, setBadgeData] = useState(initialBadgeData);
-  const [onEdit, setOnEdit] = useState(false);
-
-  const onBadgeChange = (value) => {
-    const updateBadgeData = badgeData.map((item) => {
-      return {
-        ...item,
-        color: item.value === value ? "secondary" : "primary",
-      };
-    });
-
-    setBadgeData(updateBadgeData);
-  };
+  const {
+    data,
+    onEdit,
+    showModal,
+    onToggleOnEdit,
+    onHandleAddNotes,
+    handleShowModal,
+  } = useOrder();
 
   return (
     <>
       <div className="flex items-start justify-between">
-        <div className="flex flex-col">
+        <div className="grid">
           <div className="flex items-center">
             <p className="font-bold text-2xl mb-1">Pesanan #1</p>
             <div
@@ -53,7 +42,7 @@ const OrderDetailsLayout = () => {
               data-tip={onEdit ? "Simpan Perubahan" : "Edit Pesanan"}
             >
               <Button
-                onClick={() => setOnEdit((prev) => !prev)}
+                onClick={onToggleOnEdit}
                 className="btn-sm btn-circle btn-ghost"
               >
                 {onEdit ? (
@@ -64,10 +53,20 @@ const OrderDetailsLayout = () => {
               </Button>
             </div>
           </div>
-          <p>Status: Selesai</p>
+          <p>
+            Status : <span className="font-semibold">Selesai</span>
+          </p>
         </div>
-        <div>
-          <p className="font-semibold text-lg">Meja : 2</p>
+        <div className="grid text-right">
+          <p className="font-semibold text-lg mb-1">Meja : 2</p>
+          <Button
+            onClick={() => handleShowModal(true)}
+            className={`btn-sm btn-outline text-secondary font-bold border-[1px] border-secondary hover:bg-secondary hover:border-secondary ease-in-out duration-300 ${
+              onEdit ? "opacity-100" : "opacity-0 scale-0"
+            }`}
+          >
+            Tambah Catatan
+          </Button>
         </div>
       </div>
       <div className="grid grid-cols-2 mt-4 gap-4">
@@ -87,27 +86,26 @@ const OrderDetailsLayout = () => {
           onEdit={!onEdit}
         />
       </div>
-      <div className="my-4 bg-white p-4 rounded-lg fixed bottom-0 left-4 right-4 ml-16 shadow-lg border-[1px] border-secondary">
-        <div className="flex items-start justify-between">
-          <div>
-            <p className="font-bold text-lg">Metode Pembayaran</p>
-            <BadgeStatus
-              data={badgeData}
-              isClickable={!onEdit}
-              onBadgeChange={onBadgeChange}
-            />
-          </div>
-          <p className="font-semibold text-lg text-right">
-            Total Harga : Rp. 200.000
-          </p>
-        </div>
-        <Button
-          disabled={onEdit}
-          className="bg-secondary w-full mt-4 text-lg text-white"
+      <Modal
+        title={`Catatan Untuk Pesanan #${1}`}
+        showModal={showModal}
+        closeModal={() => handleShowModal(false)}
+      >
+        <form
+          className=" flex flex-col gap-4 "
+          onSubmit={(event) => onHandleAddNotes(event)}
         >
-          Bayar Sekarang
-        </Button>
-      </div>
+          <TextArea
+            name="notes"
+            className="textarea textarea-bordered textarea-md min-h-[120px] my-4"
+            defaultValue={data?.notes}
+            placeholder="Masukkan catatan ..."
+          />
+          <Button className="bg-secondary text-white text-lg w-full border-none">
+            Simpan Perubahan
+          </Button>
+        </form>
+      </Modal>
     </>
   );
 };

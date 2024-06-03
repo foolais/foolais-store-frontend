@@ -3,6 +3,7 @@ import MainLayout from "../components/Layouts/MainLayout";
 import Title from "../components/Elements/Text/Title";
 import Breadcrumbs from "../components/Fragments/Breadcrumbs";
 import OrderDetailsLayout from "../components/Layouts/OrderDetailsLayout";
+import FooterOrderDetails from "../components/Layouts/Footer/FooterOrderDetails";
 
 const OrderDetailsPages = () => {
   const { id } = useParams();
@@ -18,6 +19,7 @@ const OrderDetailsPages = () => {
       <Title>Detail Pesanan</Title>
       <Breadcrumbs data={data} />
       <OrderDetailsLayout />
+      <FooterOrderDetails />
     </MainLayout>
   );
 };

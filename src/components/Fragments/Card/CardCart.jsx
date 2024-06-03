@@ -14,8 +14,6 @@ const CardCart = (props) => {
 
   const { isNotesFilled } = useCart();
 
-  console.log({ isDisabledAction });
-
   return (
     <Card>
       <div className="card-body">

@@ -4,6 +4,7 @@ import searchBarReducer from "./slice/searchBarSlice";
 import cartReducer from "./slice/cartSlice";
 import tableReducer from "./slice/tableSlice";
 import loginReducer from "./slice/loginSlice";
+import orderReducer from "./slice/orderSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     cart: cartReducer,
     table: tableReducer,
     login: loginReducer,
+    order: orderReducer,
   },
 });
 

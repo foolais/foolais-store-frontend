@@ -6,8 +6,12 @@ const Modal = (props) => {
 
   return (
     <>
-      <dialog className={`modal z-[100] ${showModal && "modal-open"}`}>
-        <div className="modal-box max-h-[80vh]">
+      <dialog
+        className={`modal z-[100] ${
+          showModal && "modal-open w-screen h-screen"
+        }`}
+      >
+        <div className="modal-box max-h-[80%] min-w-[80%]">
           <form method="dialog">
             <Button
               className="btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -16,7 +20,7 @@ const Modal = (props) => {
               X
             </Button>
           </form>
-          <h3 className="font-bold text-lg mb-4">{title}</h3>
+          <h3 className="font-bold text-2xl mb-4">{title}</h3>
           {children}
         </div>
       </dialog>
