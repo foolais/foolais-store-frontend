@@ -112,12 +112,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const getCartData = (state) => state.cart.data;
-export const getCartStatus = (state) => state.cart.status;
-export const getCartError = (state) => state.cart.error;
-export const getCartTable = (state) => state.cart.table;
-export const getCartTotalPrice = (state) => state.cart.totalPrice;
-
 export const {
   handleAddToCart,
   handleChangeNotes,

@@ -1,4 +1,3 @@
-import { getCartData } from "../../redux/slice/cartSlice";
 import Button from "../Elements/Button/Button";
 import Avatar from "../Fragments/Avatar";
 import Divider from "../Elements/Divider/Divider";
@@ -10,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const cartData = useSelector(getCartData);
+  const { data: cartData } = useSelector((state) => state.cart);
 
   const url = window.location.href;
   const isMenuURL = url.includes("/menu");

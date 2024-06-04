@@ -2,11 +2,6 @@
 import { AiOutlineEdit, AiOutlineRight } from "react-icons/ai";
 import Button from "../Elements/Button/Button";
 import { useSelector } from "react-redux";
-import {
-  getCartData,
-  getCartStatus,
-  getCartTable,
-} from "../../redux/slice/cartSlice";
 import { formatRupiah } from "../../utils/utils";
 import { useState, useEffect } from "react";
 import ModalPayment from "../Fragments/Modal/ModalPayment";
@@ -15,9 +10,9 @@ const FooterCartAction = () => {
   const [cartTable, setCartTable] = useState(null);
   const [showModalPayment, setShowModalPayment] = useState(false);
 
-  const cartData = useSelector(getCartData);
-  const cartTableData = useSelector(getCartTable);
-  const cartStatus = useSelector(getCartStatus);
+  const { data: cartData, table: cartTableData } = useSelector(
+    (state) => state.cart
+  );
 
   const calculateTotalPrice = () => {
     const totalPrice = cartData.reduce(
@@ -29,8 +24,8 @@ const FooterCartAction = () => {
   };
 
   useEffect(() => {
-    if (cartStatus === "idle") setCartTable(cartTableData);
-  }, [cartStatus, cartTableData]);
+    setCartTable(cartTableData);
+  }, [cartTableData]);
 
   const onChangeTable = (type) => {
     if (type === "ADD") {

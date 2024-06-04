@@ -1,15 +1,12 @@
 import { useSelector } from "react-redux";
 import Button from "../../Elements/Button/Button";
 import FormInput from "./FormInput";
-import { getCartTotalPrice } from "../../../redux/slice/cartSlice";
 
 /* eslint-disable react/prop-types */
 const FormPayment = (props) => {
   const { onSubmit } = props;
 
-  const totalPrice = useSelector(getCartTotalPrice);
-
-  console.log({ totalPrice });
+  const { totalPrice } = useSelector((state) => state.cart);
 
   return (
     <form onSubmit={onSubmit}>

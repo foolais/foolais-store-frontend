@@ -5,11 +5,7 @@ import {
   resetSelectedMenu,
   updateMenu,
 } from "../redux/slice/menuSlice";
-import {
-  getCartTable,
-  handleAddToCart,
-  handleSetTableCart,
-} from "../redux/slice/cartSlice";
+import { handleAddToCart, handleSetTableCart } from "../redux/slice/cartSlice";
 import {
   exitConfirmationDialog,
   showConfirmationDialog,
@@ -24,7 +20,7 @@ const useFooterMenu = () => {
   // dispatch
   const dispatch = useDispatch();
   const { data: dataMenu } = useSelector((state) => state.menu);
-  const tableCart = useSelector(getCartTable);
+  const { table: tableCart } = useSelector((state) => state.cart);
 
   //set Selected Menu
   useEffect(() => {

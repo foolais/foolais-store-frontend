@@ -37,7 +37,7 @@ const FormCart = (props) => {
         defaultValue={defaultValue?.is_take_away ? "take_away" : "dine_in"}
       />
       <FormInput
-        title="Harga"
+        title="Harga Satuan"
         type="number"
         name="price"
         placeholder="Masukkan Harga..."

@@ -5,7 +5,10 @@ import MainLayout from "../components/Layouts/MainLayout";
 
 const HomePages = () => {
   const data = [{ text: "Home", link: "/" }];
-  const dropdownData = [{ text: "hello", value: "hello" }];
+  const dropdownData = [
+    { text: "hello", value: "hello" },
+    { text: "tes", value: "tes" },
+  ];
   const handleSelect = (selectedValue) => {
     console.log({ selectedValue });
   };
