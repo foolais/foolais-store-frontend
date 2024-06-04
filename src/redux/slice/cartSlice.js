@@ -90,6 +90,27 @@ const cartSlice = createSlice({
       state.data = [];
       localStorage.setItem("cart", JSON.stringify({ data: [], table: null }));
     },
+    handleUpdateCart: (state, action) => {
+      const { _id, is_take_away } = action.payload;
+      const { existingCart, existingCartIndex } = getExistingCart(
+        _id,
+        is_take_away,
+        state
+      );
+
+      console.log(JSON.parse(JSON.stringify(existingCart)));
+
+      if (existingCartIndex !== -1) {
+        state.data[existingCartIndex] = { ...existingCart, ...action.payload };
+
+        console.log({ data: state.data[existingCartIndex] });
+
+        localStorage.setItem(
+          "cart",
+          JSON.stringify({ ...state, data: state.data })
+        );
+      }
+    },
   },
 });
 
@@ -105,6 +126,7 @@ export const {
   handleRemoveCart,
   handleSetTableCart,
   handleRemoveAllCart,
+  handleUpdateCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

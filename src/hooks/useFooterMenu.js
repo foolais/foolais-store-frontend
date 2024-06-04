@@ -67,7 +67,11 @@ const useFooterMenu = () => {
 
   // when add to cart
   const onAddToCart = () => {
-    dispatch(handleAddToCart(selectedMenu));
+    let payload = selectedMenu;
+    if (!selectedMenu?.is_take_away) {
+      payload = { ...selectedMenu, is_take_away: false };
+    }
+    dispatch(handleAddToCart(payload));
     setSelectedMenu(null);
     dispatch(resetSelectedMenu());
   };

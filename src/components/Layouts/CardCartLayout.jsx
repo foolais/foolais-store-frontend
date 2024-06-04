@@ -19,13 +19,15 @@ const CardCartLayout = () => {
   return (
     <div className="w-full h-auto">
       <div className="flex items-center justify-between mb-6">
-        <Button
-          className="font-semibold btn-outline btn-error btn-sm"
-          onClick={handleDeleteAllCart}
-        >
-          <AiFillWarning />
-          Hapus Semua Keranjang
-        </Button>
+        {cart && cart.length > 0 && (
+          <Button
+            className="font-semibold btn-outline btn-error btn-sm"
+            onClick={handleDeleteAllCart}
+          >
+            <AiFillWarning />
+            Hapus Semua Keranjang
+          </Button>
+        )}
         <Button
           onClick={() => handleShowNotesModal(true)}
           className="btn-sm btn-outline text-secondary font-bold border-[1px] border-secondary hover:bg-secondary hover:border-secondary ease-in-out duration-300"
@@ -33,20 +35,20 @@ const CardCartLayout = () => {
           {isNotesFilled ? "Ubah Catatan" : "Tambah Catatan"}
         </Button>
       </div>
-      <div className="flex items-center justify-around lg:justify-between flex-wrap gap-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {cart && cart.length > 0 ? (
           cart.map((item) => {
             return (
               <CardCart
-                key={item.name}
+                key={item.name + item.is_take_away}
                 item={item}
                 onDeleteCart={onDeleteCart}
               />
             );
           })
         ) : (
-          <div className="w-full flex items-center justify-center text-neutral p-4 font-semibold">
-            Tidak Ada Data di Keranjang
+          <div className="w-full flex items-center  text-primary font-semibold">
+            Tidak Ada Pesanan di Keranjang
           </div>
         )}
       </div>

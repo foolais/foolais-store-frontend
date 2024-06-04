@@ -4,6 +4,7 @@ import {
   handleChangeNotes,
   handleRemoveAllCart,
   handleRemoveCart,
+  handleUpdateCart,
 } from "../redux/slice/cartSlice";
 import {
   exitConfirmationDialog,
@@ -18,6 +19,7 @@ const useCart = () => {
   // state
   const [cart, setCart] = useState(null);
   const [showNotesModal, setShowNotesModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   // selcetor redux
   const { data: cartData, notes } = useSelector((state) => state.cart);
@@ -73,15 +75,53 @@ const useCart = () => {
     }
   };
 
+  const handleShowEditModal = (type) => {
+    if (type) {
+      setShowEditModal(type);
+    } else {
+      exitConfirmationDialog((isConfirmed) => {
+        isConfirmed && setShowEditModal(type);
+      });
+    }
+  };
+
+  const onUpdateCart = (event, _id) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    console.log({ data });
+
+    const payload = {
+      _id,
+      ...data,
+      is_take_away: data.type === "take_away",
+    };
+
+    delete payload.type;
+
+    const title = `Apakah anda yakin ingin mengubah pesanan ?`;
+    const successText = `Pesanan berhasil diperbaharui`;
+    showConfirmationDialog(title, successText, (isConfirmed) => {
+      isConfirmed &&
+        dispatch(handleUpdateCart(payload)) &&
+        setShowEditModal(false);
+    });
+  };
+
   return {
     cart,
-    showNotesModal,
     notes,
+    showNotesModal,
+    showEditModal,
     onDeleteCart,
     handleDeleteAllCart,
     isNotesFilled,
     handleShowNotesModal,
     onHandleChangeNotes,
+    handleShowEditModal,
+    onUpdateCart,
   };
 };
 

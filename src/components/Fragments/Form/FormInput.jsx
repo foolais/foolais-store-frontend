@@ -12,6 +12,7 @@ const FormInput = (props) => {
     isTextArea = false,
     isSelect = false,
     defaultValue = null,
+    isDisabled = false,
   } = props;
 
   const type = props?.type;
@@ -31,6 +32,7 @@ const FormInput = (props) => {
           placeholder={placeholder}
           required={required}
           defaultValue={defaultValue}
+          disabled={isDisabled}
         />
       )}
       {isTextArea && (

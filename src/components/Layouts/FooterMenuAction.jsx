@@ -11,7 +11,7 @@ import { useEffect } from "react";
 const FooterMenuAction = () => {
   const initialBadge = [
     { text: "Makan Di Tempat", color: "secondary", value: "dine_in" },
-    { text: "Bawa Pulang", color: "primary", value: "take_away" },
+    { text: "Dibawa Pulang", color: "primary", value: "take_away" },
   ];
 
   const {
@@ -38,6 +38,11 @@ const FooterMenuAction = () => {
       };
     });
   }, [badgeValue, setSelectedMenu]);
+
+  const onSubmitToCart = () => {
+    onAddToCart(selectedMenu);
+    onBadgeChange("dine_in");
+  };
 
   return (
     <FooterLayouts>
@@ -76,7 +81,7 @@ const FooterMenuAction = () => {
       </div>
       <FooterLayouts.BtnAction
         disabled={!selectedMenu?.name}
-        onClick={onAddToCart}
+        onClick={() => onSubmitToCart()}
       >
         Tambah Ke Keranjang
       </FooterLayouts.BtnAction>

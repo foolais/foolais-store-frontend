@@ -12,7 +12,7 @@ const FormTable = (props) => {
 
   const typeTable = [
     { text: "Makan Ditempat", value: "dine_in" },
-    { text: "Bawa Pulang", value: "take_away" },
+    { text: "Dibawa Pulang", value: "take_away" },
   ];
 
   const statusTable = [

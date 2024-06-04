@@ -41,7 +41,7 @@ const CardTable = (props) => {
       case "dine_in":
         return "Makan Ditempat";
       case "take_away":
-        return "Bawa Pulang";
+        return "Dibawa Pulang";
       default:
         return "Makan Ditempat";
     }
