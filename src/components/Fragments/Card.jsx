@@ -62,16 +62,13 @@ const Notes = (props) => {
         showModal={showModal}
         closeModal={() => handleModal(false)}
       >
-        <form
-          className=" flex flex-col gap-4 w-4/5"
-          onSubmit={handleSubmitForm}
-        >
+        <form className="flex flex-col gap-4" onSubmit={handleSubmitForm}>
           <TextArea
             name="notes"
             className="textarea textarea-bordered textarea-md"
             defaultValue={data}
           />
-          <Button className="btn-sm bg-secondary text-primary w-1/2 border-none">
+          <Button className="bg-secondary text-white w-full mt-4">
             Simpan
           </Button>
         </form>

@@ -89,7 +89,7 @@ const FooterMenuAction = () => {
       >
         <FormMenu
           isEdit={true}
-          btnText="Ubah"
+          btnText="Ubah Menu"
           defaultValue={selectedMenu}
           onSubmit={(event) => onUpdateMenu(event, selectedMenu._id)}
         />

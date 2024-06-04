@@ -3,7 +3,7 @@ import { handleChangeNotes, toogleOnEdit } from "../redux/slice/orderSlice";
 import { useState } from "react";
 import {
   exitConfirmationDialog,
-  showConfirmationDialog,
+  successDialog,
   warningDialog,
 } from "../utils/utils";
 
@@ -22,14 +22,11 @@ const useOrder = () => {
 
   const onHandleAddNotes = (event) => {
     event.preventDefault();
-
-    const text = "Apakah anda yakin ingin menyimpan perubahan?";
-    const successText = "Perubahan telah disimpan";
+    const payload = event.target.notes.value;
 
     try {
-      showConfirmationDialog(text, successText, (isConfirmed) => {
-        isConfirmed && dispatch(handleChangeNotes(event.target.notes.value));
-      });
+      dispatch(handleChangeNotes(payload));
+      successDialog("Berhasil menyimpan catatan");
       setShowModal(false);
     } catch (error) {
       warningDialog(error);

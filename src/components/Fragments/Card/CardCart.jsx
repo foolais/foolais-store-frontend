@@ -2,17 +2,9 @@
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import Button from "../../Elements/Button/Button";
 import Card from "../Card";
-import useCart from "../../../hooks/useCart";
 
 const CardCart = (props) => {
-  const {
-    item,
-    onDeleteCart,
-    handleSubmitFormNotes,
-    isDisabledAction = false,
-  } = props;
-
-  const { isNotesFilled } = useCart();
+  const { item, onDeleteCart, isDisabledAction = false } = props;
 
   return (
     <Card>
@@ -49,21 +41,6 @@ const CardCart = (props) => {
               <AiOutlineEdit size={20} />
             </Button>
           </div>
-          <Card.Notes
-            data={item.notes}
-            textButton={`${
-              isNotesFilled(item.notes) ? "Lihat" : "Tambah"
-            } Catatan`}
-            title={`${
-              isNotesFilled(item.notes) ? "Catatan " : "Tambah Catatan "
-            } untuk ${item.name}`}
-            btnClassName={`btn-sm btn-outline ${
-              isDisabledAction ? "opacity-0 scale-0" : "opacity-100"
-            } ease-in-out duration-300`}
-            onSubmit={(event) =>
-              handleSubmitFormNotes(event, item._id, item.is_take_away)
-            }
-          />
         </div>
       </div>
     </Card>

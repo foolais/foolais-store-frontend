@@ -36,7 +36,7 @@ const FormInput = (props) => {
       {isTextArea && (
         <TextArea
           name={name}
-          className="textarea textarea-bordered"
+          className="textarea textarea-bordered min-h-[100px]"
           placeholder={placeholder}
           required={required}
           defaultValue={defaultValue}

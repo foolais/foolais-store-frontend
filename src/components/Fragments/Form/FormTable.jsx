@@ -23,7 +23,7 @@ const FormTable = (props) => {
   ];
 
   return (
-    <form className="flex flex-col gap-4 w-4/5" onSubmit={onSubmit}>
+    <form className="flex flex-col gap-4" onSubmit={onSubmit}>
       <FormInput
         title="Nama"
         type="text"
@@ -58,7 +58,7 @@ const FormTable = (props) => {
           defaultValue={defaultValue?.status}
         />
       )}
-      <Button className="bg-primary text-neutral my-4">{btnText}</Button>
+      <Button className="bg-secondary text-white mt-4 w-full">{btnText}</Button>
     </form>
   );
 };

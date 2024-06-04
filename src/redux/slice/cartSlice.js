@@ -15,6 +15,7 @@ const getExistingCart = (_id, is_take_away, state) => {
 
 const initialState = {
   data: initialData?.data || [],
+  notes: initialData?.notes || "",
   status: "idle",
   loading: false,
   error: null,
@@ -53,14 +54,11 @@ const cartSlice = createSlice({
       successDialog(text);
     },
     handleChangeNotes: (state, action) => {
-      const { _id, is_take_away, notes } = action.payload;
-      const { existingCart } = getExistingCart(_id, is_take_away, state);
-
-      existingCart.notes = notes;
+      state.notes = action.payload;
 
       localStorage.setItem(
         "cart",
-        JSON.stringify({ data: state.data, table: state.table })
+        JSON.stringify({ ...state, notes: state.notes })
       );
     },
     calculateTotalPrice: (state) => {

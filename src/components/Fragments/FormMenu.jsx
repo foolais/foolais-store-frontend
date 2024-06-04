@@ -5,11 +5,6 @@ import FormInput from "../Fragments/Form/FormInput";
 const FormMenu = (props) => {
   const { onSubmit, isEdit = false, btnText, defaultValue } = props;
 
-  const typeData = [
-    { text: "Makan Ditempat", value: false },
-    { text: "Bawa Pulang", value: true },
-  ];
-
   const statusData = [
     { text: "Tersedia", value: true },
     { text: "Habis", value: false },
@@ -22,7 +17,7 @@ const FormMenu = (props) => {
   ];
 
   return (
-    <form className="flex flex-col gap-4 w-4/5" onSubmit={onSubmit}>
+    <form className="flex flex-col gap-4 " onSubmit={onSubmit}>
       <FormInput
         title="Nama"
         type="text"
@@ -55,7 +50,7 @@ const FormMenu = (props) => {
           defaultValue={defaultValue?.is_available}
         />
       )}
-      <Button className="bg-primary text-neutral my-4">{btnText}</Button>
+      <Button className="bg-secondary text-white mt-4 w-full">{btnText}</Button>
     </form>
   );
 };

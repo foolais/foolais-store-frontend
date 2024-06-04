@@ -6,6 +6,7 @@ import {
   handleRemoveCart,
 } from "../redux/slice/cartSlice";
 import {
+  exitConfirmationDialog,
   showConfirmationDialog,
   successDialog,
   warningDialog,
@@ -13,23 +14,30 @@ import {
 
 const useCart = () => {
   const dispatch = useDispatch();
-  const { data: cartData } = useSelector((state) => state.cart);
 
   // state
   const [cart, setCart] = useState(null);
+  const [showNotesModal, setShowNotesModal] = useState(false);
+
+  // selcetor redux
+  const { data: cartData, notes } = useSelector((state) => state.cart);
+
+  // selector redux
 
   useEffect(() => {
     setCart(cartData);
   }, [cartData]);
 
-  const handleSubmitFormNotes = (event, _id, is_take_away) => {
+  const onHandleChangeNotes = (event) => {
     event.preventDefault();
-    const notes = event.target.notes.value;
-    const payload = { _id, is_take_away, notes };
+    const payload = event.target.notes.value;
+
+    console.log({ payload });
 
     try {
       dispatch(handleChangeNotes(payload));
-      successDialog("Berhasil menambahkan catatan");
+      successDialog("Berhasil menyimpan catatan");
+      setShowNotesModal(false);
     } catch (error) {
       warningDialog(error);
     }
@@ -51,16 +59,29 @@ const useCart = () => {
     });
   };
 
-  const isNotesFilled = (notes) => {
+  const isNotesFilled = () => {
     return notes && notes.length > 0 ? true : false;
+  };
+
+  const handleShowNotesModal = (type) => {
+    if (type) {
+      setShowNotesModal(type);
+    } else {
+      exitConfirmationDialog((isConfirmed) => {
+        isConfirmed && setShowNotesModal(type);
+      });
+    }
   };
 
   return {
     cart,
-    handleSubmitFormNotes,
+    showNotesModal,
+    notes,
     onDeleteCart,
     handleDeleteAllCart,
     isNotesFilled,
+    handleShowNotesModal,
+    onHandleChangeNotes,
   };
 };
 

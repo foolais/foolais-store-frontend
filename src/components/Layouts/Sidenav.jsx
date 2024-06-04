@@ -69,6 +69,8 @@ const Sidenav = () => {
     navigate("/login");
   };
 
+  const isLogin = JSON.parse(localStorage.getItem("user"));
+
   return (
     <aside className="fixed top-0 left-0 h-screen w-16 m-0 flex flex-col items-center gap-3 bg-neutral shadow-md text-neutral p-4 z-10">
       {data.map((item) => {
@@ -97,7 +99,9 @@ const Sidenav = () => {
       >
         <Button
           onClick={() => onLogoutBtn()}
-          className="btn-outline text-primary border-2 btn-circle hover:bg-primary hover:text-neutral"
+          className={`btn-outline text-primary border-2 btn-circle hover:bg-primary hover:text-neutral ${
+            !isLogin && "hidden"
+          }`}
         >
           <AiOutlineLogout />
         </Button>

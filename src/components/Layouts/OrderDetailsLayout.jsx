@@ -3,8 +3,7 @@ import Button from "../Elements/Button/Button";
 import CardAddNew from "../Fragments/CardAddNew";
 import CardCart from "../Fragments/Card/CardCart";
 import useOrder from "../../hooks/useOrder";
-import Modal from "../Fragments/Modal";
-import TextArea from "../Elements/Input/TextArea";
+import ModalNotes from "../Fragments/Modal/ModalNotes";
 
 const OrderDetailsLayout = () => {
   const dummyData = [
@@ -86,26 +85,13 @@ const OrderDetailsLayout = () => {
           onEdit={!onEdit}
         />
       </div>
-      <Modal
+      <ModalNotes
         title={`Catatan Untuk Pesanan #${1}`}
         showModal={showModal}
         closeModal={() => handleShowModal(false)}
-      >
-        <form
-          className=" flex flex-col gap-4 "
-          onSubmit={(event) => onHandleAddNotes(event)}
-        >
-          <TextArea
-            name="notes"
-            className="textarea textarea-bordered textarea-md min-h-[120px] my-4"
-            defaultValue={data?.notes}
-            placeholder="Masukkan catatan ..."
-          />
-          <Button className="bg-secondary text-white text-lg w-full border-none">
-            Simpan Perubahan
-          </Button>
-        </form>
-      </Modal>
+        defaultValue={data}
+        onSubmit={(event) => onHandleAddNotes(event)}
+      />
     </>
   );
 };
