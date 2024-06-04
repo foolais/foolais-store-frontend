@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
-const Input = (props) => {
+import { forwardRef } from "react";
+
+const Input = forwardRef((props, ref) => {
   const {
     type,
     placeholder = "",
@@ -16,9 +18,12 @@ const Input = (props) => {
       name={name}
       autoComplete={autoComplete}
       className={className}
+      ref={ref}
       {...rest}
     />
   );
-};
+});
+
+Input.displayName = "Input";
 
 export default Input;

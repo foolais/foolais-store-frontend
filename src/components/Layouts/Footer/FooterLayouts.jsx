@@ -12,7 +12,7 @@ const FooterLayouts = ({ children }) => {
 
 const Title = ({ title, isWithCloseBtn, onClickCloseBtn }) => {
   return (
-    <div className="bg-secondary rounded-lg py-2 px-4 font-semibold w-max flex items-center gap-2">
+    <div className="bg-secondary rounded-lg py-2 px-4 font-semibold w-max flex items-center gap-2 text-xl">
       <p>{title}</p>
       {isWithCloseBtn && (
         <Button

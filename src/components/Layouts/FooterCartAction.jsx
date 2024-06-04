@@ -1,98 +1,58 @@
 /* eslint-disable react/prop-types */
-import { AiOutlineEdit, AiOutlineRight } from "react-icons/ai";
 import Button from "../Elements/Button/Button";
-import { useSelector } from "react-redux";
-import { formatRupiah } from "../../utils/utils";
-import { useState, useEffect } from "react";
 import ModalPayment from "../Fragments/Modal/ModalPayment";
+import useFooterCart from "../../hooks/useFooterCart";
+import FooterLayouts from "./Footer/FooterLayouts";
+import AutoComplete from "../Elements/Input/AutoComplete";
 
 const FooterCartAction = () => {
-  const [cartTable, setCartTable] = useState(null);
-  const [showModalPayment, setShowModalPayment] = useState(false);
+  const {
+    dropDownTable,
+    cartTable,
+    showModalPayment,
+    setShowModalPayment,
+    calculateTotalPrice,
+    handleChangeTable,
+  } = useFooterCart();
 
-  const { data: cartData, table: cartTableData } = useSelector(
-    (state) => state.cart
-  );
-
-  const calculateTotalPrice = () => {
-    const totalPrice = cartData.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
-
-    return formatRupiah(totalPrice);
-  };
-
-  useEffect(() => {
-    setCartTable(cartTableData);
-  }, [cartTableData]);
-
-  const onChangeTable = (type) => {
-    if (type === "ADD") {
-      console.log("ADD Table");
-    } else if (type === "UPDATE") {
-      console.log({ cartTable });
-    }
-  };
+  console.log({ cartTable });
 
   return (
-    <div className="fixed bottom-0 right-0 left-0 h-28 bg-secondary ml-16 flex items-center justify-between p-4">
-      {/* Title Name */}
-      <div className="absolute -top-6 left-0 bg-primary py-2 px-4 rounded-r-md text-neutral font-semibold">
-        Pesanan
-      </div>
-      {/* Content */}
-      <div className="flex flex-col gap-2">
-        {/* Select Meja */}
-        <div className="flex items-center gap-4 text-neutral">
-          <span className="font-semibold ">Meja : </span>
-          {cartTable ? (
-            <div className="flex items-center gap-2">
-              <span className="font-semibold">{cartTable?.name}</span>
-              <Button
-                className="btn-sm btn-circle btn-ghost"
-                onClick={() => onChangeTable("UPDATE")}
-              >
-                <AiOutlineEdit size={18} />
-              </Button>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <span className="font-semibold">Pilih Meja</span>
-              <Button
-                className="btn-sm btn-circle btn-ghost"
-                onClick={() => onChangeTable("ADD")}
-              >
-                <AiOutlineEdit size={18} />
-              </Button>
-            </div>
-          )}
+    <>
+      <FooterLayouts>
+        <FooterLayouts.Title title="Keranjang" />
+        <div className="flex items-center gap-2 my-4">
+          <p className="">Pilih Meja : </p>
+          <AutoComplete
+            name="tableCart"
+            widthClassName="w-40 min-w-40"
+            placeholder="Pilih Meja"
+            data={dropDownTable}
+            value={cartTable}
+            onSelect={handleChangeTable}
+          />
         </div>
-        {/* Total Price */}
-        <div className="text-neutral">
-          <span className="font-semibold">Total Harga</span> :{" "}
-          {calculateTotalPrice()}
+        <div className="flex flex-col items-end gap-2">
+          <p className="text-lg font-semibold">
+            Total Harga :{" "}
+            <span className="text-secondary font-bold">
+              {calculateTotalPrice()}
+            </span>
+          </p>
+          <Button
+            onClick={() => setShowModalPayment(true)}
+            className="btn-sm btn-outline border-[1px] border-primary hover:bg-primary"
+          >
+            Bayar Sekarang
+          </Button>
         </div>
-      </div>
-      <div>
-        {/* <Button className="bg-secondary text-neutral" onClick={onClick}>
-          Buat Pesananan
-          <AiCash size={15} />
-        </Button> */}
-        {/* Button Tambah pesanan */}
-        <Button
-          className="bg-secondary text-neutral"
-          onClick={() => setShowModalPayment(true)}
-        >
-          Bayar
-          <AiOutlineRight size={15} />
-        </Button>
-      </div>
+        <FooterLayouts.BtnAction>Tambah Pesanan</FooterLayouts.BtnAction>
+      </FooterLayouts>
       <ModalPayment
         showModal={showModalPayment}
         closeModal={() => setShowModalPayment(false)}
       />
-    </div>
+    </>
   );
 };
 

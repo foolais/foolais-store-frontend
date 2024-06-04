@@ -114,8 +114,9 @@ const useFooterMenu = () => {
 
   // set title footer
   const getTitleData = () => {
+    const table = tableCart?.name || tableCart?.text;
     let title = selectedMenu?.name || "Silahkan Pilih Menu";
-    tableCart && (title += " Untuk Meja " + tableCart?.name);
+    tableCart && (title += " Untuk Meja " + table);
     return title;
   };
 

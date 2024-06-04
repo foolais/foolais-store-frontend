@@ -51,7 +51,6 @@ export const updateTable = createAsyncThunk(
       const token = getToken();
       const headers = { Authorization: token };
       const { _id, ...updatedPayload } = payload;
-      console.log({ headers });
 
       const response = await axios.put(
         `${BASE_URL}/table/update/${_id}`,

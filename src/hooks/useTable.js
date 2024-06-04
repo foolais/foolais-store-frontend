@@ -122,7 +122,6 @@ const useTable = () => {
   };
 
   const onCloseModal = (type) => {
-    console.log({ type });
     exitConfirmationDialog((isConfirmed) => {
       if (isConfirmed) {
         if (type === "ADD") setAddTableModal(false);

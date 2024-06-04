@@ -5,11 +5,20 @@ import Dropdown from "./Dropdown";
 import { AiOutlineDown } from "react-icons/ai";
 
 const AutoComplete = (props) => {
-  const { name, placeholder, widthClassName, data, onSelect } = props;
+  const {
+    name,
+    placeholder,
+    widthClassName,
+    data,
+    onSelect = () => {},
+    value = null,
+  } = props;
+
   const dropdownRef = useRef(null);
+  const inputRef = useRef(null);
+  const [selectedData, setSelectedData] = useState(value);
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedData, setSelectedData] = useState(null);
   const dropownData = useMemo(() => data, [data]);
 
   const filteredData = useMemo(() => {
@@ -23,10 +32,11 @@ const AutoComplete = (props) => {
     if (selectedValue) {
       setSearch(selectedValue?.text);
       setIsOpen(false);
-      setSelectedData(selectedValue);
       onSelect(selectedValue);
+      setSelectedData(selectedValue);
     }
   };
+
   const handleChange = (event) => {
     const inputValue = event.target.value;
     setSearch(inputValue);
@@ -35,12 +45,16 @@ const AutoComplete = (props) => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        inputRef.current &&
+        !inputRef.current.contains(event.target)
+      ) {
         setIsOpen(false);
-      }
-      if (!selectedData) {
-        setSearch("");
-        setIsOpen(false);
+        if (search !== selectedData?.text) {
+          setSearch("");
+        }
       }
     };
 
@@ -49,13 +63,18 @@ const AutoComplete = (props) => {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [selectedData]);
+  }, [selectedData, search]);
+
+  useEffect(() => {
+    setSelectedData(value);
+    setSearch(value?.text || "");
+  }, [value]);
 
   return (
     <div className="relative">
       <label
         htmlFor={name}
-        className={`input input-bordered flex items-center gap-4 ${
+        className={`input input-bordered flex items-center gap-4 max-h-10 ${
           widthClassName || ""
         }`}
       >
@@ -64,8 +83,10 @@ const AutoComplete = (props) => {
           name={name}
           value={search}
           onChange={handleChange}
+          onClick={() => setIsOpen(true)}
           placeholder={placeholder}
           className="w-10/12"
+          ref={inputRef}
         />
         <div
           className={`transition duration-300 ease-in-out ${
@@ -75,7 +96,12 @@ const AutoComplete = (props) => {
           <AiOutlineDown size={15} />
         </div>
       </label>
-      <Dropdown className={isOpen && "dropdown-open"} ref={dropdownRef}>
+      <Dropdown
+        className={`${
+          isOpen ? "dropdown-open opacity-100 -mt-1" : "opacity-0 scale-0"
+        } transition-all ease-in-out duration-300`}
+        ref={dropdownRef}
+      >
         <Dropdown.Container className={widthClassName || ""}>
           {filteredData && filteredData.length > 0 ? (
             filteredData.map((item) => (

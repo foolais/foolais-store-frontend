@@ -38,8 +38,6 @@ const useCart = () => {
     event.preventDefault();
     const payload = event.target.notes.value;
 
-    console.log({ payload });
-
     try {
       dispatch(handleChangeNotes(payload));
       successDialog("Berhasil menyimpan catatan");

@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { successDialog } from "../../utils/utils";
 
-const storedData = localStorage.getItem("cart");
-const initialData = storedData ? JSON.parse(storedData) : [];
+const storedData = JSON.parse(localStorage.getItem("cart"));
+const initialData = storedData || [];
 
 const getExistingCart = (_id, is_take_away, state) => {
   const existingCartIndex = state.data.findIndex(
@@ -44,7 +44,7 @@ const cartSlice = createSlice({
 
       localStorage.setItem(
         "cart",
-        JSON.stringify({ data: state.data, table: state.table })
+        JSON.stringify({ ...storedData, data: state.data })
       );
 
       const text =
@@ -58,7 +58,7 @@ const cartSlice = createSlice({
 
       localStorage.setItem(
         "cart",
-        JSON.stringify({ ...state, notes: state.notes })
+        JSON.stringify({ ...storedData, notes: state.notes })
       );
     },
     calculateTotalPrice: (state) => {
@@ -78,13 +78,17 @@ const cartSlice = createSlice({
 
         localStorage.setItem(
           "cart",
-          JSON.stringify({ data: state.data, table: state.table })
+          JSON.stringify({ ...storedData, data: state.data })
         );
       }
     },
 
     handleSetTableCart: (state, action) => {
       state.table = action.payload;
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({ ...storedData, table: state.table })
+      );
     },
     handleRemoveAllCart: (state) => {
       state.data = [];
@@ -98,14 +102,12 @@ const cartSlice = createSlice({
         state
       );
 
-      console.log(JSON.parse(JSON.stringify(existingCart)));
-
       if (existingCartIndex !== -1) {
         state.data[existingCartIndex] = { ...existingCart, ...action.payload };
 
         localStorage.setItem(
           "cart",
-          JSON.stringify({ ...state, data: state.data })
+          JSON.stringify({ ...storedData, data: state.data })
         );
       }
     },
