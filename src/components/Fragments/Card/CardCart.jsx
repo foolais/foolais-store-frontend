@@ -6,12 +6,17 @@ import CartModal from "../Modal/CartModal";
 import useCart from "../../../hooks/useCart";
 
 const CardCart = (props) => {
-  const { item, onDeleteCart, isDisabledAction = false } = props;
+  const {
+    item,
+    onDeleteCart,
+    isDisabledAction = false,
+    isUseInCart = true,
+  } = props;
 
   const { showEditModal, handleShowEditModal, onUpdateCart } = useCart();
 
   return (
-    <Card>
+    <Card className="min-w-48 max-h-40">
       <div className="card-body">
         {/* HEADER */}
         <div className="flex items-start justify-between gap-4">
@@ -24,7 +29,7 @@ const CardCart = (props) => {
             className={`btn-circle btn-outline btn-sm btn-error ${
               isDisabledAction ? "opacity-0 scale-0" : "opacity-100"
             } ease-in-out duration-300`}
-            onClick={() => onDeleteCart(item)}
+            onClick={() => onDeleteCart(item, isUseInCart)}
           >
             <AiOutlineDelete />
           </Button>
@@ -59,7 +64,7 @@ const CardCart = (props) => {
         showModal={showEditModal}
         closeModal={() => handleShowEditModal(false)}
         defaultValue={item}
-        onSubmit={(event) => onUpdateCart(event, item._id)}
+        onSubmit={(event) => onUpdateCart(event, item._id, isUseInCart)}
       />
     </Card>
   );

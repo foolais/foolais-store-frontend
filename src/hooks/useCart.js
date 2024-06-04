@@ -7,6 +7,10 @@ import {
   handleUpdateCart,
 } from "../redux/slice/cartSlice";
 import {
+  handleUpdateMenuOrder,
+  handleRemoveMenuOrder,
+} from "../redux/slice/orderSlice";
+import {
   exitConfirmationDialog,
   showConfirmationDialog,
   successDialog,
@@ -45,11 +49,15 @@ const useCart = () => {
     }
   };
 
-  const onDeleteCart = ({ _id, name, is_take_away }) => {
+  const onDeleteCart = ({ _id, name, is_take_away }, isUseInCart) => {
     const text = `Apakah anda yakin ingin menghapus pesanan ${name}?`;
     const successText = `Pesanan ${name} telah dihapus`;
     showConfirmationDialog(text, successText, (isConfirmed) => {
-      isConfirmed && dispatch(handleRemoveCart({ _id, is_take_away }));
+      if (isConfirmed) {
+        isUseInCart
+          ? dispatch(handleRemoveCart({ _id, is_take_away }))
+          : dispatch(handleRemoveMenuOrder({ _id, is_take_away }));
+      }
     });
   };
 
@@ -85,13 +93,11 @@ const useCart = () => {
     }
   };
 
-  const onUpdateCart = (event, _id) => {
+  const onUpdateCart = (event, _id, isUseInCart) => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-
-    console.log({ data });
 
     const payload = {
       _id,
@@ -104,9 +110,12 @@ const useCart = () => {
     const title = `Apakah anda yakin ingin mengubah pesanan ?`;
     const successText = `Pesanan berhasil diperbaharui`;
     showConfirmationDialog(title, successText, (isConfirmed) => {
-      isConfirmed &&
-        dispatch(handleUpdateCart(payload)) &&
+      if (isConfirmed) {
+        isUseInCart
+          ? dispatch(handleUpdateCart(payload))
+          : dispatch(handleUpdateMenuOrder(payload));
         setShowEditModal(false);
+      }
     });
   };
 

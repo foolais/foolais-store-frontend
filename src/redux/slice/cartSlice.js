@@ -103,8 +103,6 @@ const cartSlice = createSlice({
       if (existingCartIndex !== -1) {
         state.data[existingCartIndex] = { ...existingCart, ...action.payload };
 
-        console.log({ data: state.data[existingCartIndex] });
-
         localStorage.setItem(
           "cart",
           JSON.stringify({ ...state, data: state.data })

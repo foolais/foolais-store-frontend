@@ -4,23 +4,9 @@ import CardAddNew from "../Fragments/CardAddNew";
 import CardCart from "../Fragments/Card/CardCart";
 import useOrder from "../../hooks/useOrder";
 import ModalNotes from "../Fragments/Modal/ModalNotes";
+import useCart from "../../hooks/useCart";
 
 const OrderDetailsLayout = () => {
-  const dummyData = [
-    {
-      id: 1,
-      name: "Soto",
-      price: 12000,
-      quantity: 2,
-    },
-    {
-      id: 2,
-      name: "Bakso",
-      price: 12000,
-      quantity: 2,
-    },
-  ];
-
   const {
     data,
     onEdit,
@@ -29,6 +15,8 @@ const OrderDetailsLayout = () => {
     onHandleAddNotes,
     handleShowModal,
   } = useOrder();
+
+  const { onDeleteCart } = useCart();
 
   return (
     <>
@@ -69,10 +57,16 @@ const OrderDetailsLayout = () => {
         </div>
       </div>
       <div className="grid grid-cols-2 mt-4 gap-4">
-        {dummyData &&
-          dummyData.map((item) => {
+        {data?.menu &&
+          data?.menu.map((item) => {
             return (
-              <CardCart key={item.id} item={item} isDisabledAction={!onEdit} />
+              <CardCart
+                key={item._id}
+                item={item}
+                isDisabledAction={!onEdit}
+                isUseInCart={false}
+                onDeleteCart={onDeleteCart}
+              />
             );
           })}
         <CardAddNew
