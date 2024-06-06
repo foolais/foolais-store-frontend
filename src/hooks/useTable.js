@@ -136,6 +136,7 @@ const useTable = () => {
 
   return {
     table,
+    loading,
     addTableModal,
     setAddTableModal,
     selectedTable,

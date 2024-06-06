@@ -17,7 +17,6 @@ const initialState = {
   data: initialData?.data || [],
   notes: initialData?.notes || "",
   status: "idle",
-  loading: false,
   error: null,
   totalPrice: 0,
   table: initialData?.table || null,

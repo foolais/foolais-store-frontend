@@ -159,6 +159,7 @@ const useMenu = () => {
 
   return {
     menu,
+    loading,
     badgeData,
     filteredMenu,
     searchData,

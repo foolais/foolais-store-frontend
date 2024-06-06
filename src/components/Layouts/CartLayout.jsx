@@ -6,11 +6,13 @@ import NotesModal from "../Fragments/Modal/NotesModal";
 import FooterCartAction from "../Fragments/Footer/FooterCartAction";
 import Title from "../Elements/Text/Title";
 import Breadcrumbs from "../Fragments/Breadcrumbs";
+import Skeleton from "../Fragments/Skeleton/Skeleton";
 
 const CardCartLayout = () => {
   const {
     cart,
     notes,
+    loading,
     showNotesModal,
     onDeleteCart,
     handleDeleteAllCart,
@@ -30,7 +32,7 @@ const CardCartLayout = () => {
       <Breadcrumbs data={breadcrumbsData} />
       <div
         className={`flex items-center justify-between mb-6 ${
-          cart.length === 0 && "hidden"
+          cart && cart.length === 0 && "hidden"
         }`}
       >
         {cart && cart.length > 0 && (
@@ -50,7 +52,15 @@ const CardCartLayout = () => {
         </Button>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {cart && cart.length > 0 ? (
+        {cart && cart.length === 0 && !loading ? (
+          <div className="w-full flex items-center  text-primary font-semibold">
+            Tidak Ada Pesanan di Keranjang
+          </div>
+        ) : loading ? (
+          <Skeleton.List total={4} className="min-w-48 min-h-36" />
+        ) : (
+          cart &&
+          cart.length > 0 &&
           cart.map((item) => {
             return (
               <CardCart
@@ -60,10 +70,6 @@ const CardCartLayout = () => {
               />
             );
           })
-        ) : (
-          <div className="w-full flex items-center  text-primary font-semibold">
-            Tidak Ada Pesanan di Keranjang
-          </div>
         )}
       </div>
       <NotesModal

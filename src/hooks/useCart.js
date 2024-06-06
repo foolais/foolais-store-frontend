@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -24,6 +25,7 @@ const useCart = () => {
   const [cart, setCart] = useState(null);
   const [showNotesModal, setShowNotesModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // selcetor redux
   const { data: cartData, notes } = useSelector((state) => state.cart);
@@ -31,6 +33,17 @@ const useCart = () => {
   useEffect(() => {
     setCart(cartData);
   }, [cartData]);
+
+  useEffect(() => {
+    const loadingTimeout = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+
+    return () => {
+      setLoading(true);
+      clearTimeout(loadingTimeout);
+    };
+  }, []);
 
   const onHandleChangeNotes = (event) => {
     event.preventDefault();
@@ -118,6 +131,7 @@ const useCart = () => {
   return {
     cart,
     notes,
+    loading,
     showNotesModal,
     showEditModal,
     onDeleteCart,
