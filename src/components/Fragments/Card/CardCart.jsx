@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { AiOutlineDelete } from "react-icons/ai";
 import Button from "../../Elements/Button/Button";
-import Card from "../Card";
+import Card from "../Card/Card";
 import CartModal from "../Modal/CartModal";
 import useCart from "../../../hooks/useCart";
 

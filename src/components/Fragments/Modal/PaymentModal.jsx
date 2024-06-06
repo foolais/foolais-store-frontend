@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import FormPayment from "../Form/FormPayment";
-import Modal from "../Modal";
+import Modal from "./Modal";
 
 const PaymentModal = (props) => {
   const { showModal, closeModal } = props;

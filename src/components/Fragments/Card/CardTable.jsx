@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineRight } from "react-icons/ai";
 import Button from "../../Elements/Button/Button";
-import Card from "../Card";
+import Card from "../Card/Card";
 
 const CardTable = (props) => {
   const { item, onClickEdit, onDeleteTable, onAddOrder } = props;

@@ -1,7 +1,7 @@
-import Modal from "../Fragments/Modal/Modal";
-import TextArea from "../Elements/Input/TextArea";
-import Button from "../Elements/Button/Button";
-import { formatRupiah } from "../../utils/utils";
+import Modal from "../Modal/Modal";
+import TextArea from "../../Elements/Input/TextArea";
+import Button from "../../Elements/Button/Button";
+import { formatRupiah } from "../../../utils/utils";
 import { useState } from "react";
 import { AiOutlineShoppingCart, AiOutlineHome } from "react-icons/ai";
 

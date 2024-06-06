@@ -1,5 +1,5 @@
 import BadgeStatus from "../Fragments/BadgeStatus";
-import CardAddNew from "../Fragments/CardAddNew";
+import CardAddNew from "../Fragments/Card/CardAddNew";
 import Modal from "../Fragments/Modal/Modal";
 import FormTable from "../Fragments/Form/FormTable";
 import CardTable from "../Fragments/Card/CardTable";

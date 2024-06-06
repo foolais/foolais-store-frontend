@@ -1,6 +1,6 @@
 import { AiOutlineEdit, AiOutlineFileAdd } from "react-icons/ai";
 import Button from "../Elements/Button/Button";
-import CardAddNew from "../Fragments/CardAddNew";
+import CardAddNew from "../Fragments/Card/CardAddNew";
 import CardCart from "../Fragments/Card/CardCart";
 import useOrder from "../../hooks/useOrder";
 import NotesModal from "../Fragments/Modal/NotesModal";

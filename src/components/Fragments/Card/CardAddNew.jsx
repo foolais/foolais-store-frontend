@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { AiOutlinePlus } from "react-icons/ai";
-import Button from "../Elements/Button/Button";
+import Button from "../../Elements/Button/Button";
 import Card from "./Card";
 
 const CardAddNew = (props) => {

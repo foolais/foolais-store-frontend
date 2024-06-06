@@ -1,4 +1,4 @@
-import CardAddNew from "../Fragments/CardAddNew";
+import CardAddNew from "../Fragments/Card/CardAddNew";
 import Modal from "../Fragments/Modal/Modal";
 import FormMenu from "../Fragments/FormMenu";
 import CardMenu from "../Fragments/Card/CardMenu";
