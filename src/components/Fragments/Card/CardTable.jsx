@@ -2,50 +2,14 @@
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineRight } from "react-icons/ai";
 import Button from "../../Elements/Button/Button";
 import Card from "../Card/Card";
+import {
+  setColorTable,
+  setStatusTable,
+  setTypeTable,
+} from "../../../utils/statusData";
 
 const CardTable = (props) => {
   const { item, onClickEdit, onDeleteTable, onAddOrder } = props;
-
-  const setStatus = (status) => {
-    switch (status) {
-      case "empty":
-        return "Kosong";
-      case "waiting":
-        return "Menunggu";
-      case "eating":
-        return "Makan";
-      case "finished":
-        return "Selesai";
-      default:
-        return "Kosong";
-    }
-  };
-
-  const statusColor = (status) => {
-    switch (status) {
-      case "empty":
-        return "bg-success";
-      case "waiting":
-        return "bg-warning";
-      case "eating":
-        return "bg-info";
-      case "finished":
-        return "bg-primary";
-      default:
-        return "bg-success";
-    }
-  };
-
-  const setType = (type) => {
-    switch (type) {
-      case "dine_in":
-        return "Makan Ditempat";
-      case "take_away":
-        return "Dibawa Pulang";
-      default:
-        return "Makan Ditempat";
-    }
-  };
 
   return (
     <Card
@@ -63,10 +27,10 @@ const CardTable = (props) => {
             {/* Status Tooltip  */}
             <div
               className="tooltip tooltip-right"
-              data-tip={setStatus(item.status)}
+              data-tip={setStatusTable(item.status)}
             >
               <div
-                className={`w-4 h-4 rounded-full ${statusColor(item.status)}`}
+                className={`w-4 h-4 rounded-full ${setColorTable(item.status)}`}
               />
             </div>
           </div>
@@ -81,7 +45,7 @@ const CardTable = (props) => {
         {/* MID */}
         <p className="text-sm font-semibold mb-6">
           {" "}
-          {` Tipe : ${setType(item.type)}`}
+          {` Tipe : ${setTypeTable(item.type)}`}
         </p>
         {/* BOTTOM */}
         <div className="card-actions justify-between">
@@ -97,7 +61,7 @@ const CardTable = (props) => {
             className="btn-sm bg-secondary text-neutral"
             onClick={onAddOrder}
           >
-            <span>Buat Pesanan</span>
+            <span>{item.isOrder ? "Lihat" : "Buat" + " Pesanan"}</span>
             <AiOutlineRight size={15} />
           </Button>
         </div>

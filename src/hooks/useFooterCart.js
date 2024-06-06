@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { formatRupiah } from "../utils/utils";
+import { formatRupiah, successDialog, warningDialog } from "../utils/utils";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getAllTable } from "../redux/slice/tableSlice";
+import {
+  getAllTable,
+  onChangeTableOrderStatus,
+} from "../redux/slice/tableSlice";
 import { handleSetTableCart } from "../redux/slice/cartSlice";
 
 const useFooterCart = () => {
@@ -53,6 +56,22 @@ const useFooterCart = () => {
     dispatch(handleSetTableCart(value));
   };
 
+  const handleAddOrder = () => {
+    const carTableValue = cartTable?.value || cartTable?._id;
+
+    try {
+      if (cartData && cartData.length === 0)
+        throw new Error("Masukkan Pesananan Terlebih Dahulu");
+      else if (!carTableValue) throw new Error("Pilih Meja Terlebih Dahulu");
+      else {
+        dispatch(onChangeTableOrderStatus(carTableValue));
+        successDialog("Berhasil Menambahkan Pesanan");
+      }
+    } catch (error) {
+      warningDialog(error.message);
+    }
+  };
+
   return {
     dropDownTable,
     showPaymentModal,
@@ -61,6 +80,7 @@ const useFooterCart = () => {
     setCartTable,
     calculateTotalPrice,
     handleChangeTable,
+    handleAddOrder,
   };
 };
 

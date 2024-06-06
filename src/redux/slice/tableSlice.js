@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getToken, warningDialog } from "../../utils/utils";
+import { getToken, setLocalStorage } from "../../utils/utils";
 import axios from "axios";
 
 const initialState = {
@@ -93,8 +93,7 @@ const tableSlice = createSlice({
 
       if (existingTableIndex !== -1) {
         state.data[existingTableIndex] = action.payload;
-        // Update localStorage
-        localStorage.setItem("table", JSON.stringify(state.data));
+        setLocalStorage("table", state.data);
       }
     },
     handleDeleteTable: (state, action) => {
@@ -103,8 +102,16 @@ const tableSlice = createSlice({
 
       if (existingTableIndex !== -1) {
         state.data.splice(existingTableIndex, 1);
-        // Update localStorage
-        localStorage.setItem("table", JSON.stringify(state.data));
+        setLocalStorage("table", state.data);
+      }
+    },
+    onChangeTableOrderStatus: (state, action) => {
+      const id = action.payload;
+      const { existingTableIndex } = getExistingTable(id, state);
+
+      if (existingTableIndex !== -1) {
+        state.data[existingTableIndex].isOrder = true;
+        setLocalStorage("table", state.data);
       }
     },
   },
@@ -116,7 +123,15 @@ const tableSlice = createSlice({
       .addCase(getAllTable.fulfilled, (state, action) => {
         state.loading = false;
         const { data } = action.payload;
-        state.data = data;
+        const payload = data.map((item) => {
+          if (item.isOrder) return item;
+          return {
+            ...item,
+            isOrder: false,
+          };
+        });
+        state.data = payload;
+        setLocalStorage("table", payload);
       })
       .addCase(getAllTable.rejected, (state, action) => {
         state.loading = false;
@@ -155,6 +170,10 @@ const tableSlice = createSlice({
   },
 });
 
-export const { handleUpdateTable, handleDeleteTable } = tableSlice.actions;
+export const {
+  handleUpdateTable,
+  onChangeTableOrderStatus,
+  handleChangeTableOrder,
+} = tableSlice.actions;
 
 export default tableSlice.reducer;

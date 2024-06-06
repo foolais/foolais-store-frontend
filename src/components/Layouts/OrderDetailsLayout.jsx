@@ -5,7 +5,7 @@ import CardCart from "../Fragments/Card/CardCart";
 import useOrder from "../../hooks/useOrder";
 import NotesModal from "../Fragments/Modal/NotesModal";
 import useCart from "../../hooks/useCart";
-import { setStatusTable } from "../../utils/utils";
+import { setStatusTable } from "../../utils/statusData";
 import FooterOrderDetails from "../Fragments/Footer/FooterOrderDetails";
 import Breadcrumbs from "../Fragments/Breadcrumbs";
 import Title from "../Elements/Text/Title";

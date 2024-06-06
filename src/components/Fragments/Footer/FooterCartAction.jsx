@@ -13,6 +13,7 @@ const FooterCartAction = () => {
     setShowPaymentModal,
     calculateTotalPrice,
     handleChangeTable,
+    handleAddOrder,
   } = useFooterCart();
 
   return (
@@ -44,7 +45,9 @@ const FooterCartAction = () => {
             Bayar Sekarang
           </Button>
         </div>
-        <FooterLayout.BtnAction>Tambah Pesanan</FooterLayout.BtnAction>
+        <FooterLayout.BtnAction onClick={handleAddOrder}>
+          Tambah Pesanan
+        </FooterLayout.BtnAction>
       </FooterLayout>
       <PaymentModal
         showModal={showPaymentModal}

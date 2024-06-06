@@ -18,6 +18,14 @@ export const getToken = () => {
   return JSON.parse(localStorage.getItem("user"))?.token || "";
 };
 
+export const getLocalStorage = (key) => {
+  return JSON.parse(localStorage.getItem(key));
+};
+
+export const setLocalStorage = (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
 // Alert
 export const showConfirmationDialog = (text, successTitle, callback) => {
   Swal.fire({
@@ -81,19 +89,4 @@ export const successDialog = (text) => {
     showConfirmButton: false,
     timer: 1500,
   });
-};
-
-export const setStatusTable = (status) => {
-  switch (status) {
-    case "empty":
-      return "Kosong";
-    case "waiting":
-      return "Menunggu";
-    case "eating":
-      return "Makan";
-    case "finished":
-      return "Selesai";
-    default:
-      return "Tersedia";
-  }
 };
