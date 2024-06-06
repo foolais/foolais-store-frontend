@@ -86,6 +86,9 @@ const orderSlice = createSlice({
         localStorage.setItem("order", JSON.stringify(state.data));
       }
     },
+    handleChangePaymentMethod: (state, action) => {
+      state.data.paymentMethod = action.payload;
+    },
   },
 });
 
@@ -94,6 +97,7 @@ export const {
   handleChangeNotes,
   handleUpdateMenuOrder,
   handleRemoveMenuOrder,
+  handleChangePaymentMethod,
 } = orderSlice.actions;
 
 export default orderSlice.reducer;

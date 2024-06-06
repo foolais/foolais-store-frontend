@@ -1,18 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
+import { useEffect } from "react";
 import useBadge from "../../../hooks/useBadge";
 import useOrder from "../../../hooks/useOrder";
+import { formatRupiah } from "../../../utils/utils";
 import Button from "../../Elements/Button/Button";
 import BadgeStatus from "../BadgeStatus";
 import FooterLayout from "./FooterLayout";
 
-const FooterOrderDetails = () => {
+const FooterOrderDetails = ({ data }) => {
   const initialBadge = [
     { text: "Tunai", color: "secondary", value: "cash" },
     { text: "QRIS", color: "primary", value: "qris" },
   ];
 
-  const { onEdit } = useOrder();
+  const { onEdit, onChangePayment } = useOrder();
 
-  const { badgeData, onBadgeChange } = useBadge(initialBadge);
+  const { badgeData, badgeValue, onBadgeChange } = useBadge(initialBadge);
+
+  useEffect(() => {
+    onBadgeChange(badgeValue);
+    onChangePayment(badgeValue);
+  }, [badgeValue]);
 
   return (
     <FooterLayout>
@@ -26,7 +35,7 @@ const FooterOrderDetails = () => {
           />
         </div>
         <p className="font-semibold text-lg text-right">
-          Total Harga : Rp. 200.000
+          Total Harga : {formatRupiah(data?.totalPrice)}
         </p>
       </div>
       <Button

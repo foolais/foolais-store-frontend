@@ -82,3 +82,18 @@ export const successDialog = (text) => {
     timer: 1500,
   });
 };
+
+export const setStatusTable = (status) => {
+  switch (status) {
+    case "empty":
+      return "Kosong";
+    case "waiting":
+      return "Menunggu";
+    case "eating":
+      return "Makan";
+    case "finished":
+      return "Selesai";
+    default:
+      return "Tersedia";
+  }
+};

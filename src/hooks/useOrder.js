@@ -1,5 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { handleChangeNotes, toogleOnEdit } from "../redux/slice/orderSlice";
+import {
+  handleChangeNotes,
+  handleChangePaymentMethod,
+  toogleOnEdit,
+} from "../redux/slice/orderSlice";
 import { useState } from "react";
 import {
   exitConfirmationDialog,
@@ -18,6 +22,10 @@ const useOrder = () => {
 
   const onToggleOnEdit = () => {
     dispatch(toogleOnEdit());
+  };
+
+  const onChangePayment = (value) => {
+    dispatch(handleChangePaymentMethod(value));
   };
 
   const onHandleAddNotes = (event) => {
@@ -50,6 +58,7 @@ const useOrder = () => {
     onToggleOnEdit,
     onHandleAddNotes,
     handleShowModal,
+    onChangePayment,
   };
 };
 

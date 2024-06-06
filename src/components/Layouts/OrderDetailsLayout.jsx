@@ -5,6 +5,11 @@ import CardCart from "../Fragments/Card/CardCart";
 import useOrder from "../../hooks/useOrder";
 import NotesModal from "../Fragments/Modal/NotesModal";
 import useCart from "../../hooks/useCart";
+import { setStatusTable } from "../../utils/utils";
+import FooterOrderDetails from "../Fragments/Footer/FooterOrderDetails";
+import Breadcrumbs from "../Fragments/Breadcrumbs";
+import Title from "../Elements/Text/Title";
+import { useParams } from "react-router-dom";
 
 const OrderDetailsLayout = () => {
   const {
@@ -18,12 +23,24 @@ const OrderDetailsLayout = () => {
 
   const { onDeleteCart } = useCart();
 
+  const { id } = useParams();
+
+  const breadCrumbsData = [
+    { text: "Home", link: "/" },
+    { text: "Pesanan", link: "/pesanan" },
+    { text: "Detail", link: `/pesanan/${id}` },
+  ];
+
   return (
-    <>
+    <div className="w-full h-auto">
+      <Title>Detail Pesanan</Title>
+      <Breadcrumbs data={breadCrumbsData} />
       <div className="flex items-start justify-between">
         <div className="grid">
           <div className="flex items-center">
-            <p className="font-bold text-2xl mb-1">Pesanan #1</p>
+            <p className="font-bold text-2xl mb-1">
+              {`Pesanan #${data.sequenceNumber}`}
+            </p>
             <div
               className="tooltip tooltip-right"
               data-tip={onEdit ? "Simpan Perubahan" : "Edit Pesanan"}
@@ -41,11 +58,12 @@ const OrderDetailsLayout = () => {
             </div>
           </div>
           <p>
-            Status : <span className="font-semibold">Selesai</span>
+            Status :{" "}
+            <span className="font-semibold">{setStatusTable(data.status)}</span>
           </p>
         </div>
         <div className="grid text-right">
-          <p className="font-semibold text-lg mb-1">Meja : 2</p>
+          <p className="font-semibold text-lg mb-1">Meja : {data.table}</p>
           <Button
             onClick={() => handleShowModal(true)}
             className={`btn-sm btn-outline text-secondary font-bold border-[1px] border-secondary hover:bg-secondary hover:border-secondary ease-in-out duration-300 ${
@@ -86,7 +104,8 @@ const OrderDetailsLayout = () => {
         defaultValue={data}
         onSubmit={(event) => onHandleAddNotes(event)}
       />
-    </>
+      <FooterOrderDetails data={data} />
+    </div>
   );
 };
 
