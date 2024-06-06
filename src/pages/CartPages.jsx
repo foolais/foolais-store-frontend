@@ -1,7 +1,7 @@
 import Title from "../components/Elements/Text/Title";
 import Breadcrumbs from "../components/Fragments/Breadcrumbs";
 import CardCartLayout from "../components/Layouts/CardCartLayout";
-import FooterCartAction from "../components/Layouts/FooterCartAction";
+import FooterCartAction from "../components/Layouts/Footer/FooterCartAction";
 import MainLayout from "../components/Layouts/MainLayout";
 
 const CartPages = () => {

@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import Button from "../Elements/Button/Button";
-import PaymentModal from "../Fragments/Modal/PaymentModal";
-import useFooterCart from "../../hooks/useFooterCart";
-import FooterLayouts from "./Footer/FooterLayouts";
-import AutoComplete from "../Elements/Input/AutoComplete";
+import Button from "../../Elements/Button/Button";
+import PaymentModal from "../../Fragments/Modal/PaymentModal";
+import useFooterCart from "../../../hooks/useFooterCart";
+import FooterLayout from "../../Fragments/Footer/FooterLayout";
+import AutoComplete from "../../Elements/Input/AutoComplete";
 
 const FooterCartAction = () => {
   const {
@@ -17,8 +17,8 @@ const FooterCartAction = () => {
 
   return (
     <>
-      <FooterLayouts>
-        <FooterLayouts.Title title="Keranjang" />
+      <FooterLayout>
+        <FooterLayout.Title title="Keranjang" />
         <div className="flex items-center gap-2 my-4">
           <p className="">Pilih Meja : </p>
           <AutoComplete
@@ -44,8 +44,8 @@ const FooterCartAction = () => {
             Bayar Sekarang
           </Button>
         </div>
-        <FooterLayouts.BtnAction>Tambah Pesanan</FooterLayouts.BtnAction>
-      </FooterLayouts>
+        <FooterLayout.BtnAction>Tambah Pesanan</FooterLayout.BtnAction>
+      </FooterLayout>
       <PaymentModal
         showModal={showPaymentModal}
         closeModal={() => setShowPaymentModal(false)}

@@ -1,4 +1,4 @@
-import FooterMenuAction from "../components/Layouts/FooterMenuAction";
+import FooterMenuAction from "../components/Layouts/Footer/FooterMenuAction";
 import CardMenuLayout from "../components/Layouts/CardMenuLayout";
 import MainLayout from "../components/Layouts/MainLayout";
 import Title from "../components/Elements/Text/Title";

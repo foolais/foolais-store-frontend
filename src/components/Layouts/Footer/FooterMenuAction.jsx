@@ -1,11 +1,11 @@
-import Counter from "../Fragments/Counter";
+import Counter from "../../Fragments/Counter";
 import { AiOutlineEdit } from "react-icons/ai";
-import Modal from "../Fragments/Modal/Modal";
-import FormMenu from "../Fragments/FormMenu";
-import useFooterMenu from "../../hooks/useFooterMenu";
-import useBadge from "../../hooks/useBadge";
-import FooterLayouts from "./Footer/FooterLayouts";
-import BadgeStatus from "../Fragments/BadgeStatus";
+import Modal from "../../Fragments/Modal/Modal";
+import FormMenu from "../../Fragments/FormMenu";
+import useFooterMenu from "../../../hooks/useFooterMenu";
+import useBadge from "../../../hooks/useBadge";
+import FooterLayout from "../../Fragments/Footer/FooterLayout";
+import BadgeStatus from "../../Fragments/BadgeStatus";
 import { useEffect } from "react";
 
 const FooterMenuAction = () => {
@@ -45,9 +45,9 @@ const FooterMenuAction = () => {
   };
 
   return (
-    <FooterLayouts>
+    <FooterLayout>
       <div className="flex items-center gap-2 mb-2">
-        <FooterLayouts.Title
+        <FooterLayout.Title
           title={getTitleData()}
           isWithCloseBtn={tableCart !== null}
           onClickCloseBtn={resetTableCart}
@@ -79,12 +79,12 @@ const FooterMenuAction = () => {
           disabled={!selectedMenu?.name}
         />
       </div>
-      <FooterLayouts.BtnAction
+      <FooterLayout.BtnAction
         disabled={!selectedMenu?.name}
         onClick={() => onSubmitToCart()}
       >
         Tambah Ke Keranjang
-      </FooterLayouts.BtnAction>
+      </FooterLayout.BtnAction>
       {/* Modal Update Menu  */}
       <Modal
         key={selectedMenu?._id}
@@ -99,7 +99,7 @@ const FooterMenuAction = () => {
           onSubmit={(event) => onUpdateMenu(event, selectedMenu._id)}
         />
       </Modal>
-    </FooterLayouts>
+    </FooterLayout>
   );
 };
 
