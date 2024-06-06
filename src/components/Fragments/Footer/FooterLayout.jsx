@@ -2,7 +2,7 @@
 import { AiOutlineClose } from "react-icons/ai";
 import Button from "../../Elements/Button/Button";
 
-const FooterLayouts = ({ children }) => {
+const FooterLayout = ({ children }) => {
   return (
     <div className="ml-16 my-4 fixed bottom-0 p-4 left-4 right-4 rounded-lg bg-white border-[1px] border-secondary">
       {children}
@@ -37,7 +37,7 @@ const BtnAction = ({ children, className, ...rest }) => {
   );
 };
 
-FooterLayouts.Title = Title;
-FooterLayouts.BtnAction = BtnAction;
+FooterLayout.Title = Title;
+FooterLayout.BtnAction = BtnAction;
 
-export default FooterLayouts;
+export default FooterLayout;

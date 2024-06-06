@@ -3,7 +3,7 @@ import MainLayout from "../components/Layouts/MainLayout";
 import Title from "../components/Elements/Text/Title";
 import Breadcrumbs from "../components/Fragments/Breadcrumbs";
 import OrderDetailsLayout from "../components/Layouts/OrderDetailsLayout";
-import FooterOrderDetails from "../components/Layouts/Footer/FooterOrderDetails";
+import FooterOrderDetails from "../components/Fragments/Footer/FooterOrderDetails";
 
 const OrderDetailsPages = () => {
   const { id } = useParams();

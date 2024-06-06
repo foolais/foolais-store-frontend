@@ -1,8 +1,8 @@
 import useBadge from "../../../hooks/useBadge";
 import useOrder from "../../../hooks/useOrder";
 import Button from "../../Elements/Button/Button";
-import BadgeStatus from "../../Fragments/BadgeStatus";
-import FooterLayouts from "./FooterLayouts";
+import BadgeStatus from "../BadgeStatus";
+import FooterLayout from "./FooterLayout";
 
 const FooterOrderDetails = () => {
   const initialBadge = [
@@ -15,7 +15,7 @@ const FooterOrderDetails = () => {
   const { badgeData, onBadgeChange } = useBadge(initialBadge);
 
   return (
-    <FooterLayouts>
+    <FooterLayout>
       <div className="flex items-start justify-between">
         <div>
           <p className="font-bold text-lg">Metode Pembayaran</p>
@@ -35,7 +35,7 @@ const FooterOrderDetails = () => {
       >
         Bayar Sekarang
       </Button>
-    </FooterLayouts>
+    </FooterLayout>
   );
 };
 
