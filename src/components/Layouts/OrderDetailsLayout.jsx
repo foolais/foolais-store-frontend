@@ -3,7 +3,7 @@ import Button from "../Elements/Button/Button";
 import CardAddNew from "../Fragments/CardAddNew";
 import CardCart from "../Fragments/Card/CardCart";
 import useOrder from "../../hooks/useOrder";
-import ModalNotes from "../Fragments/Modal/ModalNotes";
+import NotesModal from "../Fragments/Modal/NotesModal";
 import useCart from "../../hooks/useCart";
 
 const OrderDetailsLayout = () => {
@@ -79,7 +79,7 @@ const OrderDetailsLayout = () => {
           onEdit={!onEdit}
         />
       </div>
-      <ModalNotes
+      <NotesModal
         title={`Catatan Untuk Pesanan #${1}`}
         showModal={showModal}
         closeModal={() => handleShowModal(false)}

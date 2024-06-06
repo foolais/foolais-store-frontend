@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import FormCart from "../Form/FormCart";
-import Modal from "../Modal";
+import Modal from "./Modal";
 
 const CartModal = (props) => {
   const { showModal, closeModal, defaultValue, onSubmit } = props;

@@ -1,5 +1,5 @@
 import CardAddNew from "../Fragments/CardAddNew";
-import Modal from "../Fragments/Modal";
+import Modal from "../Fragments/Modal/Modal";
 import FormMenu from "../Fragments/FormMenu";
 import CardMenu from "../Fragments/Card/CardMenu";
 import useMenu from "../../hooks/useMenu";

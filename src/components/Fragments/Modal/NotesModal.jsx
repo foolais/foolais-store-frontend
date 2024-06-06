@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import FormNotes from "../Form/FormNotes";
-import Modal from "../Modal";
+import Modal from "./Modal";
 
-const ModalNotes = (props) => {
+const NotesModal = (props) => {
   const { title, showModal, closeModal, defaultValue, onSubmit } = props;
 
   return (
@@ -12,4 +12,4 @@ const ModalNotes = (props) => {
   );
 };
 
-export default ModalNotes;
+export default NotesModal;

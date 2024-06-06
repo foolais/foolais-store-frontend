@@ -2,7 +2,7 @@
 import FormPayment from "../Form/FormPayment";
 import Modal from "../Modal";
 
-const ModalPayment = (props) => {
+const PaymentModal = (props) => {
   const { showModal, closeModal } = props;
   return (
     <Modal
@@ -16,4 +16,4 @@ const ModalPayment = (props) => {
   );
 };
 
-export default ModalPayment;
+export default PaymentModal;

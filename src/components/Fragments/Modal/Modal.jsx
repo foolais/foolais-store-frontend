@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import Button from "../Elements/Button/Button";
+import Button from "../../Elements/Button/Button";
 
 const Modal = (props) => {
   const { children, title, showModal, closeModal } = props;

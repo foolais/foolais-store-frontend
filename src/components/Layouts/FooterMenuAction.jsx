@@ -1,6 +1,6 @@
 import Counter from "../Fragments/Counter";
 import { AiOutlineEdit } from "react-icons/ai";
-import Modal from "../Fragments/Modal";
+import Modal from "../Fragments/Modal/Modal";
 import FormMenu from "../Fragments/FormMenu";
 import useFooterMenu from "../../hooks/useFooterMenu";
 import useBadge from "../../hooks/useBadge";

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import Button from "../Elements/Button/Button";
-import ModalPayment from "../Fragments/Modal/ModalPayment";
+import PaymentModal from "../Fragments/Modal/PaymentModal";
 import useFooterCart from "../../hooks/useFooterCart";
 import FooterLayouts from "./Footer/FooterLayouts";
 import AutoComplete from "../Elements/Input/AutoComplete";
@@ -9,13 +9,11 @@ const FooterCartAction = () => {
   const {
     dropDownTable,
     cartTable,
-    showModalPayment,
-    setShowModalPayment,
+    showPaymentModal,
+    setShowPaymentModal,
     calculateTotalPrice,
     handleChangeTable,
   } = useFooterCart();
-
-  console.log({ cartTable });
 
   return (
     <>
@@ -40,7 +38,7 @@ const FooterCartAction = () => {
             </span>
           </p>
           <Button
-            onClick={() => setShowModalPayment(true)}
+            onClick={() => setShowPaymentModal(true)}
             className="btn-sm btn-outline border-[1px] border-primary hover:bg-primary"
           >
             Bayar Sekarang
@@ -48,9 +46,9 @@ const FooterCartAction = () => {
         </div>
         <FooterLayouts.BtnAction>Tambah Pesanan</FooterLayouts.BtnAction>
       </FooterLayouts>
-      <ModalPayment
-        showModal={showModalPayment}
-        closeModal={() => setShowModalPayment(false)}
+      <PaymentModal
+        showModal={showPaymentModal}
+        closeModal={() => setShowPaymentModal(false)}
       />
     </>
   );

@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   deleteTable,
   getAllTable,
-  handleDeleteTable,
   postNewTable,
   updateTable,
 } from "../redux/slice/tableSlice";

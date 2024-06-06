@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const dummyData = {
   id: 1,
+  sequenceNumber: 1,
   table: 1,
   notes: "",
   status: "finished",

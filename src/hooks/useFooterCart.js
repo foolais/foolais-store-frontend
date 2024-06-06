@@ -12,7 +12,7 @@ const useFooterCart = () => {
   // ? state
   const [cartTable, setCartTable] = useState(null);
   const [dropDownTable, setDropDownTable] = useState([]);
-  const [showModalPayment, setShowModalPayment] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   // ? redux selector
   const { data: cartData, table: cartTableData } = useSelector(
@@ -55,8 +55,8 @@ const useFooterCart = () => {
 
   return {
     dropDownTable,
-    showModalPayment,
-    setShowModalPayment,
+    showPaymentModal,
+    setShowPaymentModal,
     cartTable,
     setCartTable,
     calculateTotalPrice,

@@ -2,7 +2,7 @@ import Button from "../Elements/Button/Button";
 import { AiFillWarning } from "react-icons/ai";
 import useCart from "../../hooks/useCart";
 import CardCart from "../Fragments/Card/CardCart";
-import ModalNotes from "../Fragments/Modal/ModalNotes";
+import NotesModal from "../Fragments/Modal/NotesModal";
 
 const CardCartLayout = () => {
   const {
@@ -52,7 +52,7 @@ const CardCartLayout = () => {
           </div>
         )}
       </div>
-      <ModalNotes
+      <NotesModal
         title="Tambah Catatan"
         showModal={showNotesModal}
         closeModal={() => handleShowNotesModal(false)}
