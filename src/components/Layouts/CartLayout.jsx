@@ -28,7 +28,11 @@ const CardCartLayout = () => {
     <div className="w-full h-auto">
       <Title>Keranjang</Title>
       <Breadcrumbs data={breadcrumbsData} />
-      <div className="flex items-center justify-between mb-6">
+      <div
+        className={`flex items-center justify-between mb-6 ${
+          cart.length === 0 && "hidden"
+        }`}
+      >
         {cart && cart.length > 0 && (
           <Button
             className="font-semibold btn-outline btn-error btn-sm"
@@ -42,7 +46,7 @@ const CardCartLayout = () => {
           onClick={() => handleShowNotesModal(true)}
           className="btn-sm btn-outline text-secondary font-bold border-[1px] border-secondary hover:bg-secondary hover:border-secondary ease-in-out duration-300"
         >
-          {isNotesFilled ? "Ubah Catatan" : "Tambah Catatan"}
+          {isNotesFilled() ? "Ubah Catatan" : "Tambah Catatan"}
         </Button>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">

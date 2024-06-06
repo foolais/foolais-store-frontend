@@ -7,7 +7,10 @@ import {
   getAllTable,
   onChangeTableOrderStatus,
 } from "../redux/slice/tableSlice";
-import { handleSetTableCart } from "../redux/slice/cartSlice";
+import {
+  handleRemoveAllCart,
+  handleSetTableCart,
+} from "../redux/slice/cartSlice";
 
 const useFooterCart = () => {
   const dispatch = useDispatch();
@@ -66,6 +69,7 @@ const useFooterCart = () => {
       else {
         dispatch(onChangeTableOrderStatus(carTableValue));
         successDialog("Berhasil Menambahkan Pesanan");
+        dispatch(handleRemoveAllCart());
       }
     } catch (error) {
       warningDialog(error.message);

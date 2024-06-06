@@ -28,8 +28,6 @@ const useCart = () => {
   // selcetor redux
   const { data: cartData, notes } = useSelector((state) => state.cart);
 
-  // selector redux
-
   useEffect(() => {
     setCart(cartData);
   }, [cartData]);
@@ -68,7 +66,7 @@ const useCart = () => {
   };
 
   const isNotesFilled = () => {
-    return notes && notes.length > 0 ? true : false;
+    return Boolean(notes && notes.length > 0);
   };
 
   const handleShowNotesModal = (type) => {
