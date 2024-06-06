@@ -4,6 +4,9 @@ import FormMenu from "../Fragments/FormMenu";
 import CardMenu from "../Fragments/Card/CardMenu";
 import useMenu from "../../hooks/useMenu";
 import BadgeStatus from "../Fragments/BadgeStatus";
+import FooterMenuAction from "../Fragments/Footer/FooterMenuAction";
+import Title from "../Elements/Text/Title";
+import Breadcrumbs from "../Fragments/Breadcrumbs";
 
 const CardMenuLayout = () => {
   const {
@@ -20,8 +23,15 @@ const CardMenuLayout = () => {
     onDeleteMenu,
   } = useMenu();
 
+  const breadCrumbsData = [
+    { text: "Home", link: "/" },
+    { text: "Menu", link: "/menu" },
+  ];
+
   return (
     <div className="w-full h-auto">
+      <Title>Daftar Menu</Title>
+      <Breadcrumbs data={breadCrumbsData} />
       <BadgeStatus
         data={badgeData}
         isClickable={true}
@@ -52,17 +62,18 @@ const CardMenuLayout = () => {
               />
             );
           })}
-        <Modal
-          title="Tambah Menu Baru"
-          showModal={addMenuModal}
-          closeModal={() => onCloseModal()}
-        >
-          <FormMenu
-            onSubmit={(event) => onAddMenu(event)}
-            btnText="Tambah Menu"
-          />
-        </Modal>
       </div>
+      <Modal
+        title="Tambah Menu Baru"
+        showModal={addMenuModal}
+        closeModal={() => onCloseModal()}
+      >
+        <FormMenu
+          onSubmit={(event) => onAddMenu(event)}
+          btnText="Tambah Menu"
+        />
+      </Modal>
+      <FooterMenuAction />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import Button from "../Elements/Button/Button";
-import Avatar from "../Fragments/Avatar";
+import Avatar from "./Avatar";
 import Divider from "../Elements/Divider/Divider";
-import SearchBar from "../Fragments/SearchBar";
+import SearchBar from "./SearchBar";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

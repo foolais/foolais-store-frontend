@@ -4,6 +4,8 @@ import Modal from "../Fragments/Modal/Modal";
 import FormTable from "../Fragments/Form/FormTable";
 import CardTable from "../Fragments/Card/CardTable";
 import useTable from "../../hooks/useTable";
+import Breadcrumbs from "../Fragments/Breadcrumbs";
+import Title from "../Elements/Text/Title";
 
 const CardTableLayout = () => {
   const {
@@ -27,8 +29,15 @@ const CardTableLayout = () => {
     { text: "Selesai", color: "primary" },
   ];
 
+  const breadCrumbsData = [
+    { text: "Home", link: "/" },
+    { text: "Meja", link: "/meja" },
+  ];
+
   return (
     <div className="w-full h-auto">
+      <Title>Daftar Meja</Title>
+      <Breadcrumbs data={breadCrumbsData} />
       {/* Status */}
       <div className="flex items-center text-primary font-semibold gap-4 mb-2">
         <p>Status Meja : </p>
@@ -75,21 +84,21 @@ const CardTableLayout = () => {
               />
             );
           })}
-        {/* Edit Table Modal */}
-        <Modal
-          key={selectedTable?._id}
-          title={`Ubah Meja ${selectedTable?.name}`}
-          showModal={editTableModal}
-          closeModal={() => onCloseModal("UPDATE")}
-        >
-          <FormTable
-            onSubmit={(event) => onUpdateTable(event)}
-            btnText="Ubah Meja"
-            defaultValue={selectedTable}
-            isEdit={true}
-          />
-        </Modal>
       </div>
+      {/* Edit Table Modal */}
+      <Modal
+        key={selectedTable?._id}
+        title={`Ubah Meja ${selectedTable?.name}`}
+        showModal={editTableModal}
+        closeModal={() => onCloseModal("UPDATE")}
+      >
+        <FormTable
+          onSubmit={(event) => onUpdateTable(event)}
+          btnText="Ubah Meja"
+          defaultValue={selectedTable}
+          isEdit={true}
+        />
+      </Modal>
     </div>
   );
 };

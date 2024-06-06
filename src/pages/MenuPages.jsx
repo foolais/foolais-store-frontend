@@ -1,20 +1,10 @@
-import FooterMenuAction from "../components/Fragments/Footer/FooterMenuAction";
-import CardMenuLayout from "../components/Layouts/CardMenuLayout";
+import MenuLayout from "../components/Layouts/MenuLayout";
 import MainLayout from "../components/Layouts/MainLayout";
-import Title from "../components/Elements/Text/Title";
-import Breadcrumbs from "../components/Fragments/Breadcrumbs";
 
 const MenuPages = () => {
-  const data = [
-    { text: "Home", link: "/" },
-    { text: "Menu", link: "/menu" },
-  ];
   return (
     <MainLayout className="pb-[8.5rem]">
-      <Title>Daftar Menu</Title>
-      <Breadcrumbs data={data} />
-      <CardMenuLayout />
-      <FooterMenuAction />
+      <MenuLayout />
     </MainLayout>
   );
 };

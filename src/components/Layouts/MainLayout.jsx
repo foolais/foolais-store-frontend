@@ -1,5 +1,5 @@
-import Navbar from "./Navbar";
-import Sidenav from "./Sidenav";
+import Navbar from "../Fragments/Navbar";
+import Sidenav from "../Fragments/Sidenav";
 
 /* eslint-disable react/prop-types */
 const MainLayout = ({ children, className }) => {

@@ -3,6 +3,9 @@ import { AiFillWarning } from "react-icons/ai";
 import useCart from "../../hooks/useCart";
 import CardCart from "../Fragments/Card/CardCart";
 import NotesModal from "../Fragments/Modal/NotesModal";
+import FooterCartAction from "../Fragments/Footer/FooterCartAction";
+import Title from "../Elements/Text/Title";
+import Breadcrumbs from "../Fragments/Breadcrumbs";
 
 const CardCartLayout = () => {
   const {
@@ -16,8 +19,15 @@ const CardCartLayout = () => {
     isNotesFilled,
   } = useCart();
 
+  const breadcrumbsData = [
+    { text: "Home", link: "/" },
+    { text: "Keranjang", link: "/keranjang" },
+  ];
+
   return (
     <div className="w-full h-auto">
+      <Title>Keranjang</Title>
+      <Breadcrumbs data={breadcrumbsData} />
       <div className="flex items-center justify-between mb-6">
         {cart && cart.length > 0 && (
           <Button
@@ -59,6 +69,7 @@ const CardCartLayout = () => {
         onSubmit={(event) => onHandleChangeNotes(event)}
         defaultValue={notes}
       />
+      <FooterCartAction />
     </div>
   );
 };
