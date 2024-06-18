@@ -39,9 +39,12 @@ const useFooterCart = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const mappedData = tableData.map((item) => {
-      return { text: item.name, value: item._id };
-    });
+    const mappedData = tableData
+      .filter((item) => item.status === "empty" && !item.is_order)
+      .map((item) => {
+        return { text: item.name, value: item._id };
+      });
+
     setDropDownTable(mappedData);
   }, [tableData]);
 

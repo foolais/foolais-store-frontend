@@ -37,7 +37,7 @@ const useCart = () => {
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 750);
 
     return () => {
       setLoading(true);
