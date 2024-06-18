@@ -7,7 +7,7 @@ const MainLayout = ({ children, className }) => {
     <div className={`w-full h-auto min-h-[94vh] bg-neutral ${className || ""}`}>
       <Sidenav />
       <Navbar />
-      <div className="p-4 ml-16 mt-14">{children}</div>
+      <div className="p-4 md:ml-16 mt-14">{children}</div>
     </div>
   );
 };

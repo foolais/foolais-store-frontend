@@ -2,7 +2,7 @@
 const Title = ({ children, textColor }) => {
   return (
     <h1
-      className={`text-2xl font-bold tracking-wider ${
+      className={`text-xl md:text-2xl font-bold tracking-wider ${
         textColor ? textColor : "text-primary"
       }`}
     >

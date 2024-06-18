@@ -31,7 +31,7 @@ const CardMenuLayout = () => {
   ];
 
   return (
-    <div className="w-full h-auto">
+    <div className="w-full h-auto ">
       <Title>Daftar Menu</Title>
       <Breadcrumbs data={breadCrumbsData} />
       <BadgeStatus
@@ -45,14 +45,17 @@ const CardMenuLayout = () => {
             {`Tidak Ada Menu Untuk "${searchData}" `}
           </div>
         ) : loading ? (
-          <Skeleton.List total={4} className="min-w-48 min-h-36" />
+          <Skeleton.List
+            total={4}
+            className="min-w-42 md:min-w-48 min-h-24 md:min-h-36"
+          />
         ) : (
           <>
             <CardAddNew
               title="Tambah Menu Baru"
-              cardClassName="min-h-32 h-auto min-w-48"
-              titleClassName="font-semibold mt-4"
-              actionClassName="mt-4"
+              cardClassName="min-h-24 md:min-h-36 h-auto min-w-42 md:min-w-48"
+              titleClassName="font-semibold text-center text-[1rem] md:text-md mt-2 md:mt-4"
+              actionClassName="mt-2 md:mt-4"
               btnOnClick={() => setAddMenuModal(true)}
             />
             {filteredMenu &&
@@ -70,17 +73,21 @@ const CardMenuLayout = () => {
           </>
         )}
       </div>
-      <Modal
-        title="Tambah Menu Baru"
-        showModal={addMenuModal}
-        closeModal={() => onCloseModal()}
-      >
-        <FormMenu
-          onSubmit={(event) => onAddMenu(event)}
-          btnText="Tambah Menu"
-        />
-      </Modal>
-      <FooterMenuAction />
+      {!loading && (
+        <>
+          <Modal
+            title="Tambah Menu Baru"
+            showModal={addMenuModal}
+            closeModal={() => onCloseModal()}
+          >
+            <FormMenu
+              onSubmit={(event) => onAddMenu(event)}
+              btnText="Tambah Menu"
+            />
+          </Modal>
+          <FooterMenuAction />{" "}
+        </>
+      )}
     </div>
   );
 };

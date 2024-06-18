@@ -17,7 +17,7 @@ const FormMenu = (props) => {
   ];
 
   return (
-    <form className="flex flex-col gap-4 " onSubmit={onSubmit}>
+    <form className="flex flex-col gap-2 md:gap-4 " onSubmit={onSubmit}>
       <FormInput
         title="Nama"
         type="text"

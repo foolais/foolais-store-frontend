@@ -7,15 +7,17 @@ const Counter = (props) => {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <Button
-        className="btn-circle btn-sm bg-secondary text-white"
+        className="btn-circle btn-xs md:btn-sm bg-secondary text-white"
         onClick={() => value > 1 && handleCounter(id, "minus")}
         disabled={disabled}
       >
         <AiOutlineMinus size={20} />
       </Button>
-      <span className="font-semibold text-xl text-primary">{value}</span>
+      <span className="font-semibold text-md md:text-xl text-primary">
+        {value}
+      </span>
       <Button
-        className="btn-circle btn-sm bg-secondary text-white"
+        className="btn-circle btn-xs md:btn-sm bg-secondary text-white"
         onClick={() => handleCounter(id, "plus")}
         disabled={disabled}
       >

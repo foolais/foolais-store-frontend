@@ -34,7 +34,7 @@ const CardMenu = (props) => {
 
   return (
     <Card
-      className="cursor-pointer hover:scale-105 duration-300 min-w-48"
+      className="cursor-pointer hover:scale-105 duration-300 min-w-48 min-h-24 md:min-h-36"
       onClick={onCardClick}
     >
       <div
@@ -42,17 +42,20 @@ const CardMenu = (props) => {
       >
         <div className="flex items-start justify-between">
           {/* Nama Menu */}
-          <Card.Title title={item.name} className="font-semibold max-w-[80%]" />
+          <Card.Title
+            title={item.name}
+            className="font-semibold max-w-[80%] text-[1rem] md:text-md"
+          />
           {/* Button Delete */}
           <Button
-            className="btn-circle btn-sm btn-error absolute right-4"
+            className="btn-circle btn-xs md:btn-sm btn-error absolute right-2 md:right-4"
             onClick={onCardDelete}
           >
             <AiOutlineDelete />
           </Button>
         </div>
         {/* Harga Menu */}
-        <Card.Price price={item.price} className="text-lg" />
+        <Card.Price price={item.price} className="text-md md:text-lg" />
         <Card.Category
           category={setCategory(item.category)}
           bgColor={setColor(item.category) || ""}

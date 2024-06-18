@@ -72,7 +72,7 @@ const Sidenav = () => {
   const isLogin = JSON.parse(localStorage.getItem("user"));
 
   return (
-    <aside className="fixed top-0 left-0 h-screen w-16 m-0 flex flex-col items-center gap-3 bg-neutral shadow-md text-neutral p-4 z-10">
+    <aside className="fixed top-0 left-0 h-screen w-16 m-0 flex-col items-center gap-3 bg-neutral shadow-md text-neutral p-4 z-10 hidden md:flex">
       {data.map((item) => {
         return (
           <div
@@ -81,7 +81,7 @@ const Sidenav = () => {
             data-tip={item.title}
           >
             <Button
-              className={`btn-circle border-2 border-primary ${
+              className={`btn-circle btn-md border-2 border-primary ${
                 isActive(item.title)
                   ? "btn-outline "
                   : "bg-primary text-neutral"

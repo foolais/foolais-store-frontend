@@ -17,20 +17,22 @@ const SearchBar = () => {
   return (
     <div>
       <Label
-        className="input input-bordered input-sm min-w-[45vw] max-w-[45vw] gap-2"
+        className={`input input-bordered input-sm w-[43vw] md:w-[45vw] gap-2 relative`}
         htmlFor="searchMenu"
       >
-        <AiOutlineSearch size={12} />
+        <div className="absolute left-2 top-1/2 -translate-y-1/2">
+          <AiOutlineSearch size={15} />
+        </div>
         <Input
           type="text"
           name="searchMenu"
           placeholder="Cari menu..."
           onChange={(event) => setSearch(event.target.value)}
-          className="grow"
+          className="grow pl-4"
           value={search}
         />
         <Button
-          className="btn-circle btn-xs btn-outline"
+          className="btn-circle btn-xs btn-outline absolute right-2"
           onClick={() => setSearch("")}
         >
           <AiOutlineClose size={12} />

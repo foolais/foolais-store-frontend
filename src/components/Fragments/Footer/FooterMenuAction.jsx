@@ -63,14 +63,16 @@ const FooterMenuAction = () => {
         </div>
       </div>
       <div className="grid grid-cols-[30%_10px_auto] gap-4">
-        <p className="font-bold text-md flex items-center">Tipe Makan </p>
+        <p className="font-bold text-sm md:text-md flex items-center">
+          Tipe Makan{" "}
+        </p>
         <span className="flex items-center">:</span>
         <BadgeStatus
           data={badgeData}
           isClickable={selectedMenu?.name}
           onBadgeChange={onBadgeChange}
         />
-        <p className="font-bold text-md flex items-center">Jumlah</p>
+        <p className="font-bold text-sm md:text-md flex items-center">Jumlah</p>
         <span className="flex items-center">:</span>
         <Counter
           value={selectedMenu ? selectedMenu?.quantity : 1}

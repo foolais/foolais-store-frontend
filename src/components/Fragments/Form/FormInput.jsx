@@ -47,7 +47,7 @@ const FormInput = (props) => {
       {isSelect && (
         <Select
           name={name}
-          className=" select-bordered "
+          className="select-bordered "
           data={data}
           required={required}
           defaultValue={defaultValue}

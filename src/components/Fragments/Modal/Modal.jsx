@@ -20,7 +20,7 @@ const Modal = (props) => {
               X
             </Button>
           </form>
-          <h3 className="font-bold text-2xl mb-4">{title}</h3>
+          <h3 className="font-bold text-xl md:text-2xl mb-4">{title}</h3>
           {children}
         </div>
       </dialog>

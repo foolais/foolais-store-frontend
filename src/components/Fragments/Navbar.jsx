@@ -2,7 +2,7 @@ import Button from "../Elements/Button/Button";
 import Avatar from "./Avatar";
 import Divider from "../Elements/Divider/Divider";
 import SearchBar from "./SearchBar";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -17,12 +17,17 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed top-0 right-0 left-0 ml-16 h-14 shadow-md bg-neutral flex items-center px-4 ${
+      className={`fixed top-0 right-0 left-0 md:ml-16 h-14 shadow-md bg-neutral flex items-center px-4 z-10 ${
         isMenuURL ? "justify-between" : "justify-end"
       }`}
     >
-      {isMenuURL && <SearchBar />}
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-center gap-2">
+        <div className="md:hidden">
+          <AiOutlineMenu size={20} />
+        </div>
+        {isMenuURL && <SearchBar />}
+      </div>
+      <div className="flex items-center justify-center gap-2 md:gap-4">
         <div className="indicator">
           <span className="indicator-item badge">{cartData.length}</span>
 
@@ -40,12 +45,10 @@ const Navbar = () => {
             width="w-8"
             isWithText={true}
             username={sessionData ? sessionData?.username : ""}
-          >
-            FX
-          </Avatar>
+          ></Avatar>
         ) : (
           <Link to={"/login"}>
-            <Button className="btn-circle btn-sm bg-primary w-8" />
+            <Button className="btn-circle btn-sm bg-primary" />
           </Link>
         )}
       </div>
