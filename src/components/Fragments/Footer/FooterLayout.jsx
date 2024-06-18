@@ -1,10 +1,17 @@
 /* eslint-disable react/prop-types */
 import { AiOutlineClose } from "react-icons/ai";
 import Button from "../../Elements/Button/Button";
+import { useSelector } from "react-redux";
 
 const FooterLayout = ({ children }) => {
+  const { isMini } = useSelector((state) => state.sidenav);
+
   return (
-    <div className="md:ml-16 my-2 md:my-4 fixed bottom-0 p-4 left-4 right-4 rounded-lg bg-white border-[1px] border-secondary z-10">
+    <div
+      className={`md:ml-16 my-2 md:my-4 fixed bottom-0 p-4 left-4 right-4 rounded-lg bg-white border-[1px] border-secondary ${
+        isMini ? "z-10" : "z-0"
+      }`}
+    >
       {children}
     </div>
   );

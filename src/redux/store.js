@@ -5,6 +5,7 @@ import cartReducer from "./slice/cartSlice";
 import tableReducer from "./slice/tableSlice";
 import loginReducer from "./slice/loginSlice";
 import orderReducer from "./slice/orderSlice";
+import sidenavReducer from "./slice/sidenavSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     table: tableReducer,
     login: loginReducer,
     order: orderReducer,
+    sidenav: sidenavReducer,
   },
 });
 

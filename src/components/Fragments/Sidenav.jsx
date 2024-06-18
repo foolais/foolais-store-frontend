@@ -8,9 +8,12 @@ import {
   AiOutlineOrderedList,
   AiOutlineUser,
   AiOutlineLogout,
+  AiOutlineLeft,
+  AiOutlineMenu,
 } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handleLogout } from "../../redux/slice/loginSlice";
+import { toggleSidenav } from "../../redux/slice/sidenavSlice";
 
 const sizeIcon = 20;
 
@@ -51,12 +54,14 @@ const Sidenav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const { isMini } = useSelector((state) => state.sidenav);
 
   const isActive = (title) => {
     return location.pathname.includes(`/${title.toLowerCase()}`);
   };
 
   const handleNavigate = (title) => {
+    if (!isMini) dispatch(toggleSidenav());
     if (title == "Home") {
       navigate("/");
     } else {
@@ -72,39 +77,80 @@ const Sidenav = () => {
   const isLogin = JSON.parse(localStorage.getItem("user"));
 
   return (
-    <aside className="fixed top-0 left-0 h-screen w-16 m-0 flex-col items-center gap-3 bg-neutral shadow-md text-neutral p-4 z-10 hidden md:flex">
+    <aside
+      className={`fixed top-0 left-0 h-screen w-16 m-0 flex-col items-center gap-3 bg-neutral shadow-md text-neutral md:z-10 ${
+        isMini
+          ? "translate-x-[-300%] md:translate-x-0"
+          : "flex w-[65vw] md:w-[28vw] translate-x-0 z-[100]"
+      } transform duration-500 ease-in-out`}
+    >
+      <div className="flex items-center justify-start gap-6 w-full ml-6 h-14">
+        <div
+          className="text-primary cursor-pointer"
+          onClick={() => dispatch(toggleSidenav())}
+        >
+          {isMini ? <AiOutlineMenu size={20} /> : <AiOutlineLeft size={20} />}
+        </div>
+        <p
+          className={`text-xl text-primary font-bold tracking-widest ${
+            isMini && "hidden"
+          }`}
+        >
+          Foolais
+        </p>
+      </div>
       {data.map((item) => {
         return (
           <div
             key={item.id}
-            className="tooltip tooltip-right"
+            className={`${
+              isMini
+                ? "tooltip tooltip-right flex flex-col items-center justify-center w-full my-4"
+                : "flex items-center justify-start w-full gap-4 hover:bg-primary/50 px-2 py-1 cursor-pointer"
+            }`}
             data-tip={item.title}
+            onClick={() => !isMini && handleNavigate(item.title)}
           >
             <Button
-              className={`btn-circle btn-md border-2 border-primary ${
+              className={`btn-circle btn-sm md:btn-md border-2 border-primary ${
                 isActive(item.title)
                   ? "btn-outline "
                   : "bg-primary text-neutral"
               }`}
-              onClick={() => handleNavigate(item.title)}
+              onClick={() => isMini && handleNavigate(item.title)}
             >
               {item.icon}
             </Button>
+            <p className={`text-primary font-semibold ${isMini && "hidden"}`}>
+              {item.title}
+            </p>
           </div>
         );
       })}
       <div
-        className="tooltip tooltip-right absolute bottom-5"
+        className={`absolute bottom-5 ${
+          isMini
+            ? "tooltip tooltip-right flex items-center justify-center w-full mb-2"
+            : "flex items-center justify-start w-full gap-4 hover:bg-primary/50 px-2 py-1 cursor-pointer"
+        }`}
         data-tip="Logout"
+        onClick={() => !isMini && onLogoutBtn()}
       >
         <Button
-          onClick={() => onLogoutBtn()}
-          className={`btn-outline text-primary border-2 btn-circle hover:bg-primary hover:text-neutral ${
+          onClick={() => isMini && onLogoutBtn()}
+          className={`btn-outline text-primary border-2 btn-circle btn-sm md:btn-md hover:bg-primary hover:text-neutral ${
             !isLogin && "hidden"
           }`}
         >
           <AiOutlineLogout />
         </Button>
+        <p
+          className={`text-primary font-semibold ${
+            (isMini || !isLogin) && "hidden"
+          }`}
+        >
+          Log Out
+        </p>
       </div>
     </aside>
   );
