@@ -19,7 +19,6 @@ const FormTable = (props) => {
     { text: "Kosong", value: "empty" },
     { text: "Menunggu", value: "waiting" },
     { text: "Makan", value: "eating" },
-    { text: "Selesai", value: "finished" },
   ];
 
   return (

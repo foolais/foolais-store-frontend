@@ -28,7 +28,6 @@ const CardTableLayout = () => {
     { text: "Kosong", color: "success" },
     { text: "Menunggu", color: "warning" },
     { text: "Makan", color: "info" },
-    { text: "Selesai", color: "primary" },
   ];
 
   const breadCrumbsData = [

@@ -7,8 +7,6 @@ export const setStatusTable = (status) => {
       return "Menunggu";
     case "eating":
       return "Makan";
-    case "finished":
-      return "Selesai";
     default:
       return "Tersedia";
   }
