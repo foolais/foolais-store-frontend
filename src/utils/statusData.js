@@ -8,7 +8,7 @@ export const setStatusTable = (status) => {
     case "eating":
       return "Makan";
     default:
-      return "Tersedia";
+      return "Kosong";
   }
 };
 

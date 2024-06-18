@@ -51,6 +51,10 @@ const useOrder = () => {
     }
   };
 
+  const isNotesFilled = () => {
+    return Boolean(data.notes && data.notes.length > 0);
+  };
+
   return {
     data,
     showModal,
@@ -59,6 +63,7 @@ const useOrder = () => {
     onHandleAddNotes,
     handleShowModal,
     onChangePayment,
+    isNotesFilled,
   };
 };
 

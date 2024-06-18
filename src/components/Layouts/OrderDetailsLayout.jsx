@@ -5,7 +5,6 @@ import CardCart from "../Fragments/Card/CardCart";
 import useOrder from "../../hooks/useOrder";
 import NotesModal from "../Fragments/Modal/NotesModal";
 import useCart from "../../hooks/useCart";
-import { setStatusTable } from "../../utils/statusData";
 import FooterOrderDetails from "../Fragments/Footer/FooterOrderDetails";
 import Breadcrumbs from "../Fragments/Breadcrumbs";
 import Title from "../Elements/Text/Title";
@@ -19,6 +18,7 @@ const OrderDetailsLayout = () => {
     onToggleOnEdit,
     onHandleAddNotes,
     handleShowModal,
+    isNotesFilled,
   } = useOrder();
 
   const { onDeleteCart } = useCart();
@@ -59,18 +59,20 @@ const OrderDetailsLayout = () => {
           </div>
           <p>
             Status :{" "}
-            <span className="font-semibold">{setStatusTable(data.status)}</span>
+            <span className="font-semibold">
+              {data.is_finished ? "Selesai" : "Menunggu"}
+            </span>
           </p>
         </div>
         <div className="grid text-right">
           <p className="font-semibold text-lg mb-1">Meja : {data.table}</p>
           <Button
             onClick={() => handleShowModal(true)}
-            className={`btn-sm btn-outline text-secondary font-bold border-[1px] border-secondary hover:bg-secondary hover:border-secondary ease-in-out duration-300 ${
-              onEdit ? "opacity-100" : "opacity-0 scale-0"
-            }`}
+            className={`btn-sm btn-outline text-secondary font-bold border-[1px] border-secondary hover:bg-secondary hover:border-secondary ease-in-out duration-300`}
           >
-            Tambah Catatan
+            {isNotesFilled() || data.is_finished
+              ? "Lihat Catatan"
+              : "Tambah Catatan"}
           </Button>
         </div>
       </div>
@@ -101,8 +103,9 @@ const OrderDetailsLayout = () => {
         title={`Catatan Untuk Pesanan #${1}`}
         showModal={showModal}
         closeModal={() => handleShowModal(false)}
-        defaultValue={data}
+        defaultValue={data.notes}
         onSubmit={(event) => onHandleAddNotes(event)}
+        statusOrder={data.is_finished}
       />
       <FooterOrderDetails data={data} />
     </div>

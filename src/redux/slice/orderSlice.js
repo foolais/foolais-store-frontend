@@ -5,7 +5,7 @@ const dummyData = {
   sequenceNumber: 1,
   table: 1,
   notes: "",
-  status: "finished",
+  is_finished: false,
   menu: [
     {
       _id: 1,
