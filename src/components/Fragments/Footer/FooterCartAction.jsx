@@ -21,7 +21,7 @@ const FooterCartAction = () => {
       <FooterLayout>
         <FooterLayout.Title title="Keranjang" />
         <div className="flex items-center gap-2 my-4">
-          <p className="">Pilih Meja : </p>
+          <p className="text-sm md:text-md">Pilih Meja : </p>
           <AutoComplete
             name="tableCart"
             widthClassName="w-40 min-w-40"
@@ -32,7 +32,7 @@ const FooterCartAction = () => {
           />
         </div>
         <div className="flex flex-col items-end gap-2">
-          <p className="text-lg font-semibold">
+          <p className="text-sm md:text-lg font-semibold">
             Total Harga :{" "}
             <span className="text-secondary font-bold">
               {calculateTotalPrice()}

@@ -6,7 +6,7 @@ import FormInput from "./FormInput";
 const FormNotes = (props) => {
   const { onSubmit, defaultValue, statusOrder } = props;
   return (
-    <form className="flex flex-col gap-4" onSubmit={onSubmit}>
+    <form className="flex flex-col gap-2 md:gap-4" onSubmit={onSubmit}>
       <FormInput
         title="Catatan"
         type="text"
@@ -20,7 +20,7 @@ const FormNotes = (props) => {
         defaultValue={defaultValue?.notes || defaultValue}
       />
       <Button
-        className="bg-secondary text-white text-lg w-full mt-4"
+        className="bg-secondary text-white text-md md:text-lg w-full mt-4"
         disabled={statusOrder}
       >
         Simpan Catatan
