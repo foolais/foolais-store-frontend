@@ -1,54 +1,13 @@
 import Button from "../Elements/Button/Button";
 import { useNavigate, useLocation } from "react-router-dom";
-import {
-  AiOutlineHome,
-  AiOutlineAppstore,
-  AiOutlineTable,
-  AiOutlineShoppingCart,
-  AiOutlineOrderedList,
-  AiOutlineUser,
-  AiOutlineLogout,
-  AiOutlineLeft,
-  AiOutlineMenu,
-} from "react-icons/ai";
+import { AiOutlineLogout, AiOutlineLeft, AiOutlineMenu } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { handleLogout } from "../../redux/slice/loginSlice";
 import { toggleSidenav } from "../../redux/slice/sidenavSlice";
+import { useEffect } from "react";
+import sidenavData from "../../utils/sidenavData";
 
-const sizeIcon = 20;
-
-const data = [
-  {
-    id: 1,
-    title: "Home",
-    icon: <AiOutlineHome size={sizeIcon} />,
-  },
-  {
-    id: 2,
-    title: "Menu",
-    icon: <AiOutlineAppstore size={sizeIcon} />,
-  },
-  {
-    id: 3,
-    title: "Meja",
-    icon: <AiOutlineTable size={sizeIcon} />,
-  },
-  {
-    id: 4,
-    title: "Keranjang",
-    icon: <AiOutlineShoppingCart size={sizeIcon} />,
-  },
-  {
-    id: 5,
-    title: "Pesanan",
-    icon: <AiOutlineOrderedList size={sizeIcon} />,
-  },
-  {
-    id: 6,
-    title: "User",
-    icon: <AiOutlineUser size={sizeIcon} />,
-  },
-];
+const data = sidenavData;
 
 const Sidenav = () => {
   const navigate = useNavigate();
@@ -76,8 +35,29 @@ const Sidenav = () => {
 
   const isLogin = JSON.parse(localStorage.getItem("user"));
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        document.getElementById("sidenav") &&
+        !document.getElementById("sidenav").contains(event.target) &&
+        window.innerWidth <= 1024 &&
+        !isMini
+      ) {
+        dispatch(toggleSidenav());
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMini]);
+
   return (
     <aside
+      id="sidenav"
       className={`fixed top-0 left-0 h-screen w-16 m-0 flex-col items-center gap-3 bg-neutral shadow-md text-neutral md:z-10 ${
         isMini
           ? "translate-x-[-300%] md:translate-x-0"
