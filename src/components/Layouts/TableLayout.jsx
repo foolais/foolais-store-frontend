@@ -40,12 +40,11 @@ const CardTableLayout = () => {
       <Title>Daftar Meja</Title>
       <Breadcrumbs data={breadCrumbsData} />
       {/* Status */}
-      <div className="flex items-center text-primary font-semibold gap-4 mb-2">
-        <p>Status Meja : </p>
+      {table && table.length > 0 && !loading && (
         <BadgeStatus data={statusData} />
-      </div>
+      )}
       {/* Daftar Meja */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
         {table && table.length === 0 && !loading ? (
           <div className="w-full flex items-center justify-center text-primary p-4 font-semibold">
             Tidak ada Data Meja
@@ -57,8 +56,8 @@ const CardTableLayout = () => {
             {/* Add New Table Card */}
             <CardAddNew
               title="Tambah Meja Baru"
-              cardClassName="min-h-36 h-auto min-w-48 justify-center"
-              titleClassName="font-semibold"
+              cardClassName="min-h-24 md:min-h-36 h-auto min-w-42 md:min-w-48 justify-center"
+              titleClassName="font-semibold text-center text-[1rem] md:text-md mt-2 md:-mt-4"
               actionClassName="mt-4"
               btnOnClick={() => setAddTableModal(true)}
             />

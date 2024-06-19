@@ -13,7 +13,7 @@ const CardTable = (props) => {
 
   return (
     <Card
-      className={`cursor-pointer hover:scale-105 duration-300 border-[1px] ${
+      className={`cursor-pointer hover:scale-105 duration-300 border-[1px] min-w-48 min-h-24 md:min-h-36 ${
         item.category === "custom" ? " border-primary" : "border-secondary"
       }`}
     >
@@ -23,14 +23,19 @@ const CardTable = (props) => {
           {/* LEFT */}
           <div className="flex items-center gap-3">
             {/* name */}
-            <Card.Title title={item.name} className="font-semibold" />
+            <Card.Title
+              title={item.name}
+              className="font-semibold text-[1rem] md:text-md"
+            />
             {/* Status Tooltip  */}
             <div
               className="tooltip tooltip-right"
               data-tip={setStatusTable(item.status)}
             >
               <div
-                className={`w-4 h-4 rounded-full ${setColorTable(item.status)}`}
+                className={`w-3 h-3 md:w-4 md:h-4 rounded-full ${setColorTable(
+                  item.status
+                )}`}
               />
             </div>
           </div>
@@ -43,7 +48,7 @@ const CardTable = (props) => {
           </Button>
         </div>
         {/* MID */}
-        <p className="text-sm font-semibold mb-6">
+        <p className="text-sm font-semibold mb-2 md:mb-6">
           {" "}
           {` Tipe : ${setTypeTable(item.type)}`}
         </p>
