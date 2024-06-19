@@ -59,11 +59,14 @@ const useTable = () => {
 
     if (validate) {
       dispatch(postNewTable(data)).then((response) => {
+        console.log({ response });
         if (response.payload?.statusCode === 201) {
           successDialog(response.payload.message);
           dispatch(getAllTable());
           setAddTableModal(false);
-        } else if (response?.payload.includes("403")) {
+        } else if (response?.payload?.includes("400")) {
+          warningDialog("Tidak bisa menambahkan data yang sama");
+        } else if (response?.payload?.includes("403")) {
           warningDialog("Mohon login terlebih dahulu");
         }
       });
