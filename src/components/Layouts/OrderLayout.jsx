@@ -18,7 +18,7 @@ const OrderLayout = () => {
   const { order, getAllOrderData } = useOrder();
 
   useEffect(() => {
-    getAllOrderData();
+    if (!order.length) getAllOrderData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

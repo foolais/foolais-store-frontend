@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import useOrder from "../../../hooks/useOrder";
-import { formatRupiah, warningDialog } from "../../../utils/utils";
+import { formatDates, formatRupiah, warningDialog } from "../../../utils/utils";
 import Button from "../../Elements/Button/Button";
 import { useNavigate } from "react-router-dom";
 
@@ -28,7 +28,9 @@ const CardOrder = ({ order }) => {
         }`}</p>
       </div>
       <div className="w-auto flex flex-col justify-end">
-        <p className="text-right">17/11/2022, 20:30 PM</p>
+        <p className="text-right">
+          {formatDates(order?.timestamps?.created_at)}
+        </p>
         <p className="text-right font-semibold my-1">
           {formatRupiah(order.total_price)}
         </p>

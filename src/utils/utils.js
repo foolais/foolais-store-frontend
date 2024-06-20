@@ -1,3 +1,4 @@
+import moment from "moment";
 import Swal from "sweetalert2";
 
 export const formatRupiah = (amount) => {
@@ -6,6 +7,16 @@ export const formatRupiah = (amount) => {
     style: "currency",
     currency: "IDR",
   });
+};
+
+export const formatDates = (time, type = "full") => {
+  if (type === "full") {
+    return moment(time).format("DD/MM/YY, hh:mm A");
+  } else if (type === "date") {
+    return moment(time).format("DD/MM/YY");
+  } else if (type === "time") {
+    return moment(time).format("hh:mm A");
+  }
 };
 
 export const sortDataByArray = (data, sortOrder) => {
