@@ -8,7 +8,7 @@ import Button from "../../Elements/Button/Button";
 import BadgeStatus from "../BadgeStatus";
 import FooterLayout from "./FooterLayout";
 
-const FooterOrderDetails = ({ data }) => {
+const FooterOrderDetails = ({ totalPrice }) => {
   const initialBadge = [
     { text: "Tunai", color: "secondary", value: "cash" },
     { text: "QRIS", color: "primary", value: "qris" },
@@ -35,7 +35,7 @@ const FooterOrderDetails = ({ data }) => {
           />
         </div>
         <p className="font-semibold text-lg text-right">
-          Total Harga : {formatRupiah(data?.totalPrice)}
+          Total Harga : {formatRupiah(totalPrice)}
         </p>
       </div>
       <Button

@@ -8,10 +8,6 @@ import {
   handleUpdateCart,
 } from "../redux/slice/cartSlice";
 import {
-  handleUpdateMenuOrder,
-  handleRemoveMenuOrder,
-} from "../redux/slice/orderSlice";
-import {
   exitConfirmationDialog,
   showConfirmationDialog,
   successDialog,
@@ -65,7 +61,7 @@ const useCart = () => {
       if (isConfirmed) {
         isUseInCart
           ? dispatch(handleRemoveCart({ _id, is_take_away }))
-          : dispatch(handleRemoveMenuOrder({ _id, is_take_away }));
+          : console.log("tesa todo", _id, is_take_away);
       }
     });
   };
@@ -122,7 +118,7 @@ const useCart = () => {
       if (isConfirmed) {
         isUseInCart
           ? dispatch(handleUpdateCart(payload))
-          : dispatch(handleUpdateMenuOrder(payload));
+          : console.log("tesa todo", payload);
         setShowEditModal(false);
       }
     });

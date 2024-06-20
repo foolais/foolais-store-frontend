@@ -1,6 +1,8 @@
 import { useState } from "react";
 import BadgeStatus from "../Fragments/BadgeStatus";
 import CardOrder from "../Fragments/Card/CardOrder";
+import useOrder from "../../hooks/useOrder";
+import { useEffect } from "react";
 
 const OrderLayout = () => {
   const initialBadgeData = [
@@ -11,7 +13,14 @@ const OrderLayout = () => {
   ];
 
   const [badgeData, setBadgeData] = useState(initialBadgeData);
-  const [filter, setFilter] = useState("all");
+  // const [filter, setFilter] = useState("all");
+
+  const { order, getAllOrderData } = useOrder();
+
+  useEffect(() => {
+    getAllOrderData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onBadgeChange = (value) => {
     const updateBadgeData = badgeData.map((item) => {
@@ -32,8 +41,9 @@ const OrderLayout = () => {
         onBadgeChange={onBadgeChange}
       />
       <div className="mt-4 grid gap-4">
-        <CardOrder />
-        <CardOrder />
+        {order.map((item) => (
+          <CardOrder key={item._id} order={item} />
+        ))}
       </div>
     </div>
   );

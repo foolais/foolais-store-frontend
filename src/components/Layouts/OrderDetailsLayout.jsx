@@ -9,27 +9,33 @@ import FooterOrderDetails from "../Fragments/Footer/FooterOrderDetails";
 import Breadcrumbs from "../Fragments/Breadcrumbs";
 import Title from "../Elements/Text/Title";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const OrderDetailsLayout = () => {
+  const { id } = useParams();
   const {
-    data,
+    singleOrder: order,
     onEdit,
     showModal,
     onToggleOnEdit,
     onHandleAddNotes,
     handleShowModal,
-    isNotesFilled,
+    getSingleOrderData,
   } = useOrder();
-
   const { onDeleteCart } = useCart();
-
-  const { id } = useParams();
 
   const breadCrumbsData = [
     { text: "Home", link: "/" },
     { text: "Pesanan", link: "/pesanan" },
     { text: "Detail", link: `/pesanan/${id}` },
   ];
+
+  useEffect(() => {
+    if (!order || !order?._id) {
+      getSingleOrderData(id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="w-full h-auto">
@@ -39,7 +45,7 @@ const OrderDetailsLayout = () => {
         <div className="grid">
           <div className="flex items-center">
             <p className="font-bold text-2xl mb-1">
-              {`Pesanan #${data.sequenceNumber}`}
+              {`Pesanan #${order?.number_order}`}
             </p>
             <div
               className="tooltip tooltip-right"
@@ -60,25 +66,26 @@ const OrderDetailsLayout = () => {
           <p>
             Status :{" "}
             <span className="font-semibold">
-              {data.is_finished ? "Selesai" : "Menunggu"}
+              {order?.is_finished ? "Selesai" : "Menunggu"}
             </span>
           </p>
         </div>
         <div className="grid text-right">
-          <p className="font-semibold text-lg mb-1">Meja : {data.table}</p>
+          <p className="font-semibold text-lg mb-1">
+            Meja : {order?.table?.name}
+          </p>
           <Button
             onClick={() => handleShowModal(true)}
             className={`btn-sm btn-outline text-secondary font-bold border-[1px] border-secondary hover:bg-secondary hover:border-secondary ease-in-out duration-300`}
           >
-            {isNotesFilled() || data.is_finished
-              ? "Lihat Catatan"
-              : "Tambah Catatan"}
+            {order?.is_finished ? "Lihat Catatan" : "Tambah Catatan"}
           </Button>
         </div>
       </div>
       <div className="grid grid-cols-2 mt-4 gap-4">
-        {data?.menu &&
-          data?.menu.map((item) => {
+        {order?.menu &&
+          order?.menu.length > 0 &&
+          order?.menu.map((item) => {
             return (
               <CardCart
                 key={item._id}
@@ -103,11 +110,11 @@ const OrderDetailsLayout = () => {
         title={`Catatan Untuk Pesanan #${1}`}
         showModal={showModal}
         closeModal={() => handleShowModal(false)}
-        defaultValue={data.notes}
+        defaultValue={order?.notes}
         onSubmit={(event) => onHandleAddNotes(event)}
-        statusOrder={data.is_finished}
+        statusOrder={order?.is_finished}
       />
-      <FooterOrderDetails data={data} />
+      <FooterOrderDetails totalPrice={order?.total_price} />
     </div>
   );
 };

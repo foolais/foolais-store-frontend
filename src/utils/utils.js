@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 
 export const formatRupiah = (amount) => {
+  if (!amount) return "Rp. 0";
   return amount.toLocaleString("id-ID", {
     style: "currency",
     currency: "IDR",

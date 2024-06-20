@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  handleChangeNotes,
-  handleChangePaymentMethod,
+  getAllOrder,
+  getSingleOrder,
   toogleOnEdit,
 } from "../redux/slice/orderSlice";
 import { useState } from "react";
@@ -18,14 +18,37 @@ const useOrder = () => {
   const [showModal, setShowModal] = useState(false);
 
   // selector redux
-  const { data, onEdit } = useSelector((state) => state.order);
+  const { order, singleOrder, onEdit, loading } = useSelector(
+    (state) => state.order
+  );
+
+  const getAllOrderData = async () => {
+    if (loading) return;
+    try {
+      await dispatch(getAllOrder());
+    } catch (error) {
+      warningDialog(error);
+    }
+  };
+
+  const getSingleOrderData = async (id, callback = () => {}) => {
+    if (loading) return;
+    try {
+      await dispatch(getSingleOrder(id));
+      if (callback && typeof callback === "function") {
+        callback();
+      }
+    } catch (error) {
+      warningDialog(error);
+    }
+  };
 
   const onToggleOnEdit = () => {
     dispatch(toogleOnEdit());
   };
 
   const onChangePayment = (value) => {
-    dispatch(handleChangePaymentMethod(value));
+    console.log("tesa todo", value);
   };
 
   const onHandleAddNotes = (event) => {
@@ -33,7 +56,7 @@ const useOrder = () => {
     const payload = event.target.notes.value;
 
     try {
-      dispatch(handleChangeNotes(payload));
+      console.log("tesa todo", payload);
       successDialog("Berhasil menyimpan catatan");
       setShowModal(false);
     } catch (error) {
@@ -51,19 +74,21 @@ const useOrder = () => {
     }
   };
 
-  const isNotesFilled = () => {
-    return Boolean(data.notes && data.notes.length > 0);
-  };
+  // const isNotesFilled = () => {
+  //   return Boolean(data.notes && data.notes.length > 0);
+  // };
 
   return {
-    data,
+    order,
+    singleOrder,
     showModal,
     onEdit,
     onToggleOnEdit,
     onHandleAddNotes,
     handleShowModal,
     onChangePayment,
-    isNotesFilled,
+    getAllOrderData,
+    getSingleOrderData,
   };
 };
 

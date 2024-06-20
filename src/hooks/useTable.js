@@ -59,7 +59,6 @@ const useTable = () => {
 
     if (validate) {
       dispatch(postNewTable(data)).then((response) => {
-        console.log({ response });
         if (response.payload?.statusCode === 201) {
           successDialog(response.payload.message);
           dispatch(getAllTable());
