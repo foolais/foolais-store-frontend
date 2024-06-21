@@ -82,7 +82,7 @@ const OrderDetailsLayout = () => {
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-2 mt-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 mt-4 gap-4">
         {order?.menu &&
           order?.menu.length > 0 &&
           order?.menu.map((item) => {
@@ -98,11 +98,9 @@ const OrderDetailsLayout = () => {
           })}
         <CardAddNew
           title="Tambah Pesanan Baru"
-          cardClassName={`min-h-auto h-40 min-w-48 ${
-            onEdit ? "mb-52" : "mb-0"
-          }`}
-          titleClassName="font-semibold mt-10"
-          actionClassName="mt-4"
+          cardClassName="h-auto min-h-44 p-2 min-w-48"
+          titleClassName="font-semibold text-center text-[1rem] md:text-md mt-6 md:mt-4"
+          actionClassName="mt-2 md:mt-4"
           onEdit={!onEdit}
         />
       </div>
