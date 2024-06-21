@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import useOrder from "../../../hooks/useOrder";
-import { formatDates, formatRupiah, warningDialog } from "../../../utils/utils";
+import { formatDates, warningDialog } from "../../../utils/utils";
 import Button from "../../Elements/Button/Button";
 import { useNavigate } from "react-router-dom";
 
@@ -19,28 +19,25 @@ const CardOrder = ({ order }) => {
   };
 
   return (
-    <div className="w-full p-4 bg-white shadow-md rounded-lg flex justify-between border-[1px] border-secondary">
-      <div className="w-1/2">
-        <p className="font-bold text-2xl">{`Pesanan : #${order.number_order}`}</p>
-        <p className="font-semibold text-lg my-1">{`Meja : ${order.table.name}`}</p>
-        <p className="font-semibold text-sm">{`Status: ${
-          order?.is_finished ? "Selesai" : "Menunggu"
+    <div className="w-full p-4 bg-white shadow-md rounded-lg border-[1px] border-secondary grid sm:max-w-[80%]">
+      <div className="w-full flex items-center justify-between">
+        <p className="font-bold text-md md:text-2xl">{`Pesanan : #${order.number_order}`}</p>
+        <p className="font-bold text-sm">{`${
+          order?.is_finished ? "Selesai" : "Dalam Proses"
         }`}</p>
       </div>
-      <div className="w-auto flex flex-col justify-end">
-        <p className="text-right">
+      <div className="w-full flex items-center justify-between">
+        <p className="font-semibold text-md md:text-lg my-1">{`Meja : ${order.table.name}`}</p>
+        <p className="text-right text-sm md:text-md">
           {formatDates(order?.timestamps?.created_at)}
         </p>
-        <p className="text-right font-semibold my-1">
-          {formatRupiah(order.total_price)}
-        </p>
-        <Button
-          onClick={() => handleClickDetails(order._id)}
-          className="btn-sm bg-secondary"
-        >
-          Lihat Detail -
-        </Button>
       </div>
+      <Button
+        onClick={() => handleClickDetails(order._id)}
+        className="btn-sm bg-secondary justify-self-end mt-4"
+      >
+        Lihat Detail
+      </Button>
     </div>
   );
 };

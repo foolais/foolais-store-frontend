@@ -8,7 +8,6 @@ const OrderLayout = () => {
   const initialBadgeData = [
     { text: "Semua", color: "secondary", value: "all" },
     { text: "Dalam Proses", color: "primary", value: "onProccess" },
-    { text: "Menunggu Pembayaran", color: "primary", value: "waitingPayment" },
     { text: "Selesai", color: "primary", value: "finished" },
   ];
 
