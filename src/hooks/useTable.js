@@ -29,12 +29,17 @@ const useTable = () => {
   const { data: tableData, loading } = useSelector((state) => state.table);
 
   useEffect(() => {
-    dispatch(getAllTable());
-  }, [dispatch]);
-
-  useEffect(() => {
     if (tableData && tableData.length > 0 && !loading) setTable(tableData);
   }, [tableData, loading]);
+
+  const getAllTableData = () => {
+    if (loading) return;
+    try {
+      dispatch(getAllTable());
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Validate Table
   const isValidateTable = (table, type) => {
@@ -149,6 +154,7 @@ const useTable = () => {
     onDeleteTable,
     onCloseModal,
     onAddOrder,
+    getAllTableData,
   };
 };
 

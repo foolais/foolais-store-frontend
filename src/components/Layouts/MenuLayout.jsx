@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import CardAddNew from "../Fragments/Card/CardAddNew";
 import Modal from "../Fragments/Modal/Modal";
 import FormMenu from "../Fragments/FormMenu";
@@ -8,6 +9,7 @@ import Title from "../Elements/Text/Title";
 import Breadcrumbs from "../Fragments/Breadcrumbs";
 import Skeleton from "../Fragments/Skeleton/Skeleton";
 import CardMenu from "../Fragments/Card/CardMenu";
+import { useEffect } from "react";
 
 const CardMenuLayout = () => {
   const {
@@ -23,12 +25,17 @@ const CardMenuLayout = () => {
     onBadgeChange,
     onAddMenu,
     onDeleteMenu,
+    getAllMenuData,
   } = useMenu();
 
   const breadCrumbsData = [
     { text: "Home", link: "/" },
     { text: "Menu", link: "/menu" },
   ];
+
+  useEffect(() => {
+    getAllMenuData();
+  }, []);
 
   return (
     <div className="w-full h-auto ">

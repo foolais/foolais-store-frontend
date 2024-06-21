@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import BadgeStatus from "../Fragments/BadgeStatus";
 import CardAddNew from "../Fragments/Card/CardAddNew";
 import Modal from "../Fragments/Modal/Modal";
@@ -7,6 +8,7 @@ import Breadcrumbs from "../Fragments/Breadcrumbs";
 import Title from "../Elements/Text/Title";
 import Skeleton from "../Fragments/Skeleton/Skeleton";
 import CardTable from "../Fragments/Card/CardTable";
+import { useEffect } from "react";
 
 const CardTableLayout = () => {
   const {
@@ -22,6 +24,7 @@ const CardTableLayout = () => {
     onDeleteTable,
     onCloseModal,
     onAddOrder,
+    getAllTableData,
   } = useTable();
 
   const statusData = [
@@ -34,6 +37,10 @@ const CardTableLayout = () => {
     { text: "Home", link: "/" },
     { text: "Meja", link: "/meja" },
   ];
+
+  useEffect(() => {
+    getAllTableData();
+  }, []);
 
   return (
     <div className="w-full h-auto">

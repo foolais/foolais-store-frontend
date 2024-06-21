@@ -37,12 +37,6 @@ const useMenu = () => {
   const searchData = useSelector(getSearchData);
 
   // * Use Effect
-  // ! get all menu
-  useEffect(() => {
-    getAllMenuData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // ! set Filtered menu
   useEffect(() => {
     setFilteredMenu(menu);
@@ -170,6 +164,7 @@ const useMenu = () => {
     onBadgeChange,
     onAddMenu,
     onDeleteMenu,
+    getAllMenuData,
   };
 };
 
