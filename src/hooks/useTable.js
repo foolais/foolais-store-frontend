@@ -14,6 +14,7 @@ import {
   warningDialog,
 } from "../utils/utils";
 import { handleSetTableCart } from "../redux/slice/cartSlice";
+import { getSingleOrderByTableId } from "../redux/slice/orderSlice";
 
 const useTable = () => {
   const dispatch = useDispatch();
@@ -136,9 +137,27 @@ const useTable = () => {
     });
   };
 
-  const onAddOrder = (item) => {
-    dispatch(handleSetTableCart(item));
-    navigate("/menu");
+  const onAddOrder = async (item) => {
+    if (item.status === "empty") {
+      await dispatch(handleSetTableCart(item));
+      navigate("/menu");
+    } else {
+      await getOrderByTableId(item._id);
+      navigate(`/pesanan/${item._id}`);
+    }
+  };
+
+  const getOrderByTableId = async (id) => {
+    if (loading) return;
+    try {
+      await dispatch(getSingleOrderByTableId(id));
+    } catch (error) {
+      warningDialog(error);
+    }
+  };
+
+  const isEmptyStatusOrderTable = (status) => {
+    return status === "empty";
   };
 
   return {
@@ -155,6 +174,7 @@ const useTable = () => {
     onCloseModal,
     onAddOrder,
     getAllTableData,
+    isEmptyStatusOrderTable,
   };
 };
 

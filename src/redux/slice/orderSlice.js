@@ -33,6 +33,18 @@ export const getSingleOrder = createAsyncThunk(
   }
 );
 
+export const getSingleOrderByTableId = createAsyncThunk(
+  "order/getSingleOrderByTableId",
+  async (tableId) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/order/table/${tableId}`);
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 // const getExistingMenuOrder = (_id, is_take_away, state) => {
 //   const existingMenuOrderIndex = state.data.menu.findIndex(
 //     (item) => item._id === _id && item.is_take_away === is_take_away
@@ -74,6 +86,17 @@ const orderSlice = createSlice({
         state.singleOrder = action.payload.data;
       })
       .addCase(getSingleOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(getSingleOrderByTableId.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getSingleOrderByTableId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.singleOrder = action.payload.data;
+      })
+      .addCase(getSingleOrderByTableId.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });

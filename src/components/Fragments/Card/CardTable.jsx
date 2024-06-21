@@ -7,9 +7,12 @@ import {
   setStatusTable,
   setTypeTable,
 } from "../../../utils/statusData";
+import useTable from "../../../hooks/useTable";
 
 const CardTable = (props) => {
   const { item, onClickEdit, onDeleteTable, onAddOrder } = props;
+
+  const { isEmptyStatusOrderTable } = useTable();
 
   return (
     <Card
@@ -66,7 +69,9 @@ const CardTable = (props) => {
             className="btn-sm bg-secondary text-neutral"
             onClick={onAddOrder}
           >
-            <span>{item.isOrder ? "Lihat" : "Buat" + " Pesanan"}</span>
+            <span>{`${
+              isEmptyStatusOrderTable(item.status) ? "Buat" : "Lihat"
+            } Pesanan`}</span>
             <AiOutlineRight size={15} />
           </Button>
         </div>
