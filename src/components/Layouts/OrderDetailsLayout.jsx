@@ -44,7 +44,7 @@ const OrderDetailsLayout = () => {
       <div className="flex items-start justify-between">
         <div className="grid">
           <div className="flex items-center">
-            <p className="font-bold text-2xl mb-1">
+            <p className="font-bold text-lg md:text-2xl mb-1">
               {`Pesanan #${order?.number_order}`}
             </p>
             <div
@@ -65,13 +65,13 @@ const OrderDetailsLayout = () => {
           </div>
           <p>
             Status :{" "}
-            <span className="font-semibold">
-              {order?.is_finished ? "Selesai" : "Menunggu"}
+            <span className="font-bold">
+              {order?.is_finished ? "Selesai" : "Dalam Proses"}
             </span>
           </p>
         </div>
         <div className="grid text-right">
-          <p className="font-semibold text-lg mb-1">
+          <p className="font-semibold md:text-lg mb-2">
             Meja : {order?.table?.name}
           </p>
           <Button
@@ -82,7 +82,7 @@ const OrderDetailsLayout = () => {
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 mt-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 mt-4 gap-4">
         {order?.menu &&
           order?.menu.length > 0 &&
           order?.menu.map((item) => {

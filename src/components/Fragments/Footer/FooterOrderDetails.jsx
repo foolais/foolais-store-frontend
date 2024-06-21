@@ -25,22 +25,19 @@ const FooterOrderDetails = ({ totalPrice }) => {
 
   return (
     <FooterLayout>
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="font-bold text-lg">Metode Pembayaran</p>
-          <BadgeStatus
-            data={badgeData}
-            isClickable={!onEdit}
-            onBadgeChange={onBadgeChange}
-          />
-        </div>
-        <p className="font-semibold text-lg text-right">
-          Total Harga : {formatRupiah(totalPrice)}
-        </p>
-      </div>
+      <p className="font-bold md:text-lg">Metode Pembayaran</p>
+      <BadgeStatus
+        data={badgeData}
+        isClickable={!onEdit}
+        onBadgeChange={onBadgeChange}
+      />
+      <p className="md:text-lg text-right mb-3">
+        Total Harga :{" "}
+        <span className="font-semibold"> {formatRupiah(totalPrice)} </span>
+      </p>
       <Button
         disabled={onEdit}
-        className="bg-secondary w-full mt-4 text-lg text-white"
+        className="bg-secondary w-full text-lg text-white"
       >
         Bayar Sekarang
       </Button>
