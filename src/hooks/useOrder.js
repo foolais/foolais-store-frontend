@@ -10,9 +10,13 @@ import {
   successDialog,
   warningDialog,
 } from "../utils/utils";
+import { useLocation } from "react-router-dom";
 
 const useOrder = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const url = location.pathname;
 
   // state
   const [showModal, setShowModal] = useState(false);
@@ -74,6 +78,13 @@ const useOrder = () => {
     }
   };
 
+  const isDetailsOpenFromTableMenu = () => {
+    const hasMeja = url.includes("meja");
+    const hasPesanan = url.includes("pesanan");
+
+    return hasMeja && hasPesanan;
+  };
+
   // const isNotesFilled = () => {
   //   return Boolean(data.notes && data.notes.length > 0);
   // };
@@ -89,6 +100,7 @@ const useOrder = () => {
     onChangePayment,
     getAllOrderData,
     getSingleOrderData,
+    isDetailsOpenFromTableMenu,
   };
 };
 

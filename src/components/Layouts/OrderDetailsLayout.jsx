@@ -10,6 +10,7 @@ import Breadcrumbs from "../Fragments/Breadcrumbs";
 import Title from "../Elements/Text/Title";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import useTable from "../../hooks/useTable";
 
 const OrderDetailsLayout = () => {
   const { id } = useParams();
@@ -21,18 +22,30 @@ const OrderDetailsLayout = () => {
     onHandleAddNotes,
     handleShowModal,
     getSingleOrderData,
+    isDetailsOpenFromTableMenu,
   } = useOrder();
   const { onDeleteCart } = useCart();
+  const { getOrderByTableId } = useTable();
+
+  const isOpenFromTable = isDetailsOpenFromTableMenu();
 
   const breadCrumbsData = [
     { text: "Home", link: "/" },
-    { text: "Pesanan", link: "/pesanan" },
+    {
+      text: isOpenFromTable ? "Meja" : "Pesanan",
+      link: isOpenFromTable ? "/meja" : "/pesanan",
+    },
+    isOpenFromTable ? { text: "Pesanan", link: "/pesanan" } : null,
     { text: "Detail", link: `/pesanan/${id}` },
-  ];
+  ].filter(Boolean);
 
   useEffect(() => {
     if (!order || !order?._id) {
-      getSingleOrderData(id);
+      if (!isOpenFromTable) {
+        getSingleOrderData(id);
+      } else {
+        getOrderByTableId(id);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

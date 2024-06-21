@@ -15,6 +15,10 @@ const CardCart = (props) => {
 
   const { showEditModal, handleShowEditModal, onUpdateCart } = useCart();
 
+  const handleCheck = (item) => {
+    item.is_served = !item.is_served;
+  };
+
   return (
     <>
       <Card className="min-w-48 h-auto min-h-44">
@@ -52,14 +56,30 @@ const CardCart = (props) => {
                 className="text-sm md:text-lg font-bold"
               />
             </div>
-            <div
-              className={`justify-self-end ${
-                isDisabledAction ? "opacity-0 scale-0" : "opacity-100"
-              } ease-in-out duration-300`}
-            >
+
+            <div className="justify-self-end">
+              {!isUseInCart && isDisabledAction && (
+                <label
+                  onChange={() => handleCheck(item)}
+                  className={`cursor-pointer label gap-2 p-0 pb-2 ${
+                    isDisabledAction ? "opacity-100" : "opacity-0 scale-0"
+                  } ease-in-out`}
+                >
+                  <span className="label-text">Disajikan</span>
+                  <input
+                    type="checkbox"
+                    defaultChecked={!item.is_served}
+                    className="checkbox checkbox-success"
+                  />
+                </label>
+              )}
               <Button
                 onClick={() => handleShowEditModal(true)}
-                className="btn-sm btn-outline"
+                className={`btn-sm btn-outline ${
+                  isDisabledAction
+                    ? "opacity-0 scale-0 hidden"
+                    : "block opacity-100"
+                } ease-in-out duration-300`}
               >
                 Ubah Pesanan
               </Button>

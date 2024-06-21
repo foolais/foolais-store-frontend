@@ -8,9 +8,9 @@ const CardOrder = ({ order }) => {
   const navigate = useNavigate();
   const { getSingleOrderData } = useOrder();
 
-  const handleClickDetails = (id) => {
+  const handleClickDetails = async (id) => {
     try {
-      getSingleOrderData(id, () => {
+      await getSingleOrderData(id, () => {
         navigate(`/pesanan/${id}`);
       });
     } catch (error) {

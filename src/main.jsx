@@ -17,6 +17,7 @@ const router = createBrowserRouter([
   { path: "/", element: <HomePages />, errorElement: <ErrorPages /> },
   { path: "/menu", element: <MenuPages /> },
   { path: "/meja", element: <TablePages /> },
+  { path: "/meja/pesanan/:id", element: <OrderDetailsPages /> },
   { path: "/keranjang", element: <CartPages /> },
   { path: "/pesanan", element: <OrderPages /> },
   { path: "/pesanan/:id", element: <OrderDetailsPages /> },

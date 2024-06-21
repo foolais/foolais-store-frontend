@@ -38,7 +38,7 @@ const useTable = () => {
     try {
       dispatch(getAllTable());
     } catch (error) {
-      console.log(error);
+      warningDialog(error);
     }
   };
 
@@ -143,7 +143,7 @@ const useTable = () => {
       navigate("/menu");
     } else {
       await getOrderByTableId(item._id);
-      navigate(`/pesanan/${item._id}`);
+      navigate(`/meja/pesanan/${item._id}`);
     }
   };
 
@@ -175,6 +175,7 @@ const useTable = () => {
     onAddOrder,
     getAllTableData,
     isEmptyStatusOrderTable,
+    getOrderByTableId,
   };
 };
 
