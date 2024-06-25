@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllOrder,
   getSingleOrder,
+  handleAddMenuOrder,
   setSingleOrderData,
   toogleOnEdit,
 } from "../redux/slice/orderSlice";
@@ -21,6 +22,7 @@ const useOrder = () => {
 
   // state
   const [showModal, setShowModal] = useState(false);
+  const [showAddMenuOrderModal, setShowAddMenuOrderModal] = useState(false);
 
   // selector redux
   const { order, singleOrder, onEdit, loading } = useSelector(
@@ -73,12 +75,18 @@ const useOrder = () => {
     }
   };
 
-  const handleShowModal = (type) => {
-    if (type) {
-      setShowModal(type);
-    } else {
+  const handleShowModal = (data, type) => {
+    if (type === "addMenu" && data) {
+      setShowAddMenuOrderModal(data);
+    } else if (type === "addMenu" && !data) {
       exitConfirmationDialog((isConfirmed) => {
-        isConfirmed && setShowModal(type);
+        isConfirmed && setShowAddMenuOrderModal(data);
+      });
+    } else if (type === "notes" && data) {
+      setShowModal(data);
+    } else if (type === "notes" && !data) {
+      exitConfirmationDialog((isConfirmed) => {
+        isConfirmed && setShowModal(data);
       });
     }
   };
@@ -94,6 +102,19 @@ const useOrder = () => {
     dispatch(setSingleOrderData(menu));
   };
 
+  const onHandleAddMenuOrder = (payload) => {
+    try {
+      if (!payload?.name) throw new Error("Menu harus diisi");
+      if (payload?.quantity <= 0) throw new Error("Jumlah pesanan minimal 1");
+
+      dispatch(handleAddMenuOrder(payload));
+      successDialog("Berhasil menambahkan menu");
+      setShowAddMenuOrderModal(false);
+    } catch (error) {
+      warningDialog(error.message || error);
+    }
+  };
+
   // const isNotesFilled = () => {
   //   return Boolean(data.notes && data.notes.length > 0);
   // };
@@ -103,6 +124,7 @@ const useOrder = () => {
     singleOrder,
     showModal,
     onEdit,
+    showAddMenuOrderModal,
     onToggleOnEdit,
     onCancelEdit,
     onHandleAddNotes,
@@ -112,6 +134,7 @@ const useOrder = () => {
     getSingleOrderData,
     isDetailsOpenFromTableMenu,
     onSetSingleOrderMenu,
+    onHandleAddMenuOrder,
   };
 };
 

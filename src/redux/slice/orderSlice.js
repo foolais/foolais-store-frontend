@@ -91,6 +91,18 @@ const orderSlice = createSlice({
         state.singleOrder.menu.splice(existingMenuOrderIndex, 1);
       }
     },
+    handleAddMenuOrder: (state, action) => {
+      const { _id, is_take_away } = action.payload;
+
+      const { existingMenuOrder, existingMenuOrderIndex } =
+        getExistingMenuOrder(_id, is_take_away, state);
+
+      if (existingMenuOrderIndex !== -1) {
+        existingMenuOrder.quantity += action.payload.quantity;
+      } else {
+        state.singleOrder.menu.push(action.payload);
+      }
+    },
   },
   extraReducers(builder) {
     builder
@@ -135,6 +147,7 @@ export const {
   setSingleOrderData,
   handleChangeMenuOrder,
   handleDeleteMenuOrder,
+  handleAddMenuOrder,
 } = orderSlice.actions;
 
 export default orderSlice.reducer;

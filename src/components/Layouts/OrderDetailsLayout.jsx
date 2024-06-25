@@ -16,6 +16,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useTable from "../../hooks/useTable";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import AddMenuModal from "../Fragments/Modal/AddMenuModal";
 
 const OrderDetailsLayout = () => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ const OrderDetailsLayout = () => {
     singleOrder: order,
     onEdit,
     showModal,
+    showAddMenuOrderModal,
     onToggleOnEdit,
     onHandleAddNotes,
     handleShowModal,
@@ -131,7 +133,7 @@ const OrderDetailsLayout = () => {
             Meja : {order?.table?.name}
           </p>
           <Button
-            onClick={() => handleShowModal(true)}
+            onClick={() => handleShowModal(true, "notes")}
             className={`btn-sm btn-outline text-secondary font-bold border-[1px] border-secondary hover:bg-secondary hover:border-secondary ease-in-out duration-300`}
           >
             {order?.is_finished ? "Lihat Catatan" : "Tambah Catatan"}
@@ -144,7 +146,9 @@ const OrderDetailsLayout = () => {
           order?.menu.map((item) => {
             return (
               <CardCart
-                key={item._id}
+                key={`${item._id}-${
+                  item.is_take_away ? "take-away" : "dine-in"
+                }`}
                 item={item}
                 isDisabledAction={!onEdit}
                 isUseInCart={false}
@@ -158,17 +162,26 @@ const OrderDetailsLayout = () => {
           titleClassName="font-semibold text-center text-[1rem] md:text-md mt-6 md:mt-4"
           actionClassName="mt-2 md:mt-4"
           onEdit={!onEdit}
+          btnOnClick={() => handleShowModal(true, "addMenu")}
         />
       </div>
-      <NotesModal
-        title={`Catatan Untuk Pesanan #${1}`}
-        showModal={showModal}
-        closeModal={() => handleShowModal(false)}
-        defaultValue={order?.notes}
-        onSubmit={(event) => onHandleAddNotes(event)}
-        statusOrder={order?.is_finished}
-      />
       <FooterOrderDetails totalPrice={order?.total_price} />
+      {showModal && (
+        <NotesModal
+          title={`Catatan Untuk Pesanan #${1}`}
+          showModal={showModal}
+          closeModal={() => handleShowModal(false, "notes")}
+          defaultValue={order?.notes}
+          onSubmit={(event) => onHandleAddNotes(event)}
+          statusOrder={order?.is_finished}
+        />
+      )}
+      {showAddMenuOrderModal && (
+        <AddMenuModal
+          showModal={showAddMenuOrderModal}
+          closeModal={() => handleShowModal(false, "addMenu")}
+        />
+      )}
     </div>
   );
 };

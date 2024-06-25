@@ -34,6 +34,8 @@ const AutoComplete = (props) => {
       setIsOpen(false);
       onSelect(selectedValue);
       setSelectedData(selectedValue);
+    } else {
+      onSelect(null);
     }
   };
 
@@ -54,6 +56,7 @@ const AutoComplete = (props) => {
         setIsOpen(false);
         if (search !== selectedData?.text) {
           setSearch("");
+          onSelect(null);
         }
       }
     };
@@ -63,7 +66,7 @@ const AutoComplete = (props) => {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [selectedData, search]);
+  }, [selectedData, search, onSelect]);
 
   useEffect(() => {
     setSelectedData(value);
@@ -89,7 +92,7 @@ const AutoComplete = (props) => {
           ref={inputRef}
         />
         <div
-          className={`transition duration-300 ease-in-out ${
+          className={`absolute right-5 transition duration-300 ease-in-out ${
             isOpen ? "rotate-180" : ""
           }`}
         >
@@ -98,7 +101,9 @@ const AutoComplete = (props) => {
       </label>
       <Dropdown
         className={`${
-          isOpen ? "dropdown-open opacity-100 -mt-1" : "opacity-0 scale-0"
+          isOpen
+            ? "w-full dropdown-open opacity-100 -mt-1"
+            : "opacity-0 scale-0"
         } transition-all ease-in-out duration-300`}
         ref={dropdownRef}
       >

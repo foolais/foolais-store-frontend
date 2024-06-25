@@ -1,3 +1,4 @@
+import AutoComplete from "../../Elements/Input/AutoComplete";
 import Input from "../../Elements/Input/Input";
 import Select from "../../Elements/Input/Select";
 import TextArea from "../../Elements/Input/TextArea";
@@ -11,6 +12,7 @@ const FormInput = (props) => {
     isInput = false,
     isTextArea = false,
     isSelect = false,
+    isAutoComplete = false,
     defaultValue = null,
     isDisabled = false,
   } = props;
@@ -28,7 +30,7 @@ const FormInput = (props) => {
         <Input
           type={type}
           name={name}
-          className="input input-bordered w-full "
+          className="input input-bordered w-full"
           placeholder={placeholder}
           required={required}
           defaultValue={defaultValue}
@@ -52,6 +54,16 @@ const FormInput = (props) => {
           required={required}
           defaultValue={defaultValue}
           disabled={isDisabled}
+        />
+      )}
+      {isAutoComplete && (
+        <AutoComplete
+          name={name}
+          widthClassName="w-full"
+          placeholder={placeholder}
+          data={props?.data}
+          value={defaultValue}
+          onSelect={props?.onSelect}
         />
       )}
     </label>

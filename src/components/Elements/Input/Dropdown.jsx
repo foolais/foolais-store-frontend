@@ -28,7 +28,7 @@ const ButtonItem = (props) => {
 const Container = ({ children, className }) => {
   return (
     <ul
-      className={`dropdown-content z-30 menu p-2 shadow bg-primary text-neutral rounded-b-box mt-3 ${className}`}
+      className={`block dropdown-content max-h-32 overflow-y-auto z-30 menu p-2 shadow bg-primary text-neutral rounded-b-box mt-3  ${className}`}
     >
       {children}
     </ul>
