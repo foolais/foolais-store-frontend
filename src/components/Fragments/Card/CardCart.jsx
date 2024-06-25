@@ -87,12 +87,14 @@ const CardCart = (props) => {
           </div>
         </div>
       </Card>
-      <CartModal
-        showModal={showEditModal}
-        closeModal={() => handleShowEditModal(false)}
-        defaultValue={item}
-        onSubmit={(event) => onUpdateCart(event, item._id, isUseInCart)}
-      />
+      {showEditModal && (
+        <CartModal
+          showModal={showEditModal}
+          closeModal={() => handleShowEditModal(false)}
+          defaultValue={item}
+          onSubmit={(event) => onUpdateCart(event, item._id, isUseInCart)}
+        />
+      )}
     </>
   );
 };

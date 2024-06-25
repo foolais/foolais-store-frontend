@@ -51,6 +51,7 @@ const FormInput = (props) => {
           data={data}
           required={required}
           defaultValue={defaultValue}
+          disabled={isDisabled}
         />
       )}
     </label>

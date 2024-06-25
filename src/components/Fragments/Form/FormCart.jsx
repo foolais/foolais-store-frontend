@@ -6,8 +6,8 @@ const FormCart = (props) => {
   const { onSubmit, defaultValue } = props;
 
   const typeData = [
-    { text: "Makan Ditempat", value: "dine_in" },
-    { text: "Dibawa Pulang", value: "take_away" },
+    { text: "Makan Ditempat", value: false },
+    { text: "Dibawa Pulang", value: true },
   ];
 
   return (
@@ -22,19 +22,20 @@ const FormCart = (props) => {
         isDisabled={true}
       />
       <FormInput
+        title="Tipe"
+        data={typeData}
+        name="type"
+        isSelect={true}
+        defaultValue={defaultValue?.is_take_away}
+        isDisabled={true}
+      />
+      <FormInput
         title="Jumlah"
         type="number"
         name="quantity"
         placeholder="Masukkan Jumlah..."
         isInput={true}
         defaultValue={defaultValue?.quantity}
-      />
-      <FormInput
-        title="Tipe"
-        data={typeData}
-        name="type"
-        isSelect={true}
-        defaultValue={defaultValue?.is_take_away ? "take_away" : "dine_in"}
       />
       <FormInput
         title="Harga Satuan"
@@ -44,6 +45,7 @@ const FormCart = (props) => {
         isInput={true}
         defaultValue={defaultValue?.price}
       />
+
       <Button className="bg-secondary text-white mt-4 w-full">
         Simpan Perubahan
       </Button>

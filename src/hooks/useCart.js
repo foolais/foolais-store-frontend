@@ -13,6 +13,7 @@ import {
   successDialog,
   warningDialog,
 } from "../utils/utils";
+import { handleChangeMenuOrder } from "../redux/slice/orderSlice";
 
 const useCart = () => {
   const dispatch = useDispatch();
@@ -101,13 +102,23 @@ const useCart = () => {
   const onUpdateCart = (event, _id, isUseInCart) => {
     event.preventDefault();
     const form = event.target;
+    const disabledElements = form.querySelectorAll(":disabled");
+    disabledElements.forEach((element) => {
+      element.disabled = false;
+    });
+
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
+    disabledElements.forEach((element) => {
+      element.disabled = true;
+    });
 
     const payload = {
       _id,
       ...data,
-      is_take_away: data.type === "take_away",
+      price: +data.price,
+      quantity: +data.quantity,
+      is_take_away: data.type === "true",
     };
 
     delete payload.type;
@@ -118,7 +129,7 @@ const useCart = () => {
       if (isConfirmed) {
         isUseInCart
           ? dispatch(handleUpdateCart(payload))
-          : console.log("tesa todo", payload);
+          : dispatch(handleChangeMenuOrder(payload));
         setShowEditModal(false);
       }
     });

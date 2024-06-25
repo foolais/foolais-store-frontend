@@ -45,14 +45,14 @@ export const getSingleOrderByTableId = createAsyncThunk(
   }
 );
 
-// const getExistingMenuOrder = (_id, is_take_away, state) => {
-//   const existingMenuOrderIndex = state.data.menu.findIndex(
-//     (item) => item._id === _id && item.is_take_away === is_take_away
-//   );
-//   const existingMenuOrder = state.data.menu[existingMenuOrderIndex];
+const getExistingMenuOrder = (_id, is_take_away, state) => {
+  const existingMenuOrderIndex = state.singleOrder.menu.findIndex(
+    (item) => item._id === _id && item.is_take_away === is_take_away
+  );
+  const existingMenuOrder = state.singleOrder.menu[existingMenuOrderIndex];
 
-//   return { existingMenuOrderIndex, existingMenuOrder };
-// };
+  return { existingMenuOrderIndex, existingMenuOrder };
+};
 
 const orderSlice = createSlice({
   name: "order",
@@ -66,6 +66,19 @@ const orderSlice = createSlice({
     },
     setSingleOrderData: (state, action) => {
       state.singleOrder.menu = action.payload;
+    },
+    handleChangeMenuOrder: (state, action) => {
+      const { _id, is_take_away } = action.payload;
+      const { existingMenuOrder, existingMenuOrderIndex } =
+        getExistingMenuOrder(_id, is_take_away, state);
+
+      if (existingMenuOrderIndex !== -1) {
+        state.singleOrder.menu[existingMenuOrderIndex] = {
+          ...existingMenuOrder,
+          is_take_away: action.payload.is_take_away,
+          ...action.payload,
+        };
+      }
     },
   },
   extraReducers(builder) {
@@ -106,6 +119,7 @@ const orderSlice = createSlice({
   },
 });
 
-export const { toogleOnEdit, setSingleOrderData } = orderSlice.actions;
+export const { toogleOnEdit, setSingleOrderData, handleChangeMenuOrder } =
+  orderSlice.actions;
 
 export default orderSlice.reducer;
