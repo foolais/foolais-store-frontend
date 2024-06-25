@@ -13,7 +13,10 @@ import {
   successDialog,
   warningDialog,
 } from "../utils/utils";
-import { handleChangeMenuOrder } from "../redux/slice/orderSlice";
+import {
+  handleChangeMenuOrder,
+  handleDeleteMenuOrder,
+} from "../redux/slice/orderSlice";
 
 const useCart = () => {
   const dispatch = useDispatch();
@@ -62,7 +65,7 @@ const useCart = () => {
       if (isConfirmed) {
         isUseInCart
           ? dispatch(handleRemoveCart({ _id, is_take_away }))
-          : console.log("tesa todo", _id, is_take_away);
+          : dispatch(handleDeleteMenuOrder({ _id, is_take_away }));
       }
     });
   };

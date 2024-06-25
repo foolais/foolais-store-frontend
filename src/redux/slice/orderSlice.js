@@ -80,6 +80,17 @@ const orderSlice = createSlice({
         };
       }
     },
+    handleDeleteMenuOrder: (state, action) => {
+      const { _id, is_take_away } = action.payload;
+      const { existingMenuOrderIndex } = getExistingMenuOrder(
+        _id,
+        is_take_away,
+        state
+      );
+      if (existingMenuOrderIndex !== -1) {
+        state.singleOrder.menu.splice(existingMenuOrderIndex, 1);
+      }
+    },
   },
   extraReducers(builder) {
     builder
@@ -119,7 +130,11 @@ const orderSlice = createSlice({
   },
 });
 
-export const { toogleOnEdit, setSingleOrderData, handleChangeMenuOrder } =
-  orderSlice.actions;
+export const {
+  toogleOnEdit,
+  setSingleOrderData,
+  handleChangeMenuOrder,
+  handleDeleteMenuOrder,
+} = orderSlice.actions;
 
 export default orderSlice.reducer;
