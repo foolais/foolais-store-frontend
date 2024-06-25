@@ -1,4 +1,8 @@
-import { AiOutlineEdit, AiOutlineFileAdd } from "react-icons/ai";
+import {
+  AiOutlineClose,
+  AiOutlineEdit,
+  AiOutlineFileAdd,
+} from "react-icons/ai";
 import Button from "../Elements/Button/Button";
 import CardAddNew from "../Fragments/Card/CardAddNew";
 import CardCart from "../Fragments/Card/CardCart";
@@ -11,6 +15,7 @@ import Title from "../Elements/Text/Title";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useTable from "../../hooks/useTable";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const OrderDetailsLayout = () => {
   const { id } = useParams();
@@ -23,11 +28,39 @@ const OrderDetailsLayout = () => {
     handleShowModal,
     getSingleOrderData,
     isDetailsOpenFromTableMenu,
+    onSetSingleOrderMenu,
   } = useOrder();
   const { onDeleteCart } = useCart();
   const { getOrderByTableId } = useTable();
 
   const isOpenFromTable = isDetailsOpenFromTableMenu();
+
+  const [tempOrderMenu, setTempOrderMenu] = useLocalStorage(
+    "tempOrderMenu",
+    []
+  );
+
+  const onHandleChangeMenu = (type) => {
+    try {
+      switch (type) {
+        case "EDIT":
+          setTempOrderMenu(order?.menu);
+          break;
+        case "SAVE":
+          setTempOrderMenu([]);
+          break;
+        case "CANCEL":
+          onSetSingleOrderMenu(tempOrderMenu);
+          setTempOrderMenu([]);
+          break;
+        default:
+          break;
+      }
+      onToggleOnEdit();
+    } catch (error) {
+      console.log({ error });
+    }
+  };
 
   const breadCrumbsData = [
     { text: "Home", link: "/" },
@@ -65,8 +98,8 @@ const OrderDetailsLayout = () => {
               data-tip={onEdit ? "Simpan Perubahan" : "Edit Pesanan"}
             >
               <Button
-                onClick={onToggleOnEdit}
-                className="btn-sm btn-circle btn-ghost"
+                onClick={() => onHandleChangeMenu(onEdit ? "SAVE" : "EDIT")}
+                className="btn-sm btn-circle bg-secondary text-white mx-2"
               >
                 {onEdit ? (
                   <AiOutlineFileAdd size={20} />
@@ -75,6 +108,16 @@ const OrderDetailsLayout = () => {
                 )}
               </Button>
             </div>
+            {onEdit && (
+              <div className="tooltip tooltip-right" data-tip="Batal Perubahan">
+                <Button
+                  onClick={() => onHandleChangeMenu("CANCEL")}
+                  className="btn-sm btn-circle bg-red-500 text-white"
+                >
+                  <AiOutlineClose size={20} />
+                </Button>
+              </div>
+            )}
           </div>
           <p>
             Status :{" "}

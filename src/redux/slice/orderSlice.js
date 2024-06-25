@@ -64,6 +64,9 @@ const orderSlice = createSlice({
     handleChangePaymentMethod: (state, action) => {
       state.singleOrder.paymentMethod = action.payload;
     },
+    setSingleOrderData: (state, action) => {
+      state.singleOrder.menu = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -103,6 +106,6 @@ const orderSlice = createSlice({
   },
 });
 
-export const { toogleOnEdit } = orderSlice.actions;
+export const { toogleOnEdit, setSingleOrderData } = orderSlice.actions;
 
 export default orderSlice.reducer;

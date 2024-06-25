@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllOrder,
   getSingleOrder,
+  setSingleOrderData,
   toogleOnEdit,
 } from "../redux/slice/orderSlice";
 import { useState } from "react";
@@ -51,6 +52,10 @@ const useOrder = () => {
     dispatch(toogleOnEdit());
   };
 
+  const onCancelEdit = () => {
+    dispatch(toogleOnEdit());
+  };
+
   const onChangePayment = (value) => {
     console.log("tesa todo", value);
   };
@@ -85,6 +90,10 @@ const useOrder = () => {
     return hasMeja && hasPesanan;
   };
 
+  const onSetSingleOrderMenu = (menu) => {
+    dispatch(setSingleOrderData(menu));
+  };
+
   // const isNotesFilled = () => {
   //   return Boolean(data.notes && data.notes.length > 0);
   // };
@@ -95,12 +104,14 @@ const useOrder = () => {
     showModal,
     onEdit,
     onToggleOnEdit,
+    onCancelEdit,
     onHandleAddNotes,
     handleShowModal,
     onChangePayment,
     getAllOrderData,
     getSingleOrderData,
     isDetailsOpenFromTableMenu,
+    onSetSingleOrderMenu,
   };
 };
 
