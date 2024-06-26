@@ -7,6 +7,7 @@ import {
   setSingleOrderNotes,
   toggleHandleServedMenu,
   toogleOnEdit,
+  updateOrder,
 } from "../redux/slice/orderSlice";
 import { useState } from "react";
 import {
@@ -16,6 +17,7 @@ import {
   warningDialog,
 } from "../utils/utils";
 import { useLocation } from "react-router-dom";
+import useTable from "./useTable";
 
 const useOrder = () => {
   const dispatch = useDispatch();
@@ -31,6 +33,8 @@ const useOrder = () => {
   const { order, singleOrder, onEdit, loading } = useSelector(
     (state) => state.order
   );
+
+  const { getOrderByTableId } = useTable();
 
   const getAllOrderData = async () => {
     if (loading) return;
@@ -101,12 +105,41 @@ const useOrder = () => {
     return hasMeja && hasPesanan;
   };
 
+  const getOrderData = (id) => {
+    const isOpenFromTable = isDetailsOpenFromTableMenu();
+    if (isOpenFromTable) {
+      getOrderByTableId(singleOrder.table._id);
+    } else {
+      getSingleOrderData(id);
+    }
+  };
+
   const onHandleActionEditOrder = (type, payload, callback) => {
     const handleAction = (confirmationText, successText) => {
       showConfirmationDialog(confirmationText, successText, (isConfirmed) => {
         if (isConfirmed) {
-          dispatch(setSingleOrderData(payload));
-          callback();
+          if (type === "SAVE") {
+            dispatch(setSingleOrderData(payload));
+            const data = {
+              menu: payload.menu,
+              notes: payload.notes,
+              is_finished: payload.is_finished,
+              total_price: payload.total_price,
+              _id: payload._id,
+            };
+            dispatch(updateOrder(data)).then((response) => {
+              if (response.payload?.statusCode === 200) {
+                getOrderData(payload._id);
+                callback();
+              } else if (response?.payload.includes("403")) {
+                warningDialog("Mohon login terlebih dahulu");
+              } else {
+                warningDialog(response?.payload);
+              }
+            });
+          } else if (type === "CANCEL") {
+            callback();
+          }
         }
       });
     };

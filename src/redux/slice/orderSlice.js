@@ -62,6 +62,30 @@ export const postNewOrder = createAsyncThunk(
   }
 );
 
+export const updateOrder = createAsyncThunk(
+  "order/updateOrder",
+  async (payload) => {
+    try {
+      console.log({ payload });
+      const token = getToken();
+      const headers = { Authorization: token };
+      const { _id, ...restPayload } = payload;
+
+      const response = await axios.put(
+        `${BASE_URL}/order/update/${_id}`,
+        restPayload,
+        {
+          headers,
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 const getExistingMenuOrder = (_id, is_take_away, state) => {
   const existingMenuOrderIndex = state.singleOrder.menu.findIndex(
     (item) => item._id === _id && item.is_take_away === is_take_away
@@ -178,6 +202,16 @@ const orderSlice = createSlice({
         state.loading = false;
       })
       .addCase(postNewOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(updateOrder.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateOrder.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(updateOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });
