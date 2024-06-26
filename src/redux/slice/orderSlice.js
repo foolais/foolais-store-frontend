@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getToken } from "../../utils/utils";
 
 const initialState = {
   order: [],
@@ -38,6 +39,22 @@ export const getSingleOrderByTableId = createAsyncThunk(
   async (tableId) => {
     try {
       const response = await axios.get(`${BASE_URL}/order/table/${tableId}`);
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+export const postNewOrder = createAsyncThunk(
+  "order/postNewOrder",
+  async (payload) => {
+    try {
+      const token = getToken();
+      const headers = { Authorization: token };
+      const response = await axios.post(`${BASE_URL}/order/add`, payload, {
+        headers,
+      });
       return response.data;
     } catch (error) {
       return error.message;
@@ -151,6 +168,16 @@ const orderSlice = createSlice({
         state.singleOrder = action.payload.data;
       })
       .addCase(getSingleOrderByTableId.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(postNewOrder.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(postNewOrder.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(postNewOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });

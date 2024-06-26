@@ -60,12 +60,8 @@ const cartSlice = createSlice({
         JSON.stringify({ ...storedData, notes: state.notes })
       );
     },
-    calculateTotalPrice: (state) => {
-      const totalPrice = state.data.reduce((acc, item) => {
-        return acc + item.price * item.quantity;
-      });
-
-      state.totalPrice = totalPrice;
+    setTotalPrice: (state, action) => {
+      state.totalPrice = action.payload;
     },
     handleRemoveCart: (state, action) => {
       const { _id, is_take_away } = action.payload;
@@ -127,6 +123,7 @@ export const {
   handleSetTableCart,
   handleRemoveAllCart,
   handleUpdateCart,
+  setTotalPrice,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

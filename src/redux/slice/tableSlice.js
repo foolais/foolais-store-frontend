@@ -110,7 +110,7 @@ const tableSlice = createSlice({
       const { existingTableIndex } = getExistingTable(id, state);
 
       if (existingTableIndex !== -1) {
-        state.data[existingTableIndex].isOrder = true;
+        state.data[existingTableIndex].is_order = true;
         setLocalStorage("table", state.data);
       }
     },
@@ -124,10 +124,10 @@ const tableSlice = createSlice({
         state.loading = false;
         const { data } = action.payload;
         const payload = data.map((item) => {
-          if (item.isOrder) return item;
+          if (item.is_order) return item;
           return {
             ...item,
-            isOrder: false,
+            is_order: false,
           };
         });
         state.data = payload;
