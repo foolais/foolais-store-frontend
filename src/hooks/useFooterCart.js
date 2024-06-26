@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { formatRupiah, successDialog, warningDialog } from "../utils/utils";
+import {
+  formatRupiah,
+  showConfirmationDialog,
+  successDialog,
+  warningDialog,
+} from "../utils/utils";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -67,6 +72,44 @@ const useFooterCart = () => {
     dispatch(handleSetTableCart(value));
   };
 
+  const addNewOrder = () => {
+    const carTableValue = cartTable?.value || cartTable?._id;
+    const selectedTable = tableData.find((item) => item._id === carTableValue);
+
+    const payload = {
+      menu: cartData.map((item) => {
+        return {
+          _id: item._id,
+          name: item.name,
+          price: item.price,
+          category: item.category,
+          quantity: item.quantity,
+          is_take_away: item.is_take_away,
+        };
+      }),
+      table: {
+        _id: selectedTable._id,
+        name: selectedTable.name,
+        category: selectedTable.category,
+      },
+      total_price: totalPrice,
+    };
+
+    dispatch(postNewOrder(payload))
+      .then((response) => {
+        if (response.payload?.statusCode === 201) {
+          dispatch(onChangeTableOrderStatus(carTableValue));
+          dispatch(handleRemoveAllCart());
+          successDialog("Berhasil Menambahkan Pesanan");
+        } else if (response?.payload.includes("403")) {
+          warningDialog("Mohon login terlebih dahulu");
+        }
+      })
+      .catch((error) => {
+        warningDialog(error.message);
+      });
+  };
+
   const handleAddOrder = () => {
     const carTableValue = cartTable?.value || cartTable?._id;
 
@@ -75,42 +118,13 @@ const useFooterCart = () => {
         throw new Error("Masukkan Pesananan Terlebih Dahulu");
       else if (!carTableValue) throw new Error("Pilih Meja Terlebih Dahulu");
       else {
-        const selectedTable = tableData.find(
-          (item) => item._id === carTableValue
-        );
-
-        const payload = {
-          menu: cartData.map((item) => {
-            return {
-              _id: item._id,
-              name: item.name,
-              price: item.price,
-              category: item.category,
-              quantity: item.quantity,
-              is_take_away: item.is_take_away,
-            };
-          }),
-          table: {
-            _id: selectedTable._id,
-            name: selectedTable.name,
-            category: selectedTable.category,
-          },
-          total_price: totalPrice,
-        };
-
-        dispatch(postNewOrder(payload))
-          .then((response) => {
-            if (response.payload?.statusCode === 201) {
-              dispatch(onChangeTableOrderStatus(carTableValue));
-              dispatch(handleRemoveAllCart());
-              successDialog("Berhasil Menambahkan Pesanan");
-            } else if (response?.payload.includes("403")) {
-              warningDialog("Mohon login terlebih dahulu");
-            }
-          })
-          .catch((error) => {
-            warningDialog(error.message);
-          });
+        const text = "Apakah anda yakin ingin menambahkan pesanan?";
+        const successText = "Berhasil Menambahkan Pesanan";
+        showConfirmationDialog(text, successText, (isConfirmed) => {
+          if (isConfirmed) {
+            addNewOrder();
+          }
+        });
       }
     } catch (error) {
       warningDialog(error.message);
