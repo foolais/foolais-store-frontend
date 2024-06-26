@@ -4,6 +4,7 @@ import {
   getSingleOrder,
   handleAddMenuOrder,
   setSingleOrderData,
+  setSingleOrderNotes,
   toogleOnEdit,
 } from "../redux/slice/orderSlice";
 import { useState } from "react";
@@ -67,7 +68,7 @@ const useOrder = () => {
     const payload = event.target.notes.value;
 
     try {
-      console.log("tesa todo", payload);
+      dispatch(setSingleOrderNotes(payload));
       successDialog("Berhasil menyimpan catatan");
       setShowModal(false);
     } catch (error) {
@@ -98,8 +99,8 @@ const useOrder = () => {
     return hasMeja && hasPesanan;
   };
 
-  const onSetSingleOrderMenu = (menu) => {
-    dispatch(setSingleOrderData(menu));
+  const onSetSingleOrder = (order) => {
+    dispatch(setSingleOrderData(order));
   };
 
   const onHandleAddMenuOrder = (payload) => {
@@ -133,7 +134,7 @@ const useOrder = () => {
     getAllOrderData,
     getSingleOrderData,
     isDetailsOpenFromTableMenu,
-    onSetSingleOrderMenu,
+    onSetSingleOrder,
     onHandleAddMenuOrder,
   };
 };

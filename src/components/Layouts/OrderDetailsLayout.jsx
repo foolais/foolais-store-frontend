@@ -30,15 +30,15 @@ const OrderDetailsLayout = () => {
     handleShowModal,
     getSingleOrderData,
     isDetailsOpenFromTableMenu,
-    onSetSingleOrderMenu,
+    onSetSingleOrder,
   } = useOrder();
   const { onDeleteCart } = useCart();
   const { getOrderByTableId } = useTable();
 
   const isOpenFromTable = isDetailsOpenFromTableMenu();
 
-  const [tempOrderMenu, setTempOrderMenu] = useLocalStorage(
-    "tempOrderMenu",
+  const [tempSingleOrder, setTempSingleOrder] = useLocalStorage(
+    "tempSingleOrder",
     []
   );
 
@@ -46,14 +46,14 @@ const OrderDetailsLayout = () => {
     try {
       switch (type) {
         case "EDIT":
-          setTempOrderMenu(order?.menu);
+          setTempSingleOrder(order);
           break;
         case "SAVE":
-          setTempOrderMenu([]);
+          setTempSingleOrder([]);
           break;
         case "CANCEL":
-          onSetSingleOrderMenu(tempOrderMenu);
-          setTempOrderMenu([]);
+          onSetSingleOrder(tempSingleOrder);
+          setTempSingleOrder([]);
           break;
         default:
           break;
@@ -136,7 +136,7 @@ const OrderDetailsLayout = () => {
             onClick={() => handleShowModal(true, "notes")}
             className={`btn-sm btn-outline text-secondary font-bold border-[1px] border-secondary hover:bg-secondary hover:border-secondary ease-in-out duration-300`}
           >
-            {order?.is_finished ? "Lihat Catatan" : "Tambah Catatan"}
+            {onEdit ? "Ubah Catatan" : "Lihat Catatan"}
           </Button>
         </div>
       </div>
@@ -168,12 +168,12 @@ const OrderDetailsLayout = () => {
       <FooterOrderDetails totalPrice={order?.total_price} />
       {showModal && (
         <NotesModal
-          title={`Catatan Untuk Pesanan #${1}`}
+          title={`Catatan Untuk Pesanan #${order?.number_order}`}
           showModal={showModal}
           closeModal={() => handleShowModal(false, "notes")}
           defaultValue={order?.notes}
           onSubmit={(event) => onHandleAddNotes(event)}
-          statusOrder={order?.is_finished}
+          isDisabled={!onEdit}
         />
       )}
       {showAddMenuOrderModal && (

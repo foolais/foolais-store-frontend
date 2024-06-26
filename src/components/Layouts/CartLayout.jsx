@@ -72,14 +72,16 @@ const CardCartLayout = () => {
           })
         )}
       </div>
-      <NotesModal
-        title="Tambah Catatan"
-        showModal={showNotesModal}
-        closeModal={() => handleShowNotesModal(false)}
-        onSubmit={(event) => onHandleChangeNotes(event)}
-        defaultValue={notes}
-      />
       <FooterCartAction />
+      {NotesModal && (
+        <NotesModal
+          title="Tambah Catatan"
+          showModal={showNotesModal}
+          closeModal={() => handleShowNotesModal(false)}
+          onSubmit={(event) => onHandleChangeNotes(event)}
+          defaultValue={notes}
+        />
+      )}
     </div>
   );
 };

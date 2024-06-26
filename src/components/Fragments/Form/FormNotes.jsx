@@ -4,7 +4,7 @@ import Button from "../../Elements/Button/Button";
 import FormInput from "./FormInput";
 
 const FormNotes = (props) => {
-  const { onSubmit, defaultValue, statusOrder } = props;
+  const { onSubmit, defaultValue, isDisabled } = props;
   return (
     <form className="flex flex-col gap-2 md:gap-4" onSubmit={onSubmit}>
       <FormInput
@@ -12,7 +12,7 @@ const FormNotes = (props) => {
         type="text"
         name="notes"
         placeholder={
-          statusOrder && defaultValue.length === 0
+          isDisabled && defaultValue.length === 0
             ? "Tidak ada catatan"
             : "Masukkan catatan..."
         }
@@ -21,7 +21,7 @@ const FormNotes = (props) => {
       />
       <Button
         className="bg-secondary text-white text-md md:text-lg w-full mt-4"
-        disabled={statusOrder}
+        disabled={isDisabled}
       >
         Simpan Catatan
       </Button>

@@ -9,7 +9,7 @@ const NotesModal = (props) => {
     closeModal,
     defaultValue,
     onSubmit,
-    statusOrder = false,
+    isDisabled = false,
   } = props;
 
   return (
@@ -17,7 +17,7 @@ const NotesModal = (props) => {
       <FormNotes
         defaultValue={defaultValue}
         onSubmit={onSubmit}
-        statusOrder={statusOrder}
+        isDisabled={isDisabled}
       />
     </Modal>
   );

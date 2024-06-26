@@ -65,7 +65,7 @@ const orderSlice = createSlice({
       state.singleOrder.paymentMethod = action.payload;
     },
     setSingleOrderData: (state, action) => {
-      state.singleOrder.menu = action.payload;
+      state.singleOrder = action.payload;
     },
     handleChangeMenuOrder: (state, action) => {
       const { _id, is_take_away } = action.payload;
@@ -102,6 +102,9 @@ const orderSlice = createSlice({
       } else {
         state.singleOrder.menu.push(action.payload);
       }
+    },
+    setSingleOrderNotes: (state, action) => {
+      state.singleOrder.notes = action.payload;
     },
   },
   extraReducers(builder) {
@@ -148,6 +151,7 @@ export const {
   handleChangeMenuOrder,
   handleDeleteMenuOrder,
   handleAddMenuOrder,
+  setSingleOrderNotes,
 } = orderSlice.actions;
 
 export default orderSlice.reducer;
