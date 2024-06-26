@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import useTable from "../../hooks/useTable";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import AddMenuModal from "../Fragments/Modal/AddMenuModal";
+import { formatDates } from "../../utils/utils";
 
 const OrderDetailsLayout = () => {
   const { id } = useParams();
@@ -137,13 +138,18 @@ const OrderDetailsLayout = () => {
           <p className="font-semibold md:text-lg mb-2">
             Meja : {order?.table?.name}
           </p>
-          <Button
-            onClick={() => handleShowModal(true, "notes")}
-            className={`btn-sm btn-outline text-secondary font-bold border-[1px] border-secondary hover:bg-secondary hover:border-secondary ease-in-out duration-300`}
-          >
-            {onEdit ? "Ubah Catatan" : "Lihat Catatan"}
-          </Button>
+          <p className="font-semibold md:text-lg mb-2">
+            {formatDates(order?.timestamps?.created_at)}
+          </p>
         </div>
+      </div>
+      <div className="grid justify-end">
+        <Button
+          onClick={() => handleShowModal(true, "notes")}
+          className={`btn-sm btn-outline text-secondary font-bold border-[1px] border-secondary hover:bg-secondary hover:border-secondary ease-in-out duration-300`}
+        >
+          {onEdit ? "Ubah Catatan" : "Lihat Catatan"}
+        </Button>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 mt-4 gap-4">
         {order?.menu &&
