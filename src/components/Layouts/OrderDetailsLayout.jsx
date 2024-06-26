@@ -30,7 +30,7 @@ const OrderDetailsLayout = () => {
     handleShowModal,
     getSingleOrderData,
     isDetailsOpenFromTableMenu,
-    onSetSingleOrder,
+    onHandleActionEditOrder,
   } = useOrder();
   const { onDeleteCart } = useCart();
   const { getOrderByTableId } = useTable();
@@ -47,18 +47,23 @@ const OrderDetailsLayout = () => {
       switch (type) {
         case "EDIT":
           setTempSingleOrder(order);
+          onToggleOnEdit();
           break;
         case "SAVE":
-          setTempSingleOrder([]);
+          onHandleActionEditOrder("SAVE", order, () => {
+            setTempSingleOrder([]);
+            onToggleOnEdit();
+          });
           break;
         case "CANCEL":
-          onSetSingleOrder(tempSingleOrder);
-          setTempSingleOrder([]);
+          onHandleActionEditOrder("CANCEL", tempSingleOrder, () => {
+            setTempSingleOrder([]);
+            onToggleOnEdit();
+          });
           break;
         default:
           break;
       }
-      onToggleOnEdit();
     } catch (error) {
       console.log({ error });
     }

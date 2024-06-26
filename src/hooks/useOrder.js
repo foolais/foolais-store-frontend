@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import {
   exitConfirmationDialog,
+  showConfirmationDialog,
   successDialog,
   warningDialog,
 } from "../utils/utils";
@@ -99,8 +100,32 @@ const useOrder = () => {
     return hasMeja && hasPesanan;
   };
 
-  const onSetSingleOrder = (order) => {
-    dispatch(setSingleOrderData(order));
+  const onHandleActionEditOrder = (type, payload, callback) => {
+    const handleAction = (confirmationText, successText) => {
+      showConfirmationDialog(confirmationText, successText, (isConfirmed) => {
+        if (isConfirmed) {
+          dispatch(setSingleOrderData(payload));
+          callback();
+        }
+      });
+    };
+
+    switch (type) {
+      case "SAVE":
+        handleAction(
+          "Apakah anda yakin ingin menyimpan perubahan ?",
+          "Perubahan tersimpan"
+        );
+        break;
+      case "CANCEL":
+        handleAction(
+          "Apakah anda yakin ingin membatalkan perubahan ?",
+          "Perubahan dibatalkan"
+        );
+        break;
+      default:
+        break;
+    }
   };
 
   const onHandleAddMenuOrder = (payload) => {
@@ -116,10 +141,6 @@ const useOrder = () => {
     }
   };
 
-  // const isNotesFilled = () => {
-  //   return Boolean(data.notes && data.notes.length > 0);
-  // };
-
   return {
     order,
     singleOrder,
@@ -134,8 +155,8 @@ const useOrder = () => {
     getAllOrderData,
     getSingleOrderData,
     isDetailsOpenFromTableMenu,
-    onSetSingleOrder,
     onHandleAddMenuOrder,
+    onHandleActionEditOrder,
   };
 };
 
