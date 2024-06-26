@@ -5,6 +5,7 @@ import {
   handleAddMenuOrder,
   setSingleOrderData,
   setSingleOrderNotes,
+  toggleHandleServedMenu,
   toogleOnEdit,
 } from "../redux/slice/orderSlice";
 import { useState } from "react";
@@ -141,6 +142,10 @@ const useOrder = () => {
     }
   };
 
+  const onToggleHandleServedMenu = (payload) => {
+    dispatch(toggleHandleServedMenu(payload));
+  };
+
   return {
     order,
     singleOrder,
@@ -157,6 +162,7 @@ const useOrder = () => {
     isDetailsOpenFromTableMenu,
     onHandleAddMenuOrder,
     onHandleActionEditOrder,
+    onToggleHandleServedMenu,
   };
 };
 

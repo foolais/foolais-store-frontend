@@ -4,6 +4,7 @@ import Button from "../../Elements/Button/Button";
 import Card from "../Card/Card";
 import CartModal from "../Modal/CartModal";
 import useCart from "../../../hooks/useCart";
+import useOrder from "../../../hooks/useOrder";
 
 const CardCart = (props) => {
   const {
@@ -14,14 +15,19 @@ const CardCart = (props) => {
   } = props;
 
   const { showEditModal, handleShowEditModal, onUpdateCart } = useCart();
+  const { onToggleHandleServedMenu } = useOrder();
 
   const handleCheck = (item) => {
-    item.is_served = !item.is_served;
+    onToggleHandleServedMenu(item);
   };
 
   return (
     <>
-      <Card className="min-w-48 h-auto min-h-44">
+      <Card
+        className={`min-w-48 h-auto min-h-44 ${
+          item.is_served && "bg-secondary/100 text-white"
+        }`}
+      >
         <div className="card-body justify-between">
           {/* HEADER */}
           <div className="flex items-start justify-between gap-4">
@@ -65,10 +71,14 @@ const CardCart = (props) => {
                     isDisabledAction ? "opacity-100" : "opacity-0 scale-0"
                   } ease-in-out`}
                 >
-                  <span className="label-text">Disajikan</span>
+                  <span
+                    className={`label-text ${item.is_served && "text-white"}`}
+                  >
+                    Disajikan
+                  </span>
                   <input
                     type="checkbox"
-                    defaultChecked={!item.is_served}
+                    defaultChecked={item.is_served}
                     className="checkbox checkbox-success"
                   />
                 </label>
