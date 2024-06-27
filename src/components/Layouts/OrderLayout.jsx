@@ -3,6 +3,7 @@ import BadgeStatus from "../Fragments/BadgeStatus";
 import CardOrder from "../Fragments/Card/CardOrder";
 import useOrder from "../../hooks/useOrder";
 import { useEffect } from "react";
+import Skeleton from "../Fragments/Skeleton/Skeleton";
 
 const OrderLayout = () => {
   const initialBadgeData = [
@@ -14,7 +15,7 @@ const OrderLayout = () => {
   const [badgeData, setBadgeData] = useState(initialBadgeData);
   // const [filter, setFilter] = useState("all");
 
-  const { order, getAllOrderData } = useOrder();
+  const { order, loading, getAllOrderData } = useOrder();
 
   useEffect(() => {
     getAllOrderData();
@@ -34,14 +35,23 @@ const OrderLayout = () => {
 
   return (
     <div className="w-full h-full">
-      <BadgeStatus
-        data={badgeData}
-        isClickable={true}
-        onBadgeChange={onBadgeChange}
-      />
+      {order && !loading && (
+        <BadgeStatus
+          data={badgeData}
+          isClickable={true}
+          onBadgeChange={onBadgeChange}
+        />
+      )}
       <div className="mt-4 grid gap-4">
-        {order &&
-          order?.map((item) => <CardOrder key={item._id} order={item} />)}
+        {!order && !loading ? (
+          <div className="w-full flex items-center justify-center text-primary p-4 font-semibold">
+            Tidak Ada Pesanan
+          </div>
+        ) : loading ? (
+          <Skeleton.List total={3} className="w-[80%] md:w-full h-32" />
+        ) : (
+          order?.map((item) => <CardOrder key={item._id} order={item} />)
+        )}
       </div>
     </div>
   );

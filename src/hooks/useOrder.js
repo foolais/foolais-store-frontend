@@ -201,6 +201,7 @@ const useOrder = () => {
   };
 
   return {
+    loading,
     order,
     singleOrder,
     showModal,
