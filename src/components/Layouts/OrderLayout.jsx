@@ -17,7 +17,7 @@ const OrderLayout = () => {
   const { order, getAllOrderData } = useOrder();
 
   useEffect(() => {
-    if (!order.length) getAllOrderData();
+    getAllOrderData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -40,9 +40,8 @@ const OrderLayout = () => {
         onBadgeChange={onBadgeChange}
       />
       <div className="mt-4 grid gap-4">
-        {order.map((item) => (
-          <CardOrder key={item._id} order={item} />
-        ))}
+        {order &&
+          order?.map((item) => <CardOrder key={item._id} order={item} />)}
       </div>
     </div>
   );
