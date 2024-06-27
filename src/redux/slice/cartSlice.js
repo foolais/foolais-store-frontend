@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { successDialog } from "../../utils/utils";
+import { getLocalStorage, successDialog } from "../../utils/utils";
 
 const storedData = JSON.parse(localStorage.getItem("cart"));
 const initialData = storedData || [];
@@ -41,9 +41,10 @@ const cartSlice = createSlice({
         state.data.push(newCart);
       }
 
+      const cartStorage = getLocalStorage("cart");
       localStorage.setItem(
         "cart",
-        JSON.stringify({ ...storedData, data: state.data })
+        JSON.stringify({ ...cartStorage, data: state.data })
       );
 
       const text =
@@ -55,9 +56,10 @@ const cartSlice = createSlice({
     handleChangeNotes: (state, action) => {
       state.notes = action.payload;
 
+      const cartStorage = getLocalStorage("cart");
       localStorage.setItem(
         "cart",
-        JSON.stringify({ ...storedData, notes: state.notes })
+        JSON.stringify({ ...cartStorage, notes: state.notes })
       );
     },
     setTotalPrice: (state, action) => {
@@ -71,18 +73,21 @@ const cartSlice = createSlice({
       if (existingCartIndex !== -1) {
         state.data.splice(existingCartIndex, 1);
 
+        const cartStorage = getLocalStorage("cart");
         localStorage.setItem(
           "cart",
-          JSON.stringify({ ...storedData, data: state.data })
+          JSON.stringify({ ...cartStorage, data: state.data })
         );
       }
     },
 
     handleSetTableCart: (state, action) => {
       state.table = action.payload;
+
+      const cartStorage = getLocalStorage("cart");
       localStorage.setItem(
         "cart",
-        JSON.stringify({ ...storedData, table: state.table })
+        JSON.stringify({ ...cartStorage, table: state.table })
       );
     },
     handleRemoveAllCart: (state) => {
@@ -107,9 +112,10 @@ const cartSlice = createSlice({
 
         state.data[existingCartIndex] = payload;
 
+        const cartStorage = getLocalStorage("cart");
         localStorage.setItem(
           "cart",
-          JSON.stringify({ ...storedData, data: state.data })
+          JSON.stringify({ ...cartStorage, data: state.data })
         );
       }
     },
