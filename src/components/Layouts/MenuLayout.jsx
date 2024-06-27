@@ -41,11 +41,13 @@ const CardMenuLayout = () => {
     <div className="w-full h-auto ">
       <Title>Daftar Menu</Title>
       <Breadcrumbs data={breadCrumbsData} />
-      <BadgeStatus
-        data={badgeData}
-        isClickable={true}
-        onBadgeChange={onBadgeChange}
-      />
+      {menu && menu?.length > 0 && !loading && (
+        <BadgeStatus
+          data={badgeData}
+          isClickable={true}
+          onBadgeChange={onBadgeChange}
+        />
+      )}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-36 mt-4">
         {searchData && menu && menu.length === 0 && !loading ? (
           <div className="w-full flex items-center justify-center text-neutral p-4 font-semibold">
@@ -82,17 +84,19 @@ const CardMenuLayout = () => {
       </div>
       {!loading && (
         <>
-          <Modal
-            title="Tambah Menu Baru"
-            showModal={addMenuModal}
-            closeModal={() => onCloseModal()}
-          >
-            <FormMenu
-              onSubmit={(event) => onAddMenu(event)}
-              btnText="Tambah Menu"
-            />
-          </Modal>
-          <FooterMenuAction />{" "}
+          {addMenuModal && !loading && (
+            <Modal
+              title="Tambah Menu Baru"
+              showModal={addMenuModal}
+              closeModal={() => onCloseModal()}
+            >
+              <FormMenu
+                onSubmit={(event) => onAddMenu(event)}
+                btnText="Tambah Menu"
+              />
+            </Modal>
+          )}
+          {menu && menu?.length > 0 && !loading && <FooterMenuAction />}
         </>
       )}
     </div>

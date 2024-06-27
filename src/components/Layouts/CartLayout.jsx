@@ -53,7 +53,7 @@ const CardCartLayout = () => {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-40">
         {cart && cart.length === 0 && !loading ? (
-          <div className="w-full flex items-center  text-primary font-semibold">
+          <div className="flex items-center justify-center  text-primary p-4 font-semibold col-span-full">
             Tidak Ada Pesanan di Keranjang
           </div>
         ) : loading ? (
@@ -72,7 +72,7 @@ const CardCartLayout = () => {
           })
         )}
       </div>
-      <FooterCartAction />
+      {cart && cart?.length > 0 && <FooterCartAction />}
       {NotesModal && (
         <NotesModal
           title="Tambah Catatan"
