@@ -91,6 +91,18 @@ const OrderDetailsLayout = () => {
         getOrderByTableId(id);
       }
     }
+    if (onEdit) {
+      onToggleOnEdit();
+      setTempSingleOrder([]);
+    }
+
+    return () => {
+      if (onEdit) {
+        onToggleOnEdit();
+        setTempSingleOrder([]);
+      }
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
