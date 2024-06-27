@@ -1,4 +1,5 @@
 import {
+  AiFillWarning,
   AiOutlineClose,
   AiOutlineEdit,
   AiOutlineFileAdd,
@@ -17,7 +18,7 @@ import { useEffect } from "react";
 import useTable from "../../hooks/useTable";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import AddMenuModal from "../Fragments/Modal/AddMenuModal";
-import { formatDates } from "../../utils/utils";
+import { formatDates, isLessThanOneDay } from "../../utils/utils";
 
 const OrderDetailsLayout = () => {
   const { id } = useParams();
@@ -32,11 +33,13 @@ const OrderDetailsLayout = () => {
     getSingleOrderData,
     isDetailsOpenFromTableMenu,
     onHandleActionEditOrder,
+    onDeleteOrder,
   } = useOrder();
   const { onDeleteCart } = useCart();
   const { getOrderByTableId } = useTable();
 
   const isOpenFromTable = isDetailsOpenFromTableMenu();
+  const isDeleteValid = isLessThanOneDay(order?.timestamps?.created_at);
 
   const [tempSingleOrder, setTempSingleOrder] = useLocalStorage(
     "tempSingleOrder",
@@ -98,7 +101,7 @@ const OrderDetailsLayout = () => {
       <div className="flex items-start justify-between">
         <div className="grid">
           <div className="flex items-center">
-            <p className="font-bold text-lg md:text-2xl mb-1">
+            <p className="font-bold md:text-2xl mb-1">
               {`Pesanan #${order?.number_order}`}
             </p>
             <div
@@ -116,7 +119,7 @@ const OrderDetailsLayout = () => {
                 )}
               </Button>
             </div>
-            {onEdit && (
+            {onEdit && isDeleteValid && (
               <div className="tooltip tooltip-right" data-tip="Batal Perubahan">
                 <Button
                   onClick={() => onHandleChangeMenu("CANCEL")}
@@ -143,7 +146,16 @@ const OrderDetailsLayout = () => {
           </p>
         </div>
       </div>
-      <div className="grid justify-end">
+      <div className={`flex ${onEdit ? "justify-between" : "justify-end"}`}>
+        {onEdit && (
+          <Button
+            onClick={() => onDeleteOrder(order?._id)}
+            className="font-semibold btn-error btn-sm text-white"
+          >
+            <AiFillWarning />
+            Hapus Pesanan
+          </Button>
+        )}
         <Button
           onClick={() => handleShowModal(true, "notes")}
           className={`btn-sm btn-outline text-secondary font-bold border-[1px] border-secondary hover:bg-secondary hover:border-secondary ease-in-out duration-300`}

@@ -38,6 +38,10 @@ export const setLocalStorage = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
+export const isLessThanOneDay = (time) => {
+  return moment(time).isBefore(moment().add(1, "days"));
+};
+
 // Alert
 export const showConfirmationDialog = (text, successTitle, callback) => {
   Swal.fire({

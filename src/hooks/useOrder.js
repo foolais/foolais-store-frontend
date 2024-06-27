@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteOrder,
   getAllOrder,
   getSingleOrder,
   handleAddMenuOrder,
@@ -18,9 +19,11 @@ import {
 } from "../utils/utils";
 import { useLocation } from "react-router-dom";
 import useTable from "./useTable";
+import { useNavigate } from "react-router-dom";
 
 const useOrder = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const url = location.pathname;
@@ -179,6 +182,24 @@ const useOrder = () => {
     dispatch(toggleHandleServedMenu(payload));
   };
 
+  const onDeleteOrder = (id) => {
+    const text = "Apakah anda yakin ingin menghapus pesanan ini ?";
+    const successText = "Pesanan telah dihapus";
+    showConfirmationDialog(text, successText, (isConfirmed) => {
+      if (isConfirmed) {
+        dispatch(deleteOrder(id)).then((response) => {
+          if (response.payload?.statusCode === 200) {
+            navigate("/pesanan");
+          } else if (response?.payload.includes("403")) {
+            warningDialog("Mohon login terlebih dahulu");
+          } else {
+            warningDialog(response?.payload);
+          }
+        });
+      }
+    });
+  };
+
   return {
     order,
     singleOrder,
@@ -196,6 +217,7 @@ const useOrder = () => {
     onHandleAddMenuOrder,
     onHandleActionEditOrder,
     onToggleHandleServedMenu,
+    onDeleteOrder,
   };
 };
 

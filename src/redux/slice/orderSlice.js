@@ -86,6 +86,19 @@ export const updateOrder = createAsyncThunk(
   }
 );
 
+export const deleteOrder = createAsyncThunk("order/deleteOrder", async (id) => {
+  try {
+    const token = getToken();
+    const headers = { Authorization: token };
+    const response = await axios.delete(`${BASE_URL}/order/delete/${id}`, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+
 const getExistingMenuOrder = (_id, is_take_away, state) => {
   const existingMenuOrderIndex = state.singleOrder.menu.findIndex(
     (item) => item._id === _id && item.is_take_away === is_take_away
@@ -212,6 +225,16 @@ const orderSlice = createSlice({
         state.loading = false;
       })
       .addCase(updateOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(deleteOrder.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteOrder.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(deleteOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });
