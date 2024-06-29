@@ -91,7 +91,6 @@ const FormAddMenu = () => {
         isInput={true}
         defaultValue={selectedMenu?.quantity}
         isDisabled={selectedMenu === null}
-        value={selectedMenu?.quantity}
       />
       <FormInput
         title="Tipe"

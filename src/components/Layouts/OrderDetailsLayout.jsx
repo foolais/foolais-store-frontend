@@ -175,7 +175,7 @@ const OrderDetailsLayout = () => {
           {onEdit ? "Ubah Catatan" : "Lihat Catatan"}
         </Button>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 mt-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 mt-4 gap-4 mb-52">
         {order?.menu &&
           order?.menu.length > 0 &&
           order?.menu.map((item) => {
@@ -200,7 +200,7 @@ const OrderDetailsLayout = () => {
           btnOnClick={() => handleShowModal(true, "addMenu")}
         />
       </div>
-      <FooterOrderDetails totalPrice={order?.total_price} />
+      <FooterOrderDetails totalPrice={order?.total_price} id={order?._id} />
       {showModal && (
         <NotesModal
           title={`Catatan Untuk Pesanan #${order?.number_order}`}

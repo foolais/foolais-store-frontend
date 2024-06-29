@@ -66,7 +66,6 @@ export const updateOrder = createAsyncThunk(
   "order/updateOrder",
   async (payload) => {
     try {
-      console.log({ payload });
       const token = getToken();
       const headers = { Authorization: token };
       const { _id, ...restPayload } = payload;
@@ -93,6 +92,23 @@ export const deleteOrder = createAsyncThunk("order/deleteOrder", async (id) => {
     const response = await axios.delete(`${BASE_URL}/order/delete/${id}`, {
       headers,
     });
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+
+export const finishOrder = createAsyncThunk("order/finishOrder", async (id) => {
+  try {
+    const token = getToken();
+    const headers = { Authorization: token };
+    const response = await axios.post(
+      `${BASE_URL}/order/update/status?id=${id}&is_finished=true`,
+      "",
+      {
+        headers,
+      }
+    );
     return response.data;
   } catch (error) {
     return error.message;
@@ -235,6 +251,16 @@ const orderSlice = createSlice({
         state.loading = false;
       })
       .addCase(deleteOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(finishOrder.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(finishOrder.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(finishOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });

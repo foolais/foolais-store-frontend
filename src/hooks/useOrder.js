@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteOrder,
+  finishOrder,
   getAllOrder,
   getSingleOrder,
   handleAddMenuOrder,
@@ -68,10 +69,6 @@ const useOrder = () => {
 
   const onCancelEdit = () => {
     dispatch(toogleOnEdit());
-  };
-
-  const onChangePayment = (value) => {
-    console.log("tesa todo", value);
   };
 
   const onHandleAddNotes = (event) => {
@@ -206,6 +203,29 @@ const useOrder = () => {
     dispatch(setTotalPrice(value));
   };
 
+  const onFinishOrder = async (event, id) => {
+    event.preventDefault();
+    try {
+      const text = "Apakah anda yakin ingin menyelesaikan pesanan ini ?";
+      const successText = "Pesanan telah selesai";
+      showConfirmationDialog(text, successText, (isConfirmed) => {
+        if (isConfirmed) {
+          dispatch(finishOrder(id)).then((response) => {
+            if (response.payload?.statusCode === 200) {
+              navigate("/pesanan");
+            } else if (response?.payload.includes("403")) {
+              warningDialog("Mohon login terlebih dahulu");
+            } else {
+              warningDialog(response?.payload);
+            }
+          });
+        }
+      });
+    } catch (error) {
+      warningDialog(error);
+    }
+  };
+
   return {
     loading,
     order,
@@ -219,7 +239,6 @@ const useOrder = () => {
     onCancelEdit,
     onHandleAddNotes,
     handleShowModal,
-    onChangePayment,
     getAllOrderData,
     getSingleOrderData,
     isDetailsOpenFromTableMenu,
@@ -228,6 +247,7 @@ const useOrder = () => {
     onToggleHandleServedMenu,
     onDeleteOrder,
     onSetTotalPrice,
+    onFinishOrder,
   };
 };
 

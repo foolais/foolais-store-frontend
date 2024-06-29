@@ -9,13 +9,13 @@ import BadgeStatus from "../BadgeStatus";
 import FooterLayout from "./FooterLayout";
 import PaymentModal from "../Modal/PaymentModal";
 
-const FooterOrderDetails = ({ totalPrice }) => {
+const FooterOrderDetails = ({ totalPrice, id }) => {
   const initialBadge = [
     { text: "Tunai", color: "secondary", value: "cash" },
     { text: "QRIS", color: "primary", value: "qris" },
   ];
 
-  const { onEdit, onChangePayment, onSetTotalPrice } = useOrder();
+  const { onEdit, onSetTotalPrice, onFinishOrder } = useOrder();
 
   const { badgeData, badgeValue, onBadgeChange } = useBadge(initialBadge);
 
@@ -23,7 +23,6 @@ const FooterOrderDetails = ({ totalPrice }) => {
 
   useEffect(() => {
     onBadgeChange(badgeValue);
-    onChangePayment(badgeValue);
   }, [badgeValue]);
 
   const handlePayment = () => {
@@ -57,6 +56,7 @@ const FooterOrderDetails = ({ totalPrice }) => {
           showModal={() => setShowModalPayment(true)}
           closeModal={() => setShowModalPayment(false)}
           type={badgeValue}
+          onSubmit={(event) => onFinishOrder(event, id)}
         />
       )}
     </>

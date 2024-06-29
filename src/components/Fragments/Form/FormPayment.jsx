@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Button from "../../Elements/Button/Button";
 import FormInput from "./FormInput";
@@ -6,6 +7,7 @@ import { formatRupiah } from "../../../utils/utils";
 import BadgeStatus from "../BadgeStatus";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import QRIS from "../../../assets/qris.png";
+import { debounce } from "lodash";
 
 /* eslint-disable react/prop-types */
 const FormPayment = (props) => {
@@ -42,22 +44,13 @@ const FormPayment = (props) => {
       });
     }
 
-    const thresholds = [100000, 150000, 200000, 250000];
-    thresholds.forEach((value) => {
-      if (value <= totalPrice) {
-        badges.push({
-          text: formatRupiah(value),
-          color: "primary",
-          value: value,
-        });
-      }
-    });
-
-    if (totalPrice <= 50000) {
+    const thresholds = [50000, 100000, 150000, 200000, 250000];
+    const newBadges = thresholds.find((value) => value >= totalPrice);
+    if (newBadges) {
       badges.push({
-        text: formatRupiah(50000),
+        text: formatRupiah(newBadges),
         color: "primary",
-        value: 50000,
+        value: newBadges,
       });
     }
 
@@ -86,7 +79,6 @@ const FormPayment = (props) => {
   const [totalPayment, setTotalPayment] = useState(totalPrice);
 
   const onBadgeChange = (value) => {
-    console.log(typeof value === "number");
     if (typeof value === "number") {
       setBadgeMoney((prev) =>
         prev.map((item) => ({
@@ -106,6 +98,32 @@ const FormPayment = (props) => {
       setIsCash(value === "cash");
     }
   };
+
+  const onSetSelectedBadge = debounce(() => {
+    const badgesValue = badgeMoney?.map((item) => item.value);
+    if (!badgesValue?.includes(+totalPayment)) {
+      setBadgeMoney((prev) =>
+        prev.map((item) => ({
+          ...item,
+          color: "primary",
+        }))
+      );
+    } else {
+      setBadgeMoney((prev) =>
+        prev.map((item) => ({
+          ...item,
+          color: item.value === +totalPayment ? "secondary" : "primary",
+        }))
+      );
+    }
+  }, 650);
+
+  useEffect(() => {
+    onSetSelectedBadge();
+    return () => {
+      onSetSelectedBadge.cancel();
+    };
+  }, [totalPayment]);
 
   return (
     <form onSubmit={onSubmit}>
@@ -135,6 +153,13 @@ const FormPayment = (props) => {
             value={totalPayment}
             onChange={(e) => setTotalPayment(e.target.value)}
           />
+          <div className="mt-4">
+            <BadgeStatus
+              data={badgeMoney}
+              isClickable={true}
+              onBadgeChange={onBadgeChange}
+            />
+          </div>
           <FormInput
             title="Total Kembalian"
             type="number"
@@ -143,16 +168,6 @@ const FormPayment = (props) => {
             isDisabled={true}
             value={totalPayment - totalPrice}
           />
-          <div className="mt-4">
-            <BadgeStatus
-              data={badgeMoney}
-              isClickable={true}
-              onBadgeChange={onBadgeChange}
-            />
-          </div>
-          <Button className="bg-secondary text-white mt-4 w-full">
-            Bayar Sekarang
-          </Button>
         </>
       ) : (
         <>
@@ -162,11 +177,14 @@ const FormPayment = (props) => {
           <div className="w-full flex items-center justify-center">
             <LazyLoadImage src={QRIS} width={250} height={250} alt="qris" />
           </div>
-          <Button className="bg-secondary text-white mt-4 w-full">
-            Selesai
-          </Button>
         </>
       )}
+      <Button
+        className="bg-secondary text-white mt-4 w-full"
+        disabled={totalPayment < totalPrice}
+      >
+        Selesaikan Pesanan
+      </Button>
     </form>
   );
 };
