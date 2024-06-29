@@ -8,12 +8,19 @@ import BadgeStatus from "../BadgeStatus";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import QRIS from "../../../assets/qris.png";
 import { debounce } from "lodash";
+import useOrder from "../../../hooks/useOrder";
 
 /* eslint-disable react/prop-types */
 const FormPayment = (props) => {
   const { onSubmit, type = "cash" } = props;
 
-  const { totalPrice } = useSelector((state) => state.cart);
+  const { setTypePayment } = useOrder();
+
+  const {
+    total_price: totalPrice,
+    total_paid: totalPaid,
+    is_finished: isFinished,
+  } = useSelector((state) => state.order.singleOrder);
 
   const badgeMoneyData = React.useMemo(() => {
     const badges = [
@@ -76,7 +83,9 @@ const FormPayment = (props) => {
   const [badgeMoney, setBadgeMoney] = useState(badgeMoneyData);
   const [badgeType, setBadgeType] = useState(badgeTypeData);
   const [isCash, setIsCash] = useState(type === "cash");
-  const [totalPayment, setTotalPayment] = useState(totalPrice);
+  const [totalPayment, setTotalPayment] = useState(
+    isFinished ? totalPaid : totalPrice
+  );
 
   const onBadgeChange = (value) => {
     if (typeof value === "number") {
@@ -95,11 +104,12 @@ const FormPayment = (props) => {
         }))
       );
 
+      setTypePayment(value);
       setIsCash(value === "cash");
     }
   };
 
-  const onSetSelectedBadge = debounce(() => {
+  const onSetSelectedMoneyBadge = debounce(() => {
     const badgesValue = badgeMoney?.map((item) => item.value);
     if (!badgesValue?.includes(+totalPayment)) {
       setBadgeMoney((prev) =>
@@ -119,11 +129,18 @@ const FormPayment = (props) => {
   }, 650);
 
   useEffect(() => {
-    onSetSelectedBadge();
+    onSetSelectedMoneyBadge();
     return () => {
-      onSetSelectedBadge.cancel();
+      onSetSelectedMoneyBadge.cancel();
     };
   }, [totalPayment]);
+
+  useEffect(() => {
+    const badges = badgeType.find((item) => item.color === "secondary");
+    if (badges) {
+      setTypePayment(badges.value);
+    }
+  }, [badgeType]);
 
   return (
     <form onSubmit={onSubmit}>
@@ -140,7 +157,7 @@ const FormPayment = (props) => {
           <FormInput
             title="Total Harga"
             type="number"
-            name="number"
+            name="total_price"
             isInput={true}
             isDisabled={true}
             defaultValue={totalPrice}
@@ -148,7 +165,7 @@ const FormPayment = (props) => {
           <FormInput
             title="Total Bayar"
             type="number"
-            name="number"
+            name="total_paid"
             isInput={true}
             value={totalPayment}
             onChange={(e) => setTotalPayment(e.target.value)}

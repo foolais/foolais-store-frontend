@@ -7,9 +7,11 @@ import {
   handleAddMenuOrder,
   setSingleOrderData,
   setSingleOrderNotes,
+  setSingleOrderTypePayment,
   toggleHandleServedMenu,
   toogleOnEdit,
   updateOrder,
+  setSingleOrderTotalPrice,
 } from "../redux/slice/orderSlice";
 import { useState } from "react";
 import {
@@ -199,18 +201,35 @@ const useOrder = () => {
     });
   };
 
-  const onSetTotalPrice = (value) => {
-    dispatch(setTotalPrice(value));
+  const onSetTotalPrice = (value, type) => {
+    if (type === "order") {
+      dispatch(setSingleOrderTotalPrice(value));
+    } else if (type === "cart") {
+      dispatch(setTotalPrice(value));
+    }
   };
 
-  const onFinishOrder = async (event, id) => {
+  const onFinishOrder = async (event, payload) => {
     event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+    const { total_paid } = Object.fromEntries(formData.entries());
+    const { _id, total_price, payment_method } = payload;
+    console.log({ payment_method });
+    const mappedPayload = {
+      _id,
+      total_price,
+      total_paid: payment_method === "cash" ? +total_paid : total_price,
+      payment_method,
+    };
+
     try {
       const text = "Apakah anda yakin ingin menyelesaikan pesanan ini ?";
       const successText = "Pesanan telah selesai";
       showConfirmationDialog(text, successText, (isConfirmed) => {
         if (isConfirmed) {
-          dispatch(finishOrder(id)).then((response) => {
+          dispatch(finishOrder(mappedPayload)).then((response) => {
             if (response.payload?.statusCode === 200) {
               navigate("/pesanan");
             } else if (response?.payload.includes("403")) {
@@ -224,6 +243,10 @@ const useOrder = () => {
     } catch (error) {
       warningDialog(error);
     }
+  };
+
+  const setTypePayment = (value) => {
+    dispatch(setSingleOrderTypePayment(value));
   };
 
   return {
@@ -248,6 +271,7 @@ const useOrder = () => {
     onDeleteOrder,
     onSetTotalPrice,
     onFinishOrder,
+    setTypePayment,
   };
 };
 

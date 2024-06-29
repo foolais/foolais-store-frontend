@@ -200,7 +200,7 @@ const OrderDetailsLayout = () => {
           btnOnClick={() => handleShowModal(true, "addMenu")}
         />
       </div>
-      <FooterOrderDetails totalPrice={order?.total_price} id={order?._id} />
+      <FooterOrderDetails order={order} />
       {showModal && (
         <NotesModal
           title={`Catatan Untuk Pesanan #${order?.number_order}`}

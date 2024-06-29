@@ -8,27 +8,40 @@ import Button from "../../Elements/Button/Button";
 import BadgeStatus from "../BadgeStatus";
 import FooterLayout from "./FooterLayout";
 import PaymentModal from "../Modal/PaymentModal";
+import { useSelector } from "react-redux";
 
-const FooterOrderDetails = ({ totalPrice, id }) => {
+const FooterOrderDetails = ({ order }) => {
+  const { total_price: totalPrice } = order;
   const initialBadge = [
     { text: "Tunai", color: "secondary", value: "cash" },
     { text: "QRIS", color: "primary", value: "qris" },
   ];
 
   const { onEdit, onSetTotalPrice, onFinishOrder } = useOrder();
-
   const { badgeData, badgeValue, onBadgeChange } = useBadge(initialBadge);
-
   const { showModalPayment, setShowModalPayment } = useOrder();
 
-  useEffect(() => {
-    onBadgeChange(badgeValue);
-  }, [badgeValue]);
+  const { singleOrder, loading } = useSelector((state) => state.order);
 
   const handlePayment = () => {
     setShowModalPayment(true);
-    onSetTotalPrice(totalPrice);
   };
+
+  const calculateTotalPrice = () => {
+    const total = singleOrder?.menu?.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+    return total;
+  };
+
+  useEffect(() => {
+    onSetTotalPrice(calculateTotalPrice(), "order");
+  }, [singleOrder.menu]);
+
+  useEffect(() => {
+    if (!loading) onBadgeChange(singleOrder?.payment_method);
+  }, [loading]);
 
   return (
     <>
@@ -56,7 +69,7 @@ const FooterOrderDetails = ({ totalPrice, id }) => {
           showModal={() => setShowModalPayment(true)}
           closeModal={() => setShowModalPayment(false)}
           type={badgeValue}
-          onSubmit={(event) => onFinishOrder(event, id)}
+          onSubmit={(event) => onFinishOrder(event, singleOrder)}
         />
       )}
     </>

@@ -98,22 +98,27 @@ export const deleteOrder = createAsyncThunk("order/deleteOrder", async (id) => {
   }
 });
 
-export const finishOrder = createAsyncThunk("order/finishOrder", async (id) => {
-  try {
-    const token = getToken();
-    const headers = { Authorization: token };
-    const response = await axios.post(
-      `${BASE_URL}/order/update/status?id=${id}&is_finished=true`,
-      "",
-      {
-        headers,
-      }
-    );
-    return response.data;
-  } catch (error) {
-    return error.message;
+export const finishOrder = createAsyncThunk(
+  "order/finishOrder",
+  async (payload) => {
+    try {
+      const { _id } = payload;
+      delete payload._id;
+      const token = getToken();
+      const headers = { Authorization: token };
+      const response = await axios.post(
+        `${BASE_URL}/order/update/status?id=${_id}&is_finished=true`,
+        payload,
+        {
+          headers,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
   }
-});
+);
 
 const getExistingMenuOrder = (_id, is_take_away, state) => {
   const existingMenuOrderIndex = state.singleOrder.menu.findIndex(
@@ -134,9 +139,7 @@ const orderSlice = createSlice({
     handleChangePaymentMethod: (state, action) => {
       state.singleOrder.paymentMethod = action.payload;
     },
-    setSingleOrderData: (state, action) => {
-      state.singleOrder = action.payload;
-    },
+
     handleChangeMenuOrder: (state, action) => {
       const { _id, is_take_away } = action.payload;
       const { existingMenuOrder, existingMenuOrderIndex } =
@@ -173,8 +176,17 @@ const orderSlice = createSlice({
         state.singleOrder.menu.push(action.payload);
       }
     },
+    setSingleOrderData: (state, action) => {
+      state.singleOrder = action.payload;
+    },
     setSingleOrderNotes: (state, action) => {
       state.singleOrder.notes = action.payload;
+    },
+    setSingleOrderTypePayment: (state, action) => {
+      state.singleOrder.payment_method = action.payload;
+    },
+    setSingleOrderTotalPrice: (state, action) => {
+      state.singleOrder.total_price = action.payload;
     },
     toggleHandleServedMenu: (state, action) => {
       const { _id, is_take_away } = action.payload;
@@ -269,11 +281,13 @@ const orderSlice = createSlice({
 
 export const {
   toogleOnEdit,
-  setSingleOrderData,
   handleChangeMenuOrder,
   handleDeleteMenuOrder,
   handleAddMenuOrder,
+  setSingleOrderData,
   setSingleOrderNotes,
+  setSingleOrderTypePayment,
+  setSingleOrderTotalPrice,
   toggleHandleServedMenu,
 } = orderSlice.actions;
 

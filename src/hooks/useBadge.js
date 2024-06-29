@@ -3,7 +3,8 @@ import { useState } from "react";
 const useBadge = (initialBadge) => {
   const [badgeData, setBadgeData] = useState(initialBadge);
 
-  const onBadgeChange = (value) => {
+  const onBadgeChange = (value, callback) => {
+    console.log({ value });
     const updateBadgeData = badgeData.map((item) => {
       return {
         ...item,
@@ -12,6 +13,7 @@ const useBadge = (initialBadge) => {
     });
 
     setBadgeData(updateBadgeData);
+    if (callback && typeof callback === "function") callback();
   };
 
   const badgeValue = badgeData.find(
