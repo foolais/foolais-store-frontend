@@ -3,7 +3,8 @@ import FormPayment from "../Form/FormPayment";
 import Modal from "./Modal";
 
 const PaymentModal = (props) => {
-  const { showModal, closeModal } = props;
+  const { showModal, closeModal, onSubmit, type } = props;
+
   return (
     <Modal
       textButton="Bayar"
@@ -11,7 +12,7 @@ const PaymentModal = (props) => {
       showModal={showModal}
       closeModal={closeModal}
     >
-      <FormPayment />
+      <FormPayment onSubmit={onSubmit} type={type} />
     </Modal>
   );
 };

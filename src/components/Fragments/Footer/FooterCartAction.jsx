@@ -49,10 +49,12 @@ const FooterCartAction = () => {
           Tambah Pesanan
         </FooterLayout.BtnAction>
       </FooterLayout>
-      <PaymentModal
-        showModal={showPaymentModal}
-        closeModal={() => setShowPaymentModal(false)}
-      />
+      {showPaymentModal && (
+        <PaymentModal
+          showModal={showPaymentModal}
+          closeModal={() => setShowPaymentModal(false)}
+        />
+      )}
     </>
   );
 };

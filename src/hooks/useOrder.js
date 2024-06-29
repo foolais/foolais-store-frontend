@@ -20,6 +20,7 @@ import {
 import { useLocation } from "react-router-dom";
 import useTable from "./useTable";
 import { useNavigate } from "react-router-dom";
+import { setTotalPrice } from "../redux/slice/cartSlice";
 
 const useOrder = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const useOrder = () => {
   // state
   const [showModal, setShowModal] = useState(false);
   const [showAddMenuOrderModal, setShowAddMenuOrderModal] = useState(false);
+  const [showModalPayment, setShowModalPayment] = useState(false);
 
   // selector redux
   const { order, singleOrder, onEdit, loading } = useSelector(
@@ -200,6 +202,10 @@ const useOrder = () => {
     });
   };
 
+  const onSetTotalPrice = (value) => {
+    dispatch(setTotalPrice(value));
+  };
+
   return {
     loading,
     order,
@@ -207,6 +213,8 @@ const useOrder = () => {
     showModal,
     onEdit,
     showAddMenuOrderModal,
+    showModalPayment,
+    setShowModalPayment,
     onToggleOnEdit,
     onCancelEdit,
     onHandleAddNotes,
@@ -219,6 +227,7 @@ const useOrder = () => {
     onHandleActionEditOrder,
     onToggleHandleServedMenu,
     onDeleteOrder,
+    onSetTotalPrice,
   };
 };
 

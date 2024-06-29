@@ -73,7 +73,7 @@ const CardCartLayout = () => {
         )}
       </div>
       {cart && cart?.length > 0 && <FooterCartAction />}
-      {NotesModal && (
+      {showNotesModal && (
         <NotesModal
           title="Tambah Catatan"
           showModal={showNotesModal}

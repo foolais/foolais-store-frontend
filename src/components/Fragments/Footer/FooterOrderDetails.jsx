@@ -7,6 +7,7 @@ import { formatRupiah } from "../../../utils/utils";
 import Button from "../../Elements/Button/Button";
 import BadgeStatus from "../BadgeStatus";
 import FooterLayout from "./FooterLayout";
+import PaymentModal from "../Modal/PaymentModal";
 
 const FooterOrderDetails = ({ totalPrice }) => {
   const initialBadge = [
@@ -14,34 +15,51 @@ const FooterOrderDetails = ({ totalPrice }) => {
     { text: "QRIS", color: "primary", value: "qris" },
   ];
 
-  const { onEdit, onChangePayment } = useOrder();
+  const { onEdit, onChangePayment, onSetTotalPrice } = useOrder();
 
   const { badgeData, badgeValue, onBadgeChange } = useBadge(initialBadge);
+
+  const { showModalPayment, setShowModalPayment } = useOrder();
 
   useEffect(() => {
     onBadgeChange(badgeValue);
     onChangePayment(badgeValue);
   }, [badgeValue]);
 
+  const handlePayment = () => {
+    setShowModalPayment(true);
+    onSetTotalPrice(totalPrice);
+  };
+
   return (
-    <FooterLayout>
-      <p className="font-bold md:text-lg">Metode Pembayaran</p>
-      <BadgeStatus
-        data={badgeData}
-        isClickable={!onEdit}
-        onBadgeChange={onBadgeChange}
-      />
-      <p className="md:text-lg text-right mb-3">
-        Total Harga :{" "}
-        <span className="font-semibold"> {formatRupiah(totalPrice)} </span>
-      </p>
-      <Button
-        disabled={onEdit}
-        className="bg-secondary w-full text-lg text-white"
-      >
-        Bayar Sekarang
-      </Button>
-    </FooterLayout>
+    <>
+      <FooterLayout>
+        <p className="font-bold md:text-lg">Metode Pembayaran</p>
+        <BadgeStatus
+          data={badgeData}
+          isClickable={!onEdit}
+          onBadgeChange={onBadgeChange}
+        />
+        <p className="md:text-lg text-right mb-3">
+          Total Harga :{" "}
+          <span className="font-semibold"> {formatRupiah(totalPrice)} </span>
+        </p>
+        <Button
+          disabled={onEdit}
+          onClick={handlePayment}
+          className="bg-secondary w-full text-lg text-white"
+        >
+          Bayar Sekarang
+        </Button>
+      </FooterLayout>
+      {showModalPayment && (
+        <PaymentModal
+          showModal={() => setShowModalPayment(true)}
+          closeModal={() => setShowModalPayment(false)}
+          type={badgeValue}
+        />
+      )}
+    </>
   );
 };
 

@@ -15,6 +15,7 @@ const FormInput = (props) => {
     isAutoComplete = false,
     defaultValue = null,
     isDisabled = false,
+    ...rest
   } = props;
 
   const type = props?.type;
@@ -30,11 +31,12 @@ const FormInput = (props) => {
         <Input
           type={type}
           name={name}
-          className="input input-bordered w-full"
+          className="input input-bordered w-full disabled:text-gray-900"
           placeholder={placeholder}
           required={required}
           defaultValue={defaultValue}
           disabled={isDisabled}
+          {...rest}
         />
       )}
       {isTextArea && (
