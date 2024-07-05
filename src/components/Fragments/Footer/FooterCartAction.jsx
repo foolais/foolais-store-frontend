@@ -1,20 +1,22 @@
 /* eslint-disable react/prop-types */
-import Button from "../../Elements/Button/Button";
-import PaymentModal from "../Modal/PaymentModal";
 import useFooterCart from "../../../hooks/useFooterCart";
 import FooterLayout from "./FooterLayout";
 import AutoComplete from "../../Elements/Input/AutoComplete";
+import { useEffect } from "react";
 
 const FooterCartAction = () => {
   const {
     dropDownTable,
     cartTable,
-    showPaymentModal,
-    setShowPaymentModal,
+    setCartTable,
     calculateTotalPrice,
     handleChangeTable,
     handleAddOrder,
   } = useFooterCart();
+
+  useEffect(() => {
+    if (!cartTable) setCartTable("");
+  }, [cartTable, setCartTable]);
 
   return (
     <>
@@ -31,30 +33,16 @@ const FooterCartAction = () => {
             onSelect={handleChangeTable}
           />
         </div>
-        <div className="flex flex-col items-end gap-2">
-          <p className="text-sm md:text-lg font-semibold">
-            Total Harga :{" "}
-            <span className="text-secondary font-bold">
-              {calculateTotalPrice()}
-            </span>
-          </p>
-          <Button
-            onClick={() => setShowPaymentModal(true)}
-            className="btn-sm btn-outline border-[1px] border-primary hover:bg-primary"
-          >
-            Bayar Sekarang
-          </Button>
-        </div>
+        <p className="text-sm text-right md:text-lg font-semibold">
+          Total Harga :{" "}
+          <span className="text-secondary font-bold">
+            {calculateTotalPrice()}
+          </span>
+        </p>
         <FooterLayout.BtnAction onClick={handleAddOrder}>
           Tambah Pesanan
         </FooterLayout.BtnAction>
       </FooterLayout>
-      {showPaymentModal && (
-        <PaymentModal
-          showModal={showPaymentModal}
-          closeModal={() => setShowPaymentModal(false)}
-        />
-      )}
     </>
   );
 };

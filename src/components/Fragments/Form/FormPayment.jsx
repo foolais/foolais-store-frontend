@@ -12,7 +12,7 @@ import useOrder from "../../../hooks/useOrder";
 
 /* eslint-disable react/prop-types */
 const FormPayment = (props) => {
-  const { onSubmit, type = "cash" } = props;
+  const { onSubmit, type } = props;
 
   const { setTypePayment } = useOrder();
 
