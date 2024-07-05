@@ -16,6 +16,7 @@ import {
 import { useState } from "react";
 import {
   exitConfirmationDialog,
+  isLessThanOneDay,
   showConfirmationDialog,
   successDialog,
   warningDialog,
@@ -216,7 +217,6 @@ const useOrder = () => {
     const formData = new FormData(form);
     const { total_paid } = Object.fromEntries(formData.entries());
     const { _id, total_price, payment_method } = payload;
-    console.log({ payment_method });
     const mappedPayload = {
       _id,
       total_price,

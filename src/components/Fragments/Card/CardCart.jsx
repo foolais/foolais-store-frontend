@@ -25,7 +25,7 @@ const CardCart = (props) => {
     <>
       <Card
         className={`min-w-48 h-auto min-h-44 ${
-          item.is_served && "bg-secondary/100 text-white"
+          item.is_served && "bg-secondary/90 text-white"
         }`}
       >
         <div className="card-body justify-between">

@@ -39,7 +39,7 @@ const OrderDetailsLayout = () => {
   const { getOrderByTableId } = useTable();
 
   const isOpenFromTable = isDetailsOpenFromTableMenu();
-  const isDeleteValid = isLessThanOneDay(order?.timestamps?.created_at);
+  const isValidAction = isLessThanOneDay(order?.timestamps?.created_at);
 
   const [tempSingleOrder, setTempSingleOrder] = useLocalStorage(
     "tempSingleOrder",
@@ -117,7 +117,9 @@ const OrderDetailsLayout = () => {
               {`Pesanan #${order?.number_order}`}
             </p>
             <div
-              className="tooltip tooltip-right"
+              className={`tooltip tooltip-right ${
+                isValidAction ? "block" : "hidden"
+              }`}
               data-tip={onEdit ? "Simpan Perubahan" : "Edit Pesanan"}
             >
               <Button
@@ -131,7 +133,7 @@ const OrderDetailsLayout = () => {
                 )}
               </Button>
             </div>
-            {onEdit && isDeleteValid && (
+            {onEdit && isValidAction && (
               <div className="tooltip tooltip-right" data-tip="Batal Perubahan">
                 <Button
                   onClick={() => onHandleChangeMenu("CANCEL")}

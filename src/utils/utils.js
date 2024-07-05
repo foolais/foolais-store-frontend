@@ -39,7 +39,11 @@ export const setLocalStorage = (key, value) => {
 };
 
 export const isLessThanOneDay = (time) => {
-  return moment(time).isBefore(moment().add(1, "days"));
+  const now = moment();
+  const duration = moment.duration(now.diff(time));
+
+  const data = duration.asHours() < 24;
+  return data;
 };
 
 // Alert

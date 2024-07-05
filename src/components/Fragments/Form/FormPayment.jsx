@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Button from "../../Elements/Button/Button";
 import FormInput from "./FormInput";
-import { formatRupiah } from "../../../utils/utils";
+import { formatRupiah, isLessThanOneDay } from "../../../utils/utils";
 import BadgeStatus from "../BadgeStatus";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import QRIS from "../../../assets/qris.png";
@@ -148,7 +148,7 @@ const FormPayment = (props) => {
         <p className="text-sm md:text-md">Tipe Pembayaran : </p>
         <BadgeStatus
           data={badgeType}
-          isClickable={true}
+          isClickable={!isFinished}
           onBadgeChange={onBadgeChange}
         />
       </div>
@@ -169,11 +169,12 @@ const FormPayment = (props) => {
             isInput={true}
             value={totalPayment}
             onChange={(e) => setTotalPayment(e.target.value)}
+            disabled={isFinished}
           />
           <div className="mt-4">
             <BadgeStatus
               data={badgeMoney}
-              isClickable={true}
+              isClickable={!isFinished}
               onBadgeChange={onBadgeChange}
             />
           </div>
@@ -198,9 +199,9 @@ const FormPayment = (props) => {
       )}
       <Button
         className="bg-secondary text-white mt-4 w-full"
-        disabled={totalPayment < totalPrice}
+        disabled={totalPayment < totalPrice || isFinished}
       >
-        Selesaikan Pesanan
+        {isFinished ? "Pesanan Sudah Selesai" : "Selesaikan Pesanan"}
       </Button>
     </form>
   );

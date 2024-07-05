@@ -4,7 +4,6 @@ const useBadge = (initialBadge) => {
   const [badgeData, setBadgeData] = useState(initialBadge);
 
   const onBadgeChange = (value, callback) => {
-    console.log({ value });
     const updateBadgeData = badgeData.map((item) => {
       return {
         ...item,

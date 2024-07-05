@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import useBadge from "../../../hooks/useBadge";
 import useOrder from "../../../hooks/useOrder";
-import { formatRupiah } from "../../../utils/utils";
+import { formatRupiah, isLessThanOneDay } from "../../../utils/utils";
 import Button from "../../Elements/Button/Button";
 import BadgeStatus from "../BadgeStatus";
 import FooterLayout from "./FooterLayout";
@@ -16,6 +16,7 @@ const FooterOrderDetails = ({ order }) => {
     { text: "Tunai", color: "secondary", value: "cash" },
     { text: "QRIS", color: "primary", value: "qris" },
   ];
+  const isValidAction = isLessThanOneDay(order?.timestamps?.created_at);
 
   const { onEdit, onSetTotalPrice, onFinishOrder } = useOrder();
   const { badgeData, badgeValue, onBadgeChange } = useBadge(initialBadge);
@@ -49,7 +50,7 @@ const FooterOrderDetails = ({ order }) => {
         <p className="font-bold md:text-lg">Metode Pembayaran</p>
         <BadgeStatus
           data={badgeData}
-          isClickable={!onEdit}
+          isClickable={!onEdit && isValidAction}
           onBadgeChange={onBadgeChange}
         />
         <p className="md:text-lg text-right mb-3">
@@ -61,7 +62,7 @@ const FooterOrderDetails = ({ order }) => {
           onClick={handlePayment}
           className="bg-secondary w-full text-lg text-white"
         >
-          Bayar Sekarang
+          {isValidAction ? "Bayar Sekarang" : "Detail Pembayaran"}
         </Button>
       </FooterLayout>
       {showModalPayment && (
