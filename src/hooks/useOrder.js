@@ -13,6 +13,7 @@ import {
   updateOrder,
   setSingleOrderTotalPrice,
   toggleServedMenu,
+  setSingleOrderTable,
 } from "../redux/slice/orderSlice";
 import { useState } from "react";
 import {
@@ -37,6 +38,7 @@ const useOrder = () => {
   const [showModal, setShowModal] = useState(false);
   const [showAddMenuOrderModal, setShowAddMenuOrderModal] = useState(false);
   const [showModalPayment, setShowModalPayment] = useState(false);
+  const [showTableEditModal, setShowTableEditModal] = useState(false);
 
   // selector redux
   const { order, singleOrder, onEdit, loading } = useSelector(
@@ -125,8 +127,14 @@ const useOrder = () => {
         if (isConfirmed) {
           if (type === "SAVE") {
             dispatch(setSingleOrderData(payload));
+            const mappedTable = {
+              _id: payload?.table?._id,
+              name: payload?.table?.name,
+              category: payload?.table?.category,
+            };
             const data = {
               menu: payload.menu,
+              table: mappedTable,
               notes: payload.notes,
               is_finished: payload.is_finished,
               total_price: payload.total_price,
@@ -185,11 +193,8 @@ const useOrder = () => {
       const { _id: menu_id } = payload;
       const { _id: order_id } = singleOrder;
 
-      console.log({ menu_id, order_id });
-
       await dispatch(toggleServedMenu({ menu_id, order_id })).then(
         (response) => {
-          console.log(typeof response?.payload);
           if (response?.payload?.statusCode === 200) {
             dispatch(toggleHandleServedMenu(payload));
           } else if (
@@ -289,6 +294,11 @@ const useOrder = () => {
     dispatch(setSingleOrderTypePayment(value));
   };
 
+  const onSetSingleOrderTable = async (payload) => {
+    const response = await dispatch(setSingleOrderTable(payload));
+    return response;
+  };
+
   return {
     loading,
     order,
@@ -297,6 +307,8 @@ const useOrder = () => {
     onEdit,
     showAddMenuOrderModal,
     showModalPayment,
+    showTableEditModal,
+    setShowTableEditModal,
     setShowModalPayment,
     onToggleOnEdit,
     onCancelEdit,
@@ -312,6 +324,7 @@ const useOrder = () => {
     onSetTotalPrice,
     onFinishOrder,
     setTypePayment,
+    onSetSingleOrderTable,
   };
 };
 

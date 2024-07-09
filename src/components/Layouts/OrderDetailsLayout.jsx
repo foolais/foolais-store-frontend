@@ -19,6 +19,7 @@ import useTable from "../../hooks/useTable";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import AddMenuModal from "../Fragments/Modal/AddMenuModal";
 import { formatDates, isLessThanOneDay } from "../../utils/utils";
+import TableEditModal from "../Fragments/Modal/TableEditModal";
 
 const OrderDetailsLayout = () => {
   const { id } = useParams();
@@ -27,6 +28,8 @@ const OrderDetailsLayout = () => {
     onEdit,
     showModal,
     showAddMenuOrderModal,
+    showTableEditModal,
+    setShowTableEditModal,
     onToggleOnEdit,
     onHandleAddNotes,
     handleShowModal,
@@ -64,6 +67,10 @@ const OrderDetailsLayout = () => {
             setTempSingleOrder([]);
             onToggleOnEdit();
           });
+          break;
+        case "TABLE_EDIT":
+          setTempSingleOrder(order);
+          setShowTableEditModal(true);
           break;
         default:
           break;
@@ -152,9 +159,19 @@ const OrderDetailsLayout = () => {
           </p>
         </div>
         <div className="grid text-right">
-          <p className="font-semibold md:text-lg mb-2">
-            Meja : {order?.table?.name}
-          </p>
+          <div className="flex items-center justify-end mb-2 gap-2">
+            <p className="font-semibold md:text-lg">
+              Meja : {order?.table?.name}
+            </p>
+            {onEdit && (
+              <div
+                className="btn-sm btn-circle bg-secondary text-white flex items-center justify-center cursor-pointer hover:bg-gray-300"
+                onClick={() => onHandleChangeMenu("TABLE_EDIT")}
+              >
+                <AiOutlineEdit size={20} />
+              </div>
+            )}
+          </div>
           <p className="font-semibold md:text-lg mb-2">
             {formatDates(order?.timestamps?.created_at)}
           </p>
@@ -217,6 +234,12 @@ const OrderDetailsLayout = () => {
         <AddMenuModal
           showModal={showAddMenuOrderModal}
           closeModal={() => handleShowModal(false, "addMenu")}
+        />
+      )}
+      {showTableEditModal && (
+        <TableEditModal
+          showModal={showTableEditModal}
+          closeModal={() => setShowTableEditModal(false)}
         />
       )}
     </div>

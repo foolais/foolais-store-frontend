@@ -208,6 +208,9 @@ const orderSlice = createSlice({
     setSingleOrderTotalPrice: (state, action) => {
       state.singleOrder.total_price = action.payload;
     },
+    setSingleOrderTable: (state, action) => {
+      state.singleOrder.table = action.payload;
+    },
     toggleHandleServedMenu: (state, action) => {
       const { _id, is_take_away } = action.payload;
       const { existingMenuOrderIndex } = getExistingMenuOrder(
@@ -318,6 +321,7 @@ export const {
   setSingleOrderNotes,
   setSingleOrderTypePayment,
   setSingleOrderTotalPrice,
+  setSingleOrderTable,
   toggleHandleServedMenu,
 } = orderSlice.actions;
 
