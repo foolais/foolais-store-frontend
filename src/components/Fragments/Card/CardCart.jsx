@@ -15,17 +15,17 @@ const CardCart = (props) => {
   } = props;
 
   const { showEditModal, handleShowEditModal, onUpdateCart } = useCart();
-  const { onToggleHandleServedMenu } = useOrder();
+  const { loading, singleOrder, onToggleHandleServedMenu } = useOrder();
 
-  const handleCheck = (item) => {
-    onToggleHandleServedMenu(item);
+  const handleCheck = (payload) => {
+    if (!singleOrder?.is_finished) onToggleHandleServedMenu(payload);
   };
 
   return (
     <>
       <Card
         className={`min-w-48 h-auto min-h-44 ${
-          item.is_served && "bg-secondary/90 text-white"
+          item.is_served && "bg-secondary/80 text-white"
         }`}
       >
         <div className="card-body justify-between">
@@ -64,25 +64,29 @@ const CardCart = (props) => {
             </div>
 
             <div className="justify-self-end">
-              {!isUseInCart && isDisabledAction && (
-                <label
-                  onChange={() => handleCheck(item)}
-                  className={`cursor-pointer label gap-2 p-0 pb-2 ${
-                    isDisabledAction ? "opacity-100" : "opacity-0 scale-0"
-                  } ease-in-out`}
-                >
-                  <span
-                    className={`label-text ${item.is_served && "text-white"}`}
+              {!isUseInCart &&
+                isDisabledAction &&
+                (loading ? (
+                  <span className="loading loading-spinner loading-md"></span>
+                ) : (
+                  <label
+                    className={`cursor-pointer label gap-2 p-0 pb-2 ${
+                      isDisabledAction ? "opacity-100" : "opacity-0 scale-0"
+                    } ease-in-out`}
                   >
-                    Disajikan
-                  </span>
-                  <input
-                    type="checkbox"
-                    defaultChecked={item.is_served}
-                    className="checkbox checkbox-success"
-                  />
-                </label>
-              )}
+                    <span
+                      className={`label-text ${item.is_served && "text-white"}`}
+                    >
+                      Disajikan
+                    </span>
+                    <input
+                      type="checkbox"
+                      checked={item.is_served}
+                      className="checkbox checkbox-success"
+                      onChange={() => handleCheck(item)}
+                    />
+                  </label>
+                ))}
               <Button
                 onClick={() => handleShowEditModal(true)}
                 className={`btn-sm btn-outline ${

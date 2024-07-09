@@ -12,11 +12,11 @@ import {
   toogleOnEdit,
   updateOrder,
   setSingleOrderTotalPrice,
+  toggleServedMenu,
 } from "../redux/slice/orderSlice";
 import { useState } from "react";
 import {
   exitConfirmationDialog,
-  isLessThanOneDay,
   showConfirmationDialog,
   successDialog,
   warningDialog,
@@ -180,8 +180,48 @@ const useOrder = () => {
     }
   };
 
+  const postToggleServedMenu = async (payload) => {
+    try {
+      const { _id: menu_id } = payload;
+      const { _id: order_id } = singleOrder;
+
+      console.log({ menu_id, order_id });
+
+      await dispatch(toggleServedMenu({ menu_id, order_id })).then(
+        (response) => {
+          console.log(typeof response?.payload);
+          if (response?.payload?.statusCode === 200) {
+            dispatch(toggleHandleServedMenu(payload));
+          } else if (
+            response?.payload?.message.includes("403") ||
+            response?.payload.includes("403")
+          ) {
+            warningDialog("Mohon login terlebih dahulu");
+          } else {
+            warningDialog(response?.payload);
+          }
+        }
+      );
+    } catch (error) {
+      warningDialog(error.message || error);
+    }
+  };
   const onToggleHandleServedMenu = (payload) => {
-    dispatch(toggleHandleServedMenu(payload));
+    try {
+      if (payload?.is_served) {
+        const text = "Apakah anda yakin ingin membatalkan sajian pesanan ini ?";
+        const successText = "Sajian pesanan telah dibatalkan";
+        showConfirmationDialog(text, successText, (isConfirmed) => {
+          if (isConfirmed) {
+            postToggleServedMenu(payload);
+          }
+        });
+      } else {
+        postToggleServedMenu(payload);
+      }
+    } catch (error) {
+      warningDialog(error.message || error);
+    }
   };
 
   const onDeleteOrder = (id) => {

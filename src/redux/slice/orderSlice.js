@@ -120,6 +120,26 @@ export const finishOrder = createAsyncThunk(
   }
 );
 
+export const toggleServedMenu = createAsyncThunk(
+  "order/toggleServedMenu",
+  async (payload) => {
+    try {
+      const { order_id, menu_id } = payload;
+      if (!order_id || !menu_id) throw new Error("Missing order_id or menu_id");
+      const token = getToken();
+      const headers = { Authorization: token };
+      const response = await axios.post(
+        `${BASE_URL}/order/update/menu/status?order_id=${order_id}&menu_id=${menu_id}`,
+        payload,
+        { headers }
+      );
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
 const getExistingMenuOrder = (_id, is_take_away, state) => {
   const existingMenuOrderIndex = state.singleOrder.menu.findIndex(
     (item) => item._id === _id && item.is_take_away === is_take_away
@@ -273,6 +293,16 @@ const orderSlice = createSlice({
         state.loading = false;
       })
       .addCase(finishOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(toggleServedMenu.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(toggleServedMenu.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(toggleServedMenu.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });

@@ -11,7 +11,7 @@ import PaymentModal from "../Modal/PaymentModal";
 import { useSelector } from "react-redux";
 
 const FooterOrderDetails = ({ order }) => {
-  const { total_price: totalPrice } = order;
+  const { total_price: totalPrice, is_finished } = order;
   const initialBadge = [
     { text: "Tunai", color: "secondary", value: "cash" },
     { text: "QRIS", color: "primary", value: "qris" },
@@ -50,7 +50,7 @@ const FooterOrderDetails = ({ order }) => {
         <p className="font-bold md:text-lg">Metode Pembayaran</p>
         <BadgeStatus
           data={badgeData}
-          isClickable={!onEdit && isValidAction}
+          isClickable={!onEdit && isValidAction && !is_finished}
           onBadgeChange={onBadgeChange}
         />
         <p className="md:text-lg text-right mb-3">
@@ -62,7 +62,9 @@ const FooterOrderDetails = ({ order }) => {
           onClick={handlePayment}
           className="bg-secondary w-full text-lg text-white"
         >
-          {isValidAction ? "Bayar Sekarang" : "Detail Pembayaran"}
+          {isValidAction && !is_finished
+            ? "Bayar Sekarang"
+            : "Detail Pembayaran"}
         </Button>
       </FooterLayout>
       {showModalPayment && (
