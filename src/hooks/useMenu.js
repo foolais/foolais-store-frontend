@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -39,7 +40,12 @@ const useMenu = () => {
   // * Use Effect
   // ! set Filtered menu
   useEffect(() => {
-    setFilteredMenu(menu);
+    const badgeValue = getBadgeValue();
+    const updatedFilteredMenu =
+      badgeValue === "all"
+        ? menu
+        : menu.filter((item) => item.category === badgeValue);
+    setFilteredMenu(updatedFilteredMenu);
   }, [menu]);
 
   // ! filter menu by search data navbar
@@ -81,7 +87,6 @@ const useMenu = () => {
       value === "all" ? menu : menu.filter((item) => item.category === value);
 
     setFilteredMenu(updatedMenu);
-
     setBadgeData(updateBadgeData);
   };
 
@@ -110,6 +115,8 @@ const useMenu = () => {
         item.name.toLowerCase().trim() === data.name.toLocaleLowerCase().trim()
     );
 
+    const badgeValue = getBadgeValue();
+
     if (isSameMenu) {
       warningDialog("Menu sudah ada");
     } else if (!validate) {
@@ -122,6 +129,7 @@ const useMenu = () => {
             successDialog(response.payload.message);
             dispatch(getAllMenu());
             setAddMenuModal(false);
+            onBadgeChange(badgeValue);
           } else if (response?.payload.includes("403")) {
             warningDialog("Mohon login terlebih dahulu");
           }
@@ -135,12 +143,16 @@ const useMenu = () => {
   const onDeleteMenu = ({ _id, name }) => {
     const text = `Apakah anda yakin ingin menghapus menu ${name}?`;
     const successText = `Menu ${name} telah dihapus`;
+
+    const badgeValue = getBadgeValue();
+
     showConfirmationDialog(text, successText, (isConfirmed) => {
       isConfirmed &&
         dispatch(deleteMenu(_id))
           .then((response) => {
             if (response.payload?.statusCode === 200) {
               dispatch(getAllMenu());
+              onBadgeChange(badgeValue);
             } else if (response?.payload.includes("403")) {
               warningDialog("Mohon login terlebih dahulu");
             }
@@ -149,6 +161,12 @@ const useMenu = () => {
             warningDialog(error);
           });
     });
+  };
+
+  const getBadgeValue = () => {
+    const data = badgeData.find((item) => item.color === "secondary");
+
+    return data.value;
   };
 
   return {
@@ -165,6 +183,7 @@ const useMenu = () => {
     onAddMenu,
     onDeleteMenu,
     getAllMenuData,
+    getBadgeValue,
   };
 };
 

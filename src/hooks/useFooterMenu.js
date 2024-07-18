@@ -11,8 +11,11 @@ import {
   showConfirmationDialog,
   warningDialog,
 } from "../utils/utils";
+import useMenu from "./useMenu";
 
 const useFooterMenu = () => {
+  const { getBadgeValue, onBadgeChange } = useMenu();
+
   // state
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [updateMenuModal, setUpdateMenuModal] = useState(false);
@@ -131,6 +134,8 @@ const useFooterMenu = () => {
     const text = `Apakah anda yakin ingin mengubah menu ${payload.name}?`;
     const successText = `Menu ${payload.name} berhasil diubah`;
 
+    const badgeValue = getBadgeValue();
+
     showConfirmationDialog(text, successText, (isConfirmed) => {
       isConfirmed &&
         dispatch(updateMenu(payload))
@@ -138,6 +143,7 @@ const useFooterMenu = () => {
             if (response.payload?.statusCode === 200) {
               dispatch(getAllMenu());
               setUpdateMenuModal(false);
+              onBadgeChange(badgeValue);
             } else if (response?.payload.includes("403")) {
               warningDialog("Mohon login terlebih dahulu");
             } else {
