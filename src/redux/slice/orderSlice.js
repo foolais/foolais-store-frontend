@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getToken } from "../../utils/utils";
+import { getToken, sortDataByArray } from "../../utils/utils";
 
 const initialState = {
   order: [],
@@ -16,7 +16,9 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const getAllOrder = createAsyncThunk("order/getAllOrder", async () => {
   try {
     const response = await axios.get(`${BASE_URL}/order`);
-    return response.data;
+    const { data } = response.data;
+    const sortedData = sortDataByArray(data, [], "order");
+    return { ...response.data, data: sortedData };
   } catch (error) {
     return error.message;
   }

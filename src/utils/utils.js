@@ -16,14 +16,35 @@ export const formatDates = (time, type = "full") => {
     return moment(time).format("DD/MM/YY");
   } else if (type === "time") {
     return moment(time).format("hh:mm A");
+  } else if (type === "sort") {
+    return moment(time).format("YYYYMMDDhhmmss");
   }
 };
 
-export const sortDataByArray = (data, sortOrder) => {
-  data.sort(
-    (a, b) => sortOrder.indexOf(a.category) - sortOrder.indexOf(b.category)
-  );
-  return data;
+export const sortDataByArray = (data, sortOrder = [], type) => {
+  let sortedData;
+  switch (type) {
+    case "menu" || "table":
+      sortedData = data
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .sort(
+          (a, b) =>
+            sortOrder.indexOf(a.category) - sortOrder.indexOf(b.category)
+        );
+      break;
+    case "order":
+      sortedData = data.sort(
+        (a, b) =>
+          formatDates(b?.timestamps?.created_at, "sort") -
+          formatDates(a?.timestamps?.created_at, "sort")
+      );
+      break;
+    default:
+      sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+  }
+  console.log({ sortedData });
+  return sortedData;
 };
 
 export const getToken = () => {

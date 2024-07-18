@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getToken, setLocalStorage } from "../../utils/utils";
+import { getToken, setLocalStorage, sortDataByArray } from "../../utils/utils";
 import axios from "axios";
 
 const initialState = {
@@ -21,7 +21,10 @@ const getExistingTable = (id, state) => {
 export const getAllTable = createAsyncThunk("table/getAllTable", async () => {
   try {
     const response = await axios.get(`${BASE_URL}/table`);
-    return response.data;
+    const { data } = response.data;
+    const type = ["regular", "custom"];
+    const sortedData = await sortDataByArray(data, type, "table");
+    return { ...response.data, data: sortedData };
   } catch (error) {
     return error.message;
   }
@@ -123,7 +126,7 @@ const tableSlice = createSlice({
       .addCase(getAllTable.fulfilled, (state, action) => {
         state.loading = false;
         const { data } = action.payload;
-        const payload = data.map((item) => {
+        const payload = data?.map((item) => {
           if (item.is_order) return item;
           return {
             ...item,

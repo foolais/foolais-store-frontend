@@ -16,7 +16,7 @@ export const getAllMenu = createAsyncThunk("menu/getAllMenu", async () => {
     const response = await axios.get(`${BASE_URL}/menu`);
     const { data } = response.data;
     const category = ["food", "drink", "extra"];
-    const sortedData = sortDataByArray(data, category);
+    const sortedData = sortDataByArray(data, category, "menu");
     return { ...response.data, data: sortedData };
   } catch (error) {
     return error.message;
