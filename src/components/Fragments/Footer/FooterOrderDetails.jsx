@@ -3,7 +3,11 @@
 import { useEffect } from "react";
 import useBadge from "../../../hooks/useBadge";
 import useOrder from "../../../hooks/useOrder";
-import { formatRupiah, isLessThanOneDay } from "../../../utils/utils";
+import {
+  formatRupiah,
+  isLessThanOneDay,
+  warningDialog,
+} from "../../../utils/utils";
 import Button from "../../Elements/Button/Button";
 import BadgeStatus from "../BadgeStatus";
 import FooterLayout from "./FooterLayout";
@@ -25,7 +29,12 @@ const FooterOrderDetails = ({ order }) => {
   const { singleOrder, loading } = useSelector((state) => state.order);
 
   const handlePayment = () => {
-    setShowModalPayment(true);
+    const validate = validateServedMenu();
+    if (validate) {
+      warningDialog("Tidak boleh ada menu yang belum disajikan");
+    } else {
+      setShowModalPayment(true);
+    }
   };
 
   const calculateTotalPrice = () => {
@@ -43,6 +52,12 @@ const FooterOrderDetails = ({ order }) => {
   useEffect(() => {
     if (!loading) onBadgeChange(singleOrder?.payment_method);
   }, [loading]);
+
+  const validateServedMenu = () => {
+    const { menu } = singleOrder;
+    const notServed = menu?.filter((menu) => !menu?.is_served);
+    return notServed?.length > 0;
+  };
 
   return (
     <>
