@@ -10,8 +10,18 @@ import { useEffect } from "react";
 
 const FooterMenuAction = () => {
   const initialBadge = [
-    { text: "Makan Di Tempat", color: "secondary", value: "dine_in" },
-    { text: "Dibawa Pulang", color: "primary", value: "take_away" },
+    {
+      text: "Makan Di Tempat",
+      color: "secondary",
+      value: "dine_in",
+      isSmallText: true,
+    },
+    {
+      text: "Dibawa Pulang",
+      color: "primary",
+      value: "take_away",
+      isSmallText: false,
+    },
   ];
 
   const {

@@ -9,7 +9,7 @@ import { AiOutlineShoppingCart, AiOutlineHome } from "react-icons/ai";
 const CardMenu = ({ children, className, onClick = () => {} }) => {
   return (
     <div
-      className={`card card-compact bg-white shadow-lg text-primary min-w-[45%] sm:min-w-[30%] overflow-hidden ${className}`}
+      className={`card card-compact bg-white shadow-lg text-primary min-w-[45%] sm:min-w-[30%] lg:min-w-[20%] overflow-hidden ${className}`}
       onClick={onClick}
     >
       {children}

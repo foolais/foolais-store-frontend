@@ -41,7 +41,9 @@ const BadgeStatus = (props) => {
             }`}
           >
             <div className="flex items-center gap-2">
-              <span>{item.text}</span>
+              <span className={`${item?.isSmallText ? "text-xs" : "text-sm"}`}>
+                {item.text}
+              </span>
               {isWithCircleIcon && (
                 <div
                   className={`w-3 h-3 md:w-4 md:h-4 rounded-full ${handleSetColor(

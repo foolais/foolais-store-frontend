@@ -38,7 +38,7 @@ const CardMenuLayout = () => {
   }, []);
 
   return (
-    <div className="w-full h-auto ">
+    <div className="w-full h-auto">
       <Title>Daftar Menu</Title>
       <Breadcrumbs data={breadCrumbsData} />
       {menu && menu?.length > 0 && !loading && (
@@ -50,57 +50,59 @@ const CardMenuLayout = () => {
           type="menu"
         />
       )}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-36 mt-4">
-        {searchData && menu && menu.length === 0 && !loading ? (
-          <div className="w-full flex items-center justify-center text-neutral p-4 font-semibold">
-            {`Tidak Ada Menu Untuk "${searchData}" `}
-          </div>
-        ) : loading ? (
-          <Skeleton.List
-            total={4}
-            className="min-w-42 md:min-w-48 min-h-24 md:min-h-36"
-          />
-        ) : (
-          <>
-            <CardAddNew
-              title="Tambah Menu Baru"
-              cardClassName="min-h-24 md:min-h-36 h-auto min-w-42 md:min-w-48"
-              titleClassName="font-semibold text-center text-[1rem] md:text-md mt-2 md:mt-4"
-              actionClassName="mt-2 md:mt-4"
-              btnOnClick={() => setAddMenuModal(true)}
+      <div className="lg:flex lg:justify-between lg:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mb-36 mt-4 lg:mb-0 lg:h-auto lg:max-h-[calc(100vh-15rem)] lg:overflow-auto lg:pr-4 lg:pb-4 lg:pl-0 lg:w-full">
+          {searchData && menu && menu.length === 0 && !loading ? (
+            <div className="w-full flex items-center justify-center text-neutral p-4 font-semibold">
+              {`Tidak Ada Menu Untuk "${searchData}" `}
+            </div>
+          ) : loading ? (
+            <Skeleton.List
+              total={4}
+              className="min-w-42 md:min-w-48 min-h-24 md:min-h-36"
             />
-            {filteredMenu &&
-              filteredMenu.length > 0 &&
-              filteredMenu.map((item) => {
-                return (
-                  <CardMenu
-                    key={item._id}
-                    item={item}
-                    onCardClick={() => onSelectedMenu(item._id)}
-                    onCardDelete={() => onDeleteMenu(item)}
-                  />
-                );
-              })}
+          ) : (
+            <>
+              <CardAddNew
+                title="Tambah Menu Baru"
+                cardClassName="min-h-24 md:min-h-36 h-auto min-w-42 md:min-w-48 xl:w-auto"
+                titleClassName="font-semibold text-center text-[1rem] md:text-md mt-2 md:mt-4"
+                actionClassName="mt-2 md:mt-4"
+                btnOnClick={() => setAddMenuModal(true)}
+              />
+              {filteredMenu &&
+                filteredMenu.length > 0 &&
+                filteredMenu.map((item) => {
+                  return (
+                    <CardMenu
+                      key={item._id}
+                      item={item}
+                      onCardClick={() => onSelectedMenu(item._id)}
+                      onCardDelete={() => onDeleteMenu(item)}
+                    />
+                  );
+                })}
+            </>
+          )}
+        </div>
+        {!loading && (
+          <>
+            {addMenuModal && !loading && (
+              <Modal
+                title="Tambah Menu Baru"
+                showModal={addMenuModal}
+                closeModal={() => onCloseModal()}
+              >
+                <FormMenu
+                  onSubmit={(event) => onAddMenu(event)}
+                  btnText="Tambah Menu"
+                />
+              </Modal>
+            )}
+            {menu && menu?.length > 0 && !loading && <FooterMenuAction />}
           </>
         )}
       </div>
-      {!loading && (
-        <>
-          {addMenuModal && !loading && (
-            <Modal
-              title="Tambah Menu Baru"
-              showModal={addMenuModal}
-              closeModal={() => onCloseModal()}
-            >
-              <FormMenu
-                onSubmit={(event) => onAddMenu(event)}
-                btnText="Tambah Menu"
-              />
-            </Modal>
-          )}
-          {menu && menu?.length > 0 && !loading && <FooterMenuAction />}
-        </>
-      )}
     </div>
   );
 };
