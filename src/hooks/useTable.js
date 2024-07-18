@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -20,17 +21,34 @@ const useTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const initialBadgeData = [
+    { text: "Semua", color: "secondary", value: "all" },
+    { text: "Kosong", color: "primary", value: "empty" },
+    { text: "Menunggu", color: "primary", value: "waiting" },
+    { text: "Makan", color: "primary", value: "eating" },
+  ];
+
   // State
   const [table, setTable] = useState(null);
+  const [filteredTable, setFilteredTable] = useState([]);
   const [addTableModal, setAddTableModal] = useState(false);
   const [editTableModal, setEditTableModal] = useState(false);
   const [selectedTable, setSelectedTable] = useState(null);
+  const [badgeData, setBadgeData] = useState(initialBadgeData);
 
   // Selector
   const { data: tableData, loading } = useSelector((state) => state.table);
 
   useEffect(() => {
-    if (tableData && tableData.length > 0 && !loading) setTable(tableData);
+    if (tableData && tableData.length > 0 && !loading) {
+      setTable(tableData);
+      const badgeValue = getBadgeValue();
+      const updatedFilteredTable =
+        badgeValue === "all"
+          ? tableData
+          : tableData.filter((item) => item.status === badgeValue);
+      setFilteredTable(updatedFilteredTable);
+    }
   }, [tableData, loading]);
 
   const getAllTableData = () => {
@@ -63,12 +81,15 @@ const useTable = () => {
     const data = Object.fromEntries(formData.entries());
     const validate = isValidateTable(data, "ADD");
 
+    const badgeValue = getBadgeValue();
+
     if (validate) {
       dispatch(postNewTable(data)).then((response) => {
         if (response.payload?.statusCode === 201) {
           successDialog(response.payload.message);
           dispatch(getAllTable());
           setAddTableModal(false);
+          onBadgeChange(badgeValue);
         } else if (response?.payload?.includes("400")) {
           warningDialog("Tidak bisa menambahkan data yang sama");
         } else if (response?.payload?.includes("403")) {
@@ -93,12 +114,15 @@ const useTable = () => {
       _id: selectedTable?._id,
     };
 
+    const badgeValue = getBadgeValue();
+
     if (validate) {
       dispatch(updateTable(updatedTable)).then((response) => {
         if (response.payload?.statusCode === 200) {
           successDialog(response.payload.message);
           dispatch(getAllTable());
           setEditTableModal(false);
+          onBadgeChange(badgeValue);
         } else if (response?.payload.includes("403")) {
           warningDialog("Mohon login terlebih dahulu");
         }
@@ -112,12 +136,16 @@ const useTable = () => {
   const onDeleteTable = ({ _id, name }) => {
     const text = `Apakah anda yakin ingin menghapus meja ${name}?`;
     const successText = `Meja ${name} telah dihapus`;
+
+    const badgeValue = getBadgeValue();
+
     showConfirmationDialog(text, successText, (isConfirmed) => {
       isConfirmed &&
         dispatch(deleteTable(_id))
           .then((response) => {
             if (response.payload?.statusCode === 200) {
               dispatch(getAllTable());
+              onBadgeChange(badgeValue);
             } else if (response?.payload.includes("403")) {
               warningDialog("Mohon login terlebih dahulu");
             }
@@ -126,6 +154,12 @@ const useTable = () => {
             warningDialog(error);
           });
     });
+  };
+
+  const getBadgeValue = () => {
+    const data = badgeData.find((item) => item.color === "secondary");
+
+    return data.value;
   };
 
   const onCloseModal = (type) => {
@@ -160,13 +194,31 @@ const useTable = () => {
     return status === "empty";
   };
 
+  const onBadgeChange = (value) => {
+    const updateBadgeData = badgeData.map((item) => {
+      return {
+        ...item,
+        color: item.value === value ? "secondary" : "primary",
+      };
+    });
+
+    const updateTable =
+      value === "all" ? table : table.filter((item) => item.status === value);
+
+    setFilteredTable(updateTable);
+    setBadgeData(updateBadgeData);
+  };
+
   return {
     table,
+    filteredTable,
     loading,
     addTableModal,
     setAddTableModal,
     selectedTable,
     editTableModal,
+    badgeData,
+    onBadgeChange,
     onClickEdit,
     onAddTable,
     onUpdateTable,

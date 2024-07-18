@@ -1,6 +1,13 @@
 /* eslint-disable react/prop-types */
+import { setColorTable } from "../../utils/statusData";
+
 const BadgeStatus = (props) => {
-  const { data, isClickable = false, onBadgeChange = () => {} } = props;
+  const {
+    data,
+    isClickable = false,
+    onBadgeChange = () => {},
+    isWithCircleIcon = false,
+  } = props;
   return (
     <div className="flex flex-wrap items-center gap-2 my-2 max-w-[90vw]">
       {data &&
@@ -14,7 +21,16 @@ const BadgeStatus = (props) => {
               isClickable && "cursor-pointer hover:opacity-70"
             }`}
           >
-            {item.text}
+            <div className="flex items-center gap-2">
+              <span>{item.text}</span>
+              {isWithCircleIcon && (
+                <div
+                  className={`w-3 h-3 md:w-4 md:h-4 rounded-full ${setColorTable(
+                    item.value
+                  )}`}
+                />
+              )}
+            </div>
           </div>
         ))}
     </div>

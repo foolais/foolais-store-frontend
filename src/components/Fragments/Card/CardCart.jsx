@@ -23,12 +23,12 @@ const CardCart = (props) => {
 
   return (
     <>
-      <Card
-        className={`min-w-48 h-auto min-h-44 ${
-          item.is_served && "bg-secondary/80 text-white"
-        }`}
-      >
-        <div className="card-body justify-between">
+      <Card className="min-w-48 h-auto min-h-44">
+        <div
+          className={`card-body justify-between ${
+            item.is_served ? "bg-secondary text-white" : "bg-white"
+          }`}
+        >
           {/* HEADER */}
           <div className="flex items-start justify-between gap-4">
             {/* Judul */}

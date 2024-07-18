@@ -14,6 +14,8 @@ export const setStatusTable = (status) => {
 
 export const setColorTable = (status) => {
   switch (status) {
+    case "all":
+      return "bg-neutral";
     case "empty":
       return "bg-success";
     case "waiting":

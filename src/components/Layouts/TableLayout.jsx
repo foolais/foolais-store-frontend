@@ -12,12 +12,13 @@ import { useEffect } from "react";
 
 const CardTableLayout = () => {
   const {
-    table,
+    filteredTable: table,
     addTableModal,
     loading,
     setAddTableModal,
     selectedTable,
     editTableModal,
+    badgeData,
     onClickEdit,
     onAddTable,
     onUpdateTable,
@@ -25,13 +26,8 @@ const CardTableLayout = () => {
     onCloseModal,
     onAddOrder,
     getAllTableData,
+    onBadgeChange,
   } = useTable();
-
-  const statusData = [
-    { text: "Kosong", color: "success" },
-    { text: "Menunggu", color: "warning" },
-    { text: "Makan", color: "info" },
-  ];
 
   const breadCrumbsData = [
     { text: "Home", link: "/" },
@@ -47,8 +43,13 @@ const CardTableLayout = () => {
       <Title>Daftar Meja</Title>
       <Breadcrumbs data={breadCrumbsData} />
       {/* Status */}
-      {table && table.length > 0 && !loading && (
-        <BadgeStatus data={statusData} />
+      {!loading && (
+        <BadgeStatus
+          data={badgeData}
+          isClickable={true}
+          onBadgeChange={onBadgeChange}
+          isWithCircleIcon={true}
+        />
       )}
       {/* Daftar Meja */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
