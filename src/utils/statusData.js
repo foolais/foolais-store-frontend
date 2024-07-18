@@ -1,3 +1,32 @@
+// * MENU
+export const setColorMenu = (category) => {
+  switch (category) {
+    case "all":
+      return "bg-neutral";
+    case "food":
+      return "bg-primary-badge";
+    case "drink":
+      return "bg-secondary-badge";
+    case "extra":
+      return "bg-ternary-badge";
+    default:
+      return "bg-primary-badge";
+  }
+};
+
+export const setCategoryMenu = (category) => {
+  switch (category) {
+    case "food":
+      return "Makanan";
+    case "drink":
+      return "Minuman";
+    case "extra":
+      return "Tambahan";
+    default:
+      return "Makanan";
+  }
+};
+
 // * TABLE
 export const setStatusTable = (status) => {
   switch (status) {
@@ -37,5 +66,19 @@ export const setTypeTable = (type) => {
       return "Dibawa Pulang";
     default:
       return "Makan Ditempat";
+  }
+};
+
+// * ORDER
+export const setColorOrder = (status) => {
+  switch (status) {
+    case "all":
+      return "bg-neutral";
+    case "onProccess":
+      return "bg-warning";
+    case "finished":
+      return "bg-success";
+    default:
+      return "bg-primary";
   }
 };

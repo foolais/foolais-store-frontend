@@ -2,35 +2,10 @@
 import { AiOutlineDelete } from "react-icons/ai";
 import Button from "../../Elements/Button/Button";
 import Card from "../Card/Card";
+import { setCategoryMenu, setColorMenu } from "../../../utils/statusData";
 
 const CardMenu = (props) => {
   const { item, onCardClick, onCardDelete } = props;
-
-  const setCategory = (category) => {
-    switch (category) {
-      case "food":
-        return "Makanan";
-      case "drink":
-        return "Minuman";
-      case "extra":
-        return "Tambahan";
-      default:
-        return "Makanan";
-    }
-  };
-
-  const setColor = (category) => {
-    switch (category) {
-      case "food":
-        return "bg-primary-badge";
-      case "drink":
-        return "bg-secondary-badge";
-      case "extra":
-        return "bg-ternary-badge";
-      default:
-        return "bg-primary-badge";
-    }
-  };
 
   return (
     <Card
@@ -57,8 +32,8 @@ const CardMenu = (props) => {
         {/* Harga Menu */}
         <Card.Price price={item.price} className="text-md md:text-lg" />
         <Card.Category
-          category={setCategory(item.category)}
-          bgColor={setColor(item.category) || ""}
+          category={setCategoryMenu(item.category)}
+          bgColor={setColorMenu(item.category) || ""}
         />
       </div>
     </Card>

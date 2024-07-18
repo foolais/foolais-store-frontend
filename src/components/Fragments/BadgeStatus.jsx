@@ -1,5 +1,9 @@
 /* eslint-disable react/prop-types */
-import { setColorTable } from "../../utils/statusData";
+import {
+  setColorMenu,
+  setColorOrder,
+  setColorTable,
+} from "../../utils/statusData";
 
 const BadgeStatus = (props) => {
   const {
@@ -7,7 +11,22 @@ const BadgeStatus = (props) => {
     isClickable = false,
     onBadgeChange = () => {},
     isWithCircleIcon = false,
+    type = "",
   } = props;
+
+  const handleSetColor = (item) => {
+    switch (type) {
+      case "menu":
+        return setColorMenu(item?.value);
+      case "table":
+        return setColorTable(item?.value);
+      case "order":
+        return setColorOrder(item?.value);
+      default:
+        return "bg-primary-badge";
+    }
+  };
+
   return (
     <div className="flex flex-wrap items-center gap-2 my-2 max-w-[90vw]">
       {data &&
@@ -25,8 +44,8 @@ const BadgeStatus = (props) => {
               <span>{item.text}</span>
               {isWithCircleIcon && (
                 <div
-                  className={`w-3 h-3 md:w-4 md:h-4 rounded-full ${setColorTable(
-                    item.value
+                  className={`w-3 h-3 md:w-4 md:h-4 rounded-full ${handleSetColor(
+                    item
                   )}`}
                 />
               )}

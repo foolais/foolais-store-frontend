@@ -40,6 +40,8 @@ const OrderLayout = () => {
           data={badgeData}
           isClickable={true}
           onBadgeChange={onBadgeChange}
+          isWithCircleIcon={true}
+          type="order"
         />
       )}
       <div className="mt-4 grid gap-4">

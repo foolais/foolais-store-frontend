@@ -43,7 +43,6 @@ export const sortDataByArray = (data, sortOrder = [], type) => {
       sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
       break;
   }
-  console.log({ sortedData });
   return sortedData;
 };
 

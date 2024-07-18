@@ -49,6 +49,7 @@ const CardTableLayout = () => {
           isClickable={true}
           onBadgeChange={onBadgeChange}
           isWithCircleIcon={true}
+          type="table"
         />
       )}
       {/* Daftar Meja */}

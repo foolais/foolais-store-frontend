@@ -46,6 +46,8 @@ const CardMenuLayout = () => {
           data={badgeData}
           isClickable={true}
           onBadgeChange={onBadgeChange}
+          isWithCircleIcon={true}
+          type="menu"
         />
       )}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-36 mt-4">
