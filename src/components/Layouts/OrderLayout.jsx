@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
 import BadgeStatus from "../Fragments/BadgeStatus";
 import CardOrder from "../Fragments/Card/CardOrder";
@@ -13,13 +14,21 @@ const OrderLayout = () => {
   ];
 
   const [badgeData, setBadgeData] = useState(initialBadgeData);
-  // const [filter, setFilter] = useState("all");
+  const [filteredOrder, setFilteredOrder] = useState([]);
 
   const { order, loading, getAllOrderData } = useOrder();
 
   useEffect(() => {
+    const fetchAndFilterOrders = async () => {
+      if (order) {
+        await filterOrders();
+      }
+    };
+    fetchAndFilterOrders();
+  }, [order, badgeData]);
+
+  useEffect(() => {
     getAllOrderData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onBadgeChange = (value) => {
@@ -33,9 +42,24 @@ const OrderLayout = () => {
     setBadgeData(updateBadgeData);
   };
 
+  const getBadgeValue = () => {
+    const data = badgeData.find((item) => item.color === "secondary");
+    return data.value;
+  };
+
+  const filterOrders = () => {
+    const badgeValue = getBadgeValue();
+    const isBadgeValueFinished = badgeValue === "finished";
+    const updatedFilteredOrder =
+      badgeValue === "all"
+        ? order
+        : order.filter((item) => item.is_finished === isBadgeValueFinished);
+    setFilteredOrder(updatedFilteredOrder);
+  };
+
   return (
     <div className="w-full h-full">
-      {order && !loading && (
+      {filteredOrder && !loading && (
         <BadgeStatus
           data={badgeData}
           isClickable={true}
@@ -45,14 +69,16 @@ const OrderLayout = () => {
         />
       )}
       <div className="mt-4 grid gap-4">
-        {!order && !loading ? (
+        {filteredOrder.length === 0 && !loading ? (
           <div className="w-full flex items-center justify-center text-primary p-4 font-semibold">
             Tidak Ada Pesanan
           </div>
         ) : loading ? (
           <Skeleton.List total={3} className="w-[80%] md:w-full h-32" />
         ) : (
-          order?.map((item) => <CardOrder key={item._id} order={item} />)
+          filteredOrder?.map((item) => (
+            <CardOrder key={item._id} order={item} />
+          ))
         )}
       </div>
     </div>
