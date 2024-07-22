@@ -8,7 +8,7 @@ const FooterLayout = ({ children }) => {
 
   return (
     <div
-      className={`md:ml-16 md:max-w-[70vw] my-2 md:my-4 fixed bottom-0 p-4 left-4 right-4 rounded-lg bg-white border-[1px] border-secondary lg:relative lg:right-auto lg:left-auto lg:max-h-[50vh] lg:ml-0 lg:min-w-[450px] lg:max-w-[450px] ${
+      className={`md:ml-16 md:max-w-[70vw] my-2 md:my-4 fixed bottom-0 p-4 left-4 right-4 rounded-lg bg-white border-[1px] border-secondary lg:relative lg:right-auto lg:left-auto lg:h-max lg:ml-0 lg:min-w-[450px] lg:max-w-[450px] ${
         isMini ? "z-10" : "z-0"
       }`}
     >

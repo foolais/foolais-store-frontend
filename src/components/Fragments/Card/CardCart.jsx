@@ -23,7 +23,7 @@ const CardCart = (props) => {
 
   return (
     <>
-      <Card className="min-w-48 h-auto min-h-44">
+      <Card className="min-w-48 h-auto lg:min-h-[12.5rem] xl:min-h-[11.5rem]">
         <div
           className={`card-body justify-between ${
             item.is_served ? "bg-secondary text-white" : "bg-white"
