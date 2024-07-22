@@ -11,7 +11,7 @@ const Modal = (props) => {
           showModal && "modal-open w-screen h-screen"
         }`}
       >
-        <div className="modal-box max-h-[90%] min-w-[80%]">
+        <div className="modal-box max-h-[90%] min-w-[80%] md:min-w-[60%] lg:min-w-[40%]">
           <form method="dialog">
             <Button
               className="btn-sm btn-circle btn-ghost absolute right-2 top-2"
