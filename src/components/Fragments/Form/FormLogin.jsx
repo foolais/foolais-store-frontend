@@ -29,7 +29,10 @@ const FormLogin = () => {
   };
 
   return (
-    <form onSubmit={handleLogin} className="flex flex-col gap-4 w-4/5">
+    <form
+      onSubmit={handleLogin}
+      className="flex flex-col gap-4 w-4/5 md:w-1/2 lg:w-1/3 xl:w-1/4"
+    >
       <FormInput
         title="Email"
         type="email"
@@ -44,11 +47,11 @@ const FormLogin = () => {
         placeholder="*****"
         isInput={true}
       />
-      <Button className="bg-secondary text-primary my-4">
+      <Button className="bg-secondary text-primary font-bold tracking-wider uppercase my-4">
         {loading ? (
           <span className="loading loading-spinner loading-md" />
         ) : (
-          "Login"
+          "Log in"
         )}
       </Button>
     </form>
