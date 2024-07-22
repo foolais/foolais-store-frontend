@@ -72,7 +72,7 @@ const FooterMenuAction = () => {
           <AiOutlineEdit size={20} />
         </div>
       </div>
-      <div className="grid grid-cols-[30%_10px_auto] gap-4">
+      <div className="grid grid-cols-[max-content_10px_auto]  gap-4">
         <p className="font-bold text-sm md:text-md flex items-center">
           Tipe Makan{" "}
         </p>
