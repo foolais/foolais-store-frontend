@@ -151,12 +151,19 @@ const OrderDetailsLayout = () => {
               </div>
             )}
           </div>
-          <p>
-            Status :{" "}
-            <span className="font-bold">
-              {order?.is_finished ? "Selesai" : "Dalam Proses"}
-            </span>
-          </p>
+          <div className="flex items-center gap-2">
+            <p>Status :</p>
+            <div className="flex items-center justify-center gap-2">
+              <span className="font-bold">
+                {order?.is_finished ? "Selesai" : "Dalam Proses"}
+              </span>
+              <div
+                className={`w-3 h-3 rounded-full ${
+                  order?.is_finished ? "bg-secondary" : "bg-warning"
+                }`}
+              />
+            </div>
+          </div>
         </div>
         <div className="grid text-right">
           <div className="flex items-center justify-end mb-2 gap-2">
