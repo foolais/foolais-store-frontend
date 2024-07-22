@@ -66,8 +66,8 @@ const CardMenuLayout = () => {
               <CardAddNew
                 title="Tambah Menu Baru"
                 cardClassName="min-h-24 md:min-h-36 h-auto min-w-42 md:min-w-48 xl:w-auto"
-                titleClassName="font-semibold text-center text-[1rem] md:text-md mt-2 md:mt-4"
-                actionClassName="mt-2 md:mt-4"
+                titleClassName="font-semibold text-center text-[1rem] md:text-md"
+                actionClassName="mt-2"
                 btnOnClick={() => setAddMenuModal(true)}
               />
               {filteredMenu &&

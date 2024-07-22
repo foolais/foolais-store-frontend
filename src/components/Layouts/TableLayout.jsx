@@ -66,7 +66,7 @@ const CardTableLayout = () => {
             <CardAddNew
               title="Tambah Meja Baru"
               cardClassName="min-h-24 md:min-h-36 h-auto min-w-42 md:min-w-48 justify-center"
-              titleClassName="font-semibold text-center text-[1rem] md:text-md mt-2 md:-mt-4"
+              titleClassName="font-semibold text-center text-[1rem] md:text-md"
               actionClassName="mt-4"
               btnOnClick={() => setAddTableModal(true)}
             />
