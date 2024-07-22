@@ -130,3 +130,17 @@ export const successDialog = (text) => {
     timer: 1500,
   });
 };
+
+export const warningWithCallback = (text, callback) => {
+  Swal.fire({
+    icon: "warning",
+    title: "Warning",
+    allowOutsideClick: false,
+    text,
+    confirmButtonColor: "#3085d6",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      callback(true);
+    }
+  });
+};

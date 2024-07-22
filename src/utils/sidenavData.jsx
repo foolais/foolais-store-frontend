@@ -4,7 +4,7 @@ import {
   AiOutlineTable,
   AiOutlineShoppingCart,
   AiOutlineOrderedList,
-  AiOutlineUser,
+  // AiOutlineUser,
 } from "react-icons/ai";
 
 const sizeIcon = 20;
@@ -35,11 +35,11 @@ const sidenavData = [
     title: "Pesanan",
     icon: <AiOutlineOrderedList size={sizeIcon} />,
   },
-  {
-    id: 6,
-    title: "User",
-    icon: <AiOutlineUser size={sizeIcon} />,
-  },
+  // {
+  //   id: 6,
+  //   title: "User",
+  //   icon: <AiOutlineUser size={sizeIcon} />,
+  // },
 ];
 
 export default sidenavData;

@@ -12,6 +12,7 @@ const HomePages = () => {
   const handleSelect = (selectedValue) => {
     console.log({ selectedValue });
   };
+
   return (
     <MainLayout>
       <Title>Home</Title>
