@@ -31,7 +31,7 @@ const FooterOrderDetails = ({ order }) => {
   const handlePayment = () => {
     const validate = validateServedMenu();
     if (validate) {
-      warningDialog("Tidak boleh ada menu yang belum disajikan");
+      warningDialog("Menu harus disajikan semua");
     } else {
       setShowModalPayment(true);
     }

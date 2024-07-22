@@ -194,32 +194,36 @@ const OrderDetailsLayout = () => {
           {onEdit ? "Ubah Catatan" : "Lihat Catatan"}
         </Button>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 mt-4 gap-4 mb-52">
-        {order?.menu &&
-          order?.menu.length > 0 &&
-          order?.menu.map((item) => {
-            return (
-              <CardCart
-                key={`${item._id}-${
-                  item.is_take_away ? "take-away" : "dine-in"
-                }`}
-                item={item}
-                isDisabledAction={!onEdit}
-                isUseInCart={false}
-                onDeleteCart={onDeleteCart}
-              />
-            );
-          })}
-        <CardAddNew
-          title="Tambah Pesanan Baru"
-          cardClassName="h-auto min-h-44 p-2 min-w-48"
-          titleClassName="font-semibold text-center text-[1rem] md:text-md mt-6 md:mt-4"
-          actionClassName="mt-2 md:mt-4"
-          onEdit={!onEdit}
-          btnOnClick={() => handleShowModal(true, "addMenu")}
-        />
+      <div className="lg:flex lg:justify-between lg:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 mt-4 gap-4 mb-52 lg:h-auto lg:max-h-[calc(100vh-260px)] lg:overflow-auto lg:pr-4 lg:pb-12 lg:w-full">
+          {order?.menu &&
+            order?.menu.length > 0 &&
+            order?.menu.map((item) => {
+              return (
+                <CardCart
+                  key={`${item._id}-${
+                    item.is_take_away ? "take-away" : "dine-in"
+                  }`}
+                  item={item}
+                  isDisabledAction={!onEdit}
+                  isUseInCart={false}
+                  onDeleteCart={onDeleteCart}
+                />
+              );
+            })}
+          {onEdit && (
+            <CardAddNew
+              title="Tambah Pesanan Baru"
+              cardClassName="h-auto min-h-44 p-2 min-w-48"
+              titleClassName="font-semibold text-center text-[1rem] text-lg lg:text-xl"
+              actionClassName="mt-2 md:mt-4"
+              onEdit={!onEdit}
+              btnOnClick={() => handleShowModal(true, "addMenu")}
+            />
+          )}
+        </div>
+        <FooterOrderDetails order={order} />
       </div>
-      <FooterOrderDetails order={order} />
       {showModal && (
         <NotesModal
           title={`Catatan Untuk Pesanan #${order?.number_order}`}

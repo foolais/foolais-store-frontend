@@ -3,7 +3,7 @@ import OrderDetailsLayout from "../components/Layouts/OrderDetailsLayout";
 
 const OrderDetailsPages = () => {
   return (
-    <MainLayout>
+    <MainLayout className="lg:max-h-screen lg:overflow-hidden">
       <OrderDetailsLayout />
     </MainLayout>
   );

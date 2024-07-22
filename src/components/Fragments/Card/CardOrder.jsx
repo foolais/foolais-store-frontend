@@ -19,7 +19,7 @@ const CardOrder = ({ order }) => {
   };
 
   return (
-    <div className="w-full p-4 bg-white shadow-md rounded-lg border-[1px] border-secondary grid sm:max-w-[80%]">
+    <div className="w-full p-4 bg-white shadow-md rounded-lg border-[1px] border-secondary grid sm:max-w-[90%] md:max-w-[80%] lg:max-w-[60%] xl:max-w-[50%]">
       <div className="w-full flex items-center justify-between">
         <p className="font-bold text-md md:text-2xl">{`Pesanan : #${order.number_order}`}</p>
         <p className="font-bold text-sm">{`${
