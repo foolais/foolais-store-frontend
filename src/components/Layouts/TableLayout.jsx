@@ -53,7 +53,7 @@ const CardTableLayout = () => {
         />
       )}
       {/* Daftar Meja */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4 xl:max-w-[80vw]">
         {table && table.length === 0 && !loading ? (
           <div className="w-full flex items-center justify-center text-primary p-4 font-semibold">
             Tidak ada Data Meja
