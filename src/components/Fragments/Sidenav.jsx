@@ -61,7 +61,7 @@ const Sidenav = () => {
       className={`fixed top-0 left-0 h-screen w-16 m-0 flex-col items-center gap-3 bg-neutral shadow-md text-neutral md:z-10 ${
         isMini
           ? "translate-x-[-300%] md:translate-x-0"
-          : "flex w-[65vw] md:w-[28vw] translate-x-0 z-[100]"
+          : "flex w-[65vw] md:w-[20vw] translate-x-0 z-[100]"
       } transform duration-500 ease-in-out`}
     >
       <div className="flex items-center justify-start gap-6 w-full ml-6 h-14">
