@@ -12,7 +12,7 @@ const CardStats = ({ data }) => {
       <div className="flex flex-col">
         <span className="font-bold tracking-widest text-md md:text-xl">
           {text.toLowerCase().includes("pendapatan")
-            ? formatRupiah(value)
+            ? formatRupiah(value, "thousand")
             : value}
         </span>
         <p className="text-xs md:text-md">{text}</p>

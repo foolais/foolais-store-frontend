@@ -60,11 +60,11 @@ const DashboardStatsCard = () => {
   };
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 xl:min-w-[25%] xl:w-auto">
       <h1 className="text-2xl font-bold tracking-wider text-center md:text-left">
         Warung Soto Bakso Hanna
       </h1>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+      <div className="grid grid-cols-2 lg:flex xl:flex-col gap-4 mt-4">
         {!loading &&
           statsData &&
           statsData.map((item) => {

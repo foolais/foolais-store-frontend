@@ -1,12 +1,30 @@
 import moment from "moment";
 import Swal from "sweetalert2";
 
-export const formatRupiah = (amount) => {
-  if (!amount) return "Rp. 0";
-  return amount.toLocaleString("id-ID", {
-    style: "currency",
-    currency: "IDR",
-  });
+export const formatRupiah = (amount, type = "normal") => {
+  if (!amount) return "Rp 0";
+  if (type === "normal")
+    return amount.toLocaleString("id-ID", {
+      style: "currency",
+      currency: "IDR",
+    });
+  else if (type === "thousand") {
+    const formatter = new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+
+    if (amount >= 1000) {
+      const thousands = amount / 1000;
+      return `Rp ${thousands.toLocaleString("id-ID", {
+        maximumFractionDigits: 1,
+      })} K`;
+    } else {
+      return formatter.format(amount);
+    }
+  }
 };
 
 export const formatDates = (time, type = "full") => {

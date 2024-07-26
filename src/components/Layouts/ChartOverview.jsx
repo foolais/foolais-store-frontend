@@ -73,11 +73,11 @@ const ChartOverview = () => {
   };
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 xl:w-full xl:max-w-3/4">
       <h2 className="text-xl font-semibold tracking-wider my-4 text-center md:text-left">
         Pendapatan di Bulan {getCurrentDate()}
       </h2>
-      <div className="w-full h-full lg:w-[700px] lg:h-[350px]">
+      <div className="w-full h-full lg:h-[60vh] xl:w-auto xl:h-[60vh]">
         {!loading && <Line data={chartData} options={options} />}
       </div>
     </div>

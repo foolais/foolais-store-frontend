@@ -7,8 +7,10 @@ const HomePages = () => {
   return (
     <MainLayout>
       <Title>Halaman Utama</Title>
-      <DashboardStatsCard />
-      <ChartOverview />
+      <div className="xl:flex xl:w-auto xl:gap-20">
+        <DashboardStatsCard />
+        <ChartOverview />
+      </div>
     </MainLayout>
   );
 };
