@@ -3,7 +3,7 @@ import MainLayout from "../components/Layouts/MainLayout";
 
 const CartPages = () => {
   return (
-    <MainLayout className="pb-[8.5rem] lg:pb-[10.5rem] lg:max-h-screen lg:overflow-hidden">
+    <MainLayout className="pb-[8.5rem] lg:pb-[10.5rem] min-h-screen lg:max-h-screen lg:overflow-hidden">
       <CartLayout />
     </MainLayout>
   );
