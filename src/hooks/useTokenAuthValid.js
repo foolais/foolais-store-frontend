@@ -11,7 +11,8 @@ const useTokenAuthValid = () => {
     if (user?.token) {
       const validToken = isTokenValid(user?.token);
       setIsAuthValid(validToken);
-      const validUser = (user?.email && user?.role) || user === null;
+      const validUser =
+        (user?.email !== null && user?.role !== null) || user === null;
       setIsValidUser(validUser);
     }
   }, []);
