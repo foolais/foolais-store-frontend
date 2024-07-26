@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -37,10 +38,13 @@ const useFooterCart = () => {
 
   // ? Use Effect
   useEffect(() => {
-    const text = cartTableData?.name || cartTableData?.text;
-    const value = cartTableData?._id || cartTableData?.value;
-    const payload = cartTableData ? { text, value } : null;
-    setCartTable(payload);
+    if (!cartTableData) setCartTable("");
+    else {
+      const text = cartTableData?.name || cartTableData?.text;
+      const value = cartTableData?._id || cartTableData?.value;
+      const payload = cartTableData ? { text, value } : null;
+      setCartTable(payload);
+    }
   }, [cartTableData]);
 
   useEffect(() => {

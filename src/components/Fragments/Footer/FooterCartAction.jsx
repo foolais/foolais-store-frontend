@@ -1,8 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import useFooterCart from "../../../hooks/useFooterCart";
 import FooterLayout from "./FooterLayout";
 import AutoComplete from "../../Elements/Input/AutoComplete";
-import { useEffect } from "react";
 import Button from "../../Elements/Button/Button";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import useCart from "../../../hooks/useCart";
@@ -12,7 +12,6 @@ const FooterCartAction = () => {
   const {
     dropDownTable,
     cartTable,
-    setCartTable,
     calculateTotalPrice,
     handleChangeTable,
     handleAddOrder,
@@ -25,10 +24,6 @@ const FooterCartAction = () => {
     handleShowNotesModal,
     onHandleChangeNotes,
   } = useCart();
-
-  useEffect(() => {
-    if (!cartTable) setCartTable("");
-  }, [cartTable, setCartTable]);
 
   return (
     <>
