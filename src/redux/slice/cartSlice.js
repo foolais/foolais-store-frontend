@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getLocalStorage, successDialog } from "../../utils/utils";
+import {
+  getLocalStorage,
+  sortDataByArray,
+  successDialog,
+} from "../../utils/utils";
 
 const storedData = JSON.parse(localStorage.getItem("cart"));
 const initialData = storedData || [];
@@ -40,6 +44,12 @@ const cartSlice = createSlice({
         const newCart = { ...action.payload, quantity: quantity || 1 };
         state.data.push(newCart);
       }
+
+      // sort cart
+      const category = ["food", "drink", "extra"];
+      const sortedCartData = sortDataByArray(state.data, category, "menu");
+
+      state.data = sortedCartData;
 
       const cartStorage = getLocalStorage("cart");
       localStorage.setItem(

@@ -29,7 +29,15 @@ export const getSingleOrder = createAsyncThunk(
   async (id) => {
     try {
       const response = await axios.get(`${BASE_URL}/order/${id}`);
-      return response.data;
+      const category = ["food", "drink", "extra"];
+      const { menu } = response.data.data;
+      console.log({ menu });
+      const sortedMenu = sortDataByArray(menu, category, "menu");
+      const payload = {
+        ...response.data,
+        menu: sortedMenu,
+      };
+      return payload;
     } catch (error) {
       return error.message;
     }
