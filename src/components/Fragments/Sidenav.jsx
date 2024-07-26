@@ -6,6 +6,7 @@ import { handleLogout } from "../../redux/slice/loginSlice";
 import { toggleSidenav } from "../../redux/slice/sidenavSlice";
 import { useEffect } from "react";
 import sidenavData from "../../utils/sidenavData";
+import { showConfirmationDialog } from "../../utils/utils";
 
 const data = sidenavData;
 
@@ -29,8 +30,14 @@ const Sidenav = () => {
   };
 
   const onLogoutBtn = () => {
-    dispatch(handleLogout());
-    navigate("/login");
+    const text = "Apakah anda yakin ingin keluar ?";
+    const successText = "Berhasil keluar";
+    showConfirmationDialog(text, successText, (isConfirmed) => {
+      if (isConfirmed) {
+        dispatch(handleLogout());
+        navigate("/login");
+      }
+    });
   };
 
   const isLogin = JSON.parse(localStorage.getItem("user"));
