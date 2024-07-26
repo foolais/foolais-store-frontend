@@ -46,6 +46,27 @@ export const sortDataByArray = (data, sortOrder = [], type) => {
   return sortedData;
 };
 
+export const getCurrentDate = () => {
+  const monthName = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
+  const monthIndex = new Date().getMonth();
+  const month = monthName[monthIndex];
+  const year = new Date().getFullYear();
+  return `${month} ${year}`;
+};
+
 export const getToken = () => {
   return JSON.parse(localStorage.getItem("user"))?.token || "";
 };

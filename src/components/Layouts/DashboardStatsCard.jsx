@@ -1,34 +1,63 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import CardStats from "../Fragments/Card/CardStats";
-import sidenavData from "../../utils/sidenavData";
-import { useEffect } from "react";
-import { useState } from "react";
-import { AiOutlineMoneyCollect } from "react-icons/ai";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllOverview } from "../../redux/slice/overviewSlice";
+import {
+  AiFillMoneyCollect,
+  AiOutlineAppstore,
+  AiOutlineOrderedList,
+  AiOutlineTable,
+} from "react-icons/ai";
 
 const DashboardStatsCard = () => {
+  const dispatch = useDispatch();
+
   const [statsData, setStatsData] = useState([]);
+  const { data, loading } = useSelector((state) => state.overview);
 
   useEffect(() => {
-    const updatedData = sidenavData
-      .map((item) => {
-        const acceptedData = ["menu", "meja", "pesanan"];
-        if (acceptedData.includes(item.title.toLocaleLowerCase())) {
-          return {
-            text: item.title,
-            value: 1000,
-            icon: item.icon,
-          };
-        }
-      })
-      .filter((item) => item);
-
-    updatedData.push({
-      text: "Pendapatan",
-      value: 1000,
-      icon: <AiOutlineMoneyCollect size={20} />,
-    });
-
-    setStatsData(updatedData);
+    getOverviewData();
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      const { totalMenu, totalTable, totalOrder, totalEarnings } = data;
+      const payload = [
+        {
+          text: "Total Menu",
+          value: totalMenu,
+          icon: <AiOutlineAppstore size={30} />,
+        },
+        {
+          text: "Total Meja",
+          value: totalTable,
+          icon: <AiOutlineTable size={30} />,
+        },
+        {
+          text: "Total Pesanan",
+          value: totalOrder,
+          icon: <AiOutlineOrderedList size={30} />,
+        },
+        {
+          text: "Total Pendapatan",
+          value: totalEarnings,
+          icon: <AiFillMoneyCollect size={30} />,
+        },
+      ];
+
+      setStatsData(payload);
+    }
+  }, [data]);
+
+  const getOverviewData = () => {
+    if (loading) return;
+    try {
+      dispatch(getAllOverview());
+    } catch (error) {
+      setStatsData([]);
+    }
+  };
 
   return (
     <div className="mt-4">
@@ -36,9 +65,10 @@ const DashboardStatsCard = () => {
         Warung Soto Bakso Hanna
       </h1>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-        {statsData &&
+        {!loading &&
+          statsData &&
           statsData.map((item) => {
-            return <CardStats key={item.text} data={item} />;
+            return <CardStats key={item?.text} data={item} />;
           })}
       </div>
     </div>

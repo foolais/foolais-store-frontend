@@ -1,3 +1,5 @@
+import { formatRupiah } from "../../../utils/utils";
+
 /* eslint-disable react/prop-types */
 const CardStats = ({ data }) => {
   const { text, value, icon } = data;
@@ -9,9 +11,11 @@ const CardStats = ({ data }) => {
       </div>
       <div className="flex flex-col">
         <span className="font-bold tracking-widest text-md md:text-xl">
-          {value}
+          {text.toLowerCase().includes("pendapatan")
+            ? formatRupiah(value)
+            : value}
         </span>
-        <p className="text-xs md:text-md">Total {text}</p>
+        <p className="text-xs md:text-md">{text}</p>
       </div>
     </div>
   );

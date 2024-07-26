@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -8,6 +9,10 @@ import {
   Tooltip,
   Filler,
 } from "chart.js";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getEaringPerMonth } from "../../redux/slice/overviewSlice";
+import { getCurrentDate } from "../../utils/utils";
 
 ChartJS.register(
   LineElement,
@@ -19,12 +24,17 @@ ChartJS.register(
 );
 
 const ChartOverview = () => {
-  const data = {
+  const dispatch = useDispatch();
+
+  const [earningsData, setEarningsData] = useState([0, 0, 0, 0, 0]);
+  const { data, loading } = useSelector((state) => state.overview);
+
+  const chartData = {
     labels: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4", "Minggu 5"],
     datasets: [
       {
         label: "Pendapatan",
-        data: [400000, 30000, 35000, 44000, 50000],
+        data: earningsData,
         fill: true,
         backgroundColor: "#49beaa60",
         borderColor: "#49beaa",
@@ -42,12 +52,34 @@ const ChartOverview = () => {
     },
   };
 
+  useEffect(() => {
+    getEarningsData();
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      const { earningPerMonth } = data;
+      setEarningsData(earningPerMonth);
+    }
+  }, [data]);
+
+  const getEarningsData = () => {
+    if (loading) return;
+    try {
+      dispatch(getEaringPerMonth());
+    } catch (error) {
+      setEarningsData([]);
+    }
+  };
+
   return (
     <div className="mt-8">
       <h2 className="text-xl font-semibold tracking-wider my-4 text-center md:text-left">
-        Pendapatan Bulan Juni
+        Pendapatan di Bulan {getCurrentDate()}
       </h2>
-      <Line data={data} options={options} />
+      <div className="w-full h-full lg:w-[700px] lg:h-[350px]">
+        {!loading && <Line data={chartData} options={options} />}
+      </div>
     </div>
   );
 };

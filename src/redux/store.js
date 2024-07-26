@@ -6,6 +6,7 @@ import tableReducer from "./slice/tableSlice";
 import loginReducer from "./slice/loginSlice";
 import orderReducer from "./slice/orderSlice";
 import sidenavReducer from "./slice/sidenavSlice";
+import overviewReducer from "./slice/overviewSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     login: loginReducer,
     order: orderReducer,
     sidenav: sidenavReducer,
+    overview: overviewReducer,
   },
 });
 
