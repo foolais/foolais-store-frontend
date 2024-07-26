@@ -9,7 +9,7 @@ import MenuPages from "./pages/MenuPages";
 import ErrorPages from "./pages/ErrorPages";
 import TablePages from "./pages/TablePages";
 import CartPages from "./pages/CartPages";
-import LoginPages from "./pages/LoginPages";
+import AuthPages from "./pages/AuthPages";
 import OrderPages from "./pages/OrderPages";
 import OrderDetailsPages from "./pages/OrderDetailsPages";
 
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
   { path: "/keranjang", element: <CartPages /> },
   { path: "/pesanan", element: <OrderPages /> },
   { path: "/pesanan/:id", element: <OrderDetailsPages /> },
-  { path: "/login", element: <LoginPages /> },
+  { path: "/auth", element: <AuthPages /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

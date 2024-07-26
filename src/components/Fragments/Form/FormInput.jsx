@@ -1,3 +1,4 @@
+import { AiOutlineInfoCircle } from "react-icons/ai";
 import AutoComplete from "../../Elements/Input/AutoComplete";
 import Input from "../../Elements/Input/Input";
 import Select from "../../Elements/Input/Select";
@@ -15,6 +16,8 @@ const FormInput = (props) => {
     isAutoComplete = false,
     defaultValue = null,
     isDisabled = false,
+    isWithInfo = false,
+    infoText = "",
     ...rest
   } = props;
 
@@ -25,7 +28,17 @@ const FormInput = (props) => {
   return (
     <label className="form-control w-full">
       <div className="label">
-        <span className="label-text font-semibold">{title}</span>
+        <span className="label-text font-semibold flex items-center">
+          {title}
+          {isWithInfo && (
+            <div
+              className="tooltip tooltip-right ml-1 cursor-pointer w-4 h-4"
+              data-tip={infoText}
+            >
+              <AiOutlineInfoCircle />
+            </div>
+          )}
+        </span>
       </div>
       {isInput && (
         <Input

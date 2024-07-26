@@ -3,7 +3,7 @@ import menuReducer from "./slice/menuSlice";
 import searchBarReducer from "./slice/searchBarSlice";
 import cartReducer from "./slice/cartSlice";
 import tableReducer from "./slice/tableSlice";
-import loginReducer from "./slice/loginSlice";
+import authReducer from "./slice/authSlice";
 import orderReducer from "./slice/orderSlice";
 import sidenavReducer from "./slice/sidenavSlice";
 import overviewReducer from "./slice/overviewSlice";
@@ -14,7 +14,7 @@ const store = configureStore({
     searchBar: searchBarReducer,
     cart: cartReducer,
     table: tableReducer,
-    login: loginReducer,
+    auth: authReducer,
     order: orderReducer,
     sidenav: sidenavReducer,
     overview: overviewReducer,

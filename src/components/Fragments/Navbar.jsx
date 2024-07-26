@@ -50,7 +50,7 @@ const Navbar = () => {
               username={sessionData ? sessionData?.username : ""}
             ></Avatar>
           ) : (
-            <Link to={"/login"}>
+            <Link to={"/auth"}>
               <Button className="btn-circle btn-sm bg-primary" />
             </Link>
           )}

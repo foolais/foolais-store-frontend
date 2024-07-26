@@ -1,16 +1,20 @@
+/* eslint-disable react/prop-types */
 import { useDispatch } from "react-redux";
 import Button from "../../Elements/Button/Button";
 import FormInput from "./FormInput";
-import { postLogin } from "../../../redux/slice/loginSlice";
+import { postLogin } from "../../../redux/slice/authSlice";
 import { useNavigate } from "react-router-dom";
 import { warningDialog } from "../../../utils/utils";
 import { useSelector } from "react-redux";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useState } from "react";
 
-const FormLogin = () => {
+const FormLogin = ({ onHandleChangeForm }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading } = useSelector((state) => state.login);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const { loading } = useSelector((state) => state.auth);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -40,20 +44,39 @@ const FormLogin = () => {
         placeholder="test@mail.com"
         isInput={true}
       />
-      <FormInput
-        title="Password"
-        type="password"
-        name="password"
-        placeholder="*****"
-        isInput={true}
-      />
+      <div className="relative">
+        <FormInput
+          title="Password"
+          type={isPasswordVisible ? "text" : "password"}
+          name="password"
+          placeholder="*****"
+          isInput={true}
+        />
+        <label className="swap swap-rotate absolute right-4 bottom-2.5">
+          <input
+            type="checkbox"
+            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+          />
+          <AiOutlineEyeInvisible className="swap-off" size={25} />
+          <AiOutlineEye className="swap-on" size={25} />
+        </label>
+      </div>
       <Button className="bg-secondary text-primary font-bold tracking-wider uppercase my-4">
         {loading ? (
           <span className="loading loading-spinner loading-md" />
         ) : (
-          "Log in"
+          "Login"
         )}
       </Button>
+      <span className="text-sm text-center">
+        Belum punya akun?
+        <span
+          onClick={onHandleChangeForm}
+          className="text-secondary font-bold ml-1 cursor-pointer"
+        >
+          Daftar
+        </span>
+      </span>
     </form>
   );
 };

@@ -8,7 +8,6 @@ const AuthLayout = ({ children }) => {
       <Link to="/" className="absolute top-2 left-10">
         <Title textColor="text-primary my-4">Foolais</Title>
       </Link>
-      <Title textColor="text-secondary my-4">Welcome Back</Title>
       {children}
     </div>
   );

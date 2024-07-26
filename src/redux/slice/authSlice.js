@@ -22,8 +22,20 @@ export const postLogin = createAsyncThunk(
   }
 );
 
-const loginSlice = createSlice({
-  name: "login",
+export const postRegister = createAsyncThunk(
+  "register/postRegister",
+  async (payload) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/user/register`, payload);
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {
     handleLogout: (state) => {
@@ -54,10 +66,20 @@ const loginSlice = createSlice({
         state.loading = false;
         state.error = action.payload.message;
         localStorage.removeItem("user");
+      })
+      .addCase(postRegister.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(postRegister.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(postRegister.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
       });
   },
 });
 
-export const { handleLogout } = loginSlice.actions;
+export const { handleLogout } = authSlice.actions;
 
-export default loginSlice.reducer;
+export default authSlice.reducer;

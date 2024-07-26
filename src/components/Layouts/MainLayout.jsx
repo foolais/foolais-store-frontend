@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../Fragments/Navbar";
 import Sidenav from "../Fragments/Sidenav";
 import { useDispatch } from "react-redux";
-import { handleLogout } from "../../redux/slice/loginSlice";
+import { handleLogout } from "../../redux/slice/authSlice";
 import { warningWithCallback } from "../../utils/utils";
 import useTokenAuthValid from "../../hooks/useTokenAuthValid";
 
@@ -16,7 +16,7 @@ const MainLayout = ({ children, className }) => {
   if (!isAuthValid && isValidUser) {
     warningWithCallback("Token telah expired", () => {
       dispatch(handleLogout());
-      navigate("/login");
+      navigate("/auth");
     });
   }
 

@@ -2,7 +2,7 @@ import Button from "../Elements/Button/Button";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineLogout, AiOutlineLeft, AiOutlineMenu } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { handleLogout } from "../../redux/slice/loginSlice";
+import { handleLogout } from "../../redux/slice/authSlice";
 import { toggleSidenav } from "../../redux/slice/sidenavSlice";
 import { useEffect } from "react";
 import sidenavData from "../../utils/sidenavData";
@@ -35,7 +35,7 @@ const Sidenav = () => {
     showConfirmationDialog(text, successText, (isConfirmed) => {
       if (isConfirmed) {
         dispatch(handleLogout());
-        navigate("/login");
+        navigate("/auth");
       }
     });
   };
